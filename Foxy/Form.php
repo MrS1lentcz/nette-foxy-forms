@@ -2,7 +2,7 @@
 
 # @package nette-foxy-forms
 #
-# Generate nette forms using Doctrine entity annotations
+# Generate nette form component using Doctrine entity annotations
 #
 # @author Jiri Dubansky <jiri@dubansky.cz>
 
@@ -50,7 +50,7 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @string
     # Redirect destination after save model action
-    protected $successRedirect = '';
+    protected $successUrl = '';
 
     # @array
     protected $validationMessages = array(
@@ -91,18 +91,16 @@ abstract class Form extends \Nette\Application\UI\Form {
                                 \Nette\ComponentModel\IContainer $parent = NULL,
                                 $name = NULL)
     {
-        #parent::__construct($parent,$name);
         parent::__construct();
         $this->em = $em;
 
         # Instance of new model for getting form's default values
         $this->instance = new $this->model;
+        $this->onSuccess[] = array($this, 'saveModel');
 
-        # Create form components
         foreach($this->getCompletedProperties() as $property) {
             $this->createFieldComponent($property);
         }
-        $this->onSuccess[] = array($this, 'saveModel');
     }
 
     # Returns entity's identifier name
@@ -442,8 +440,8 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->em->flush();
         }
 
-        if ($this->successRedirect) {
-            header('Location: '.$this->successRedirect);
+        if ($this->successUrl) {
+            $this->presenter($this->successUrl);
         }
     }
 }
