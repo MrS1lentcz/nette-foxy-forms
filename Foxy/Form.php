@@ -78,28 +78,30 @@ abstract class Form extends \Nette\Application\UI\Form {
         1           => 'Foxy\FormComponents::createMultipleSelectBox',     # Many to many
     );
 
-    # @string
-    protected $formNameSuffix = 'Form';
-
-
     # Construct Foxy\Form
     #
     # @param \Doctrine\ORM\EntityManager $em
     # @param Nette\ComponentModel\IContainer $parent
     # @param string $name
-    public function __construct(\Doctrine\ORM\EntityManager $em,
-                                \Nette\ComponentModel\IContainer $parent = NULL,
-                                $name = NULL)
+    public function __construct(\Doctrine\ORM\EntityManager $em)
     {
         parent::__construct();
         $this->em = $em;
-
-        # Instance of new model for getting form's default values
         $this->instance = new $this->model;
         $this->onSuccess[] = array($this, 'saveModel');
+    }
 
-        foreach($this->getCompletedProperties() as $property) {
-            $this->createFieldComponent($property);
+    # Creates form components after attached to presenter
+    #
+    # @param object
+    protected function attached($presenter)
+    {
+        parent::attached($presenter);
+
+        if ($presenter instanceof \Nette\Application\UI\Presenter) {
+            foreach($this->getCompletedProperties() as $property) {
+                $this->createFieldComponent($property);
+            }
         }
     }
 
@@ -229,8 +231,8 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         # Custom creating component for field
-        if (method_exists($this, 'getFieldComponent')) {
-            $this->getFieldComponent($property['fieldName']);
+        if (method_exists($this, 'setFieldComponent')) {
+            $this->setFieldComponent($property['fieldName']);
 
             if (isset($this[$property['fieldName']])) {
                 return;
@@ -241,14 +243,6 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->componentsCallbackMap[$property['type']],
             $params
         );
-    }
-
-    # Get validation level for component builder
-    #
-    # @return int
-    public function getValidationLevel()
-    {
-        return $this->validation;
     }
 
     # Customize property metadata
@@ -367,7 +361,16 @@ abstract class Form extends \Nette\Application\UI\Form {
     # @return string
     public function getValidationMessage($field, $level)
     {
-        return $this->validationMessages[$level];
+        $msg = NULL;
+        if (method_exists($this,'getMessage')) {
+            $msg = $this->getMessage($field, $level);
+        }
+
+        if (is_null($msg)) {
+            return $this->validationMessages[$level];
+        }
+
+        return $msg;
     }
 
     # Save model
