@@ -17,6 +17,10 @@ define('FOXY_MAX_LENGTH', 16);
 define('FOXY_HTML5_SUPPORT', 32);
 define('FOXY_UNIQUE', 64);
 define('FOXY_VALIDATE_ALL', 126);
+define('FOXY_ONE_TO_ONE', 1);
+define('FOXY_MANY_TO_ONE', 2);
+define('FOXY_ONE_TO_MANY', 4);
+define('FOXY_MANY_TO_MANY', 8);
 
 
 abstract class Form extends \Nette\Application\UI\Form {
@@ -46,7 +50,7 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @object
     # Instance of model
-    protected $instance;
+    private $instance;
 
     # @string
     # Redirect destination after save model action
@@ -63,20 +67,26 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @array
     protected $componentsCallbackMap = array(
-        'integer'   => 'Foxy\FormComponents::createInteger',
-        'bigint'    => 'Foxy\FormComponents::createBigInteger',
-        'smallint'  => 'Foxy\FormComponents::createSmallInteger',
-        'string'    => 'Foxy\FormComponents::createString',
-        'text'      => 'Foxy\FormComponents::createText',
-        'decimal'   => 'Foxy\FormComponents::createDecimal',
-        'boolean'   => 'Foxy\FormComponents::createBoolean',
-        'datetime'  => 'Foxy\FormComponents::createDatetime',
-        'date'      => 'Foxy\FormComponents::createDate',
-        'time'      => 'Foxy\FormComponents::createTime',
-        2           => 'Foxy\FormComponents::createSelectBox',             # One to many
-        4           => 'Foxy\FormComponents::createMultipleSelectBox',     # Many to one
-        1           => 'Foxy\FormComponents::createMultipleSelectBox',     # Many to many
+        'integer'           => 'Foxy\FormComponents::createInteger',
+        'bigint'            => 'Foxy\FormComponents::createBigInteger',
+        'smallint'          => 'Foxy\FormComponents::createSmallInteger',
+        'string'            => 'Foxy\FormComponents::createString',
+        'text'              => 'Foxy\FormComponents::createText',
+        'decimal'           => 'Foxy\FormComponents::createDecimal',
+        'boolean'           => 'Foxy\FormComponents::createBoolean',
+        'datetime'          => 'Foxy\FormComponents::createDatetime',
+        'date'              => 'Foxy\FormComponents::createDate',
+        'time'              => 'Foxy\FormComponents::createTime',
+        FOXY_ONE_TO_ONE     => 'Foxy\FormComponents::createSelectBox',
+        FOXY_MANY_TO_ONE    => 'Foxy\FormComponents::createSelectBox',
+        FOXY_ONE_TO_MANY    => 'Foxy\FormComponents::createMultipleSelectBox',
+        FOXY_MANY_TO_MANY   => 'Foxy\FormComponents::createMultipleSelectBox',
     );
+
+    # Properties with customized metadata
+    # @array
+    private $properties = array();
+
 
     # Construct Foxy\Form
     #
@@ -87,7 +97,11 @@ abstract class Form extends \Nette\Application\UI\Form {
     {
         parent::__construct();
         $this->em = $em;
-        $this->instance = new $this->model;
+        if (is_object($this->model)) {
+            $this->instance = $this->model;
+        } else {
+            $this->instance = new $this->model;
+        }
         $this->onSuccess[] = array($this, 'saveModel');
     }
 
@@ -99,7 +113,8 @@ abstract class Form extends \Nette\Application\UI\Form {
         parent::attached($presenter);
 
         if ($presenter instanceof \Nette\Application\UI\Presenter) {
-            foreach($this->getCompletedProperties() as $property) {
+            $this->properties = $this->getCompletedProperties();
+            foreach($this->properties as $property) {
                 $this->createFieldComponent($property);
             }
         }
@@ -163,56 +178,40 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $this->fields;
     }
 
+    # Check if validation is allowed for choosen level
+    #
+    # @return boolean
+    public function canValidate($level)
+    {
+        return $this->validation & $level;
+    }
+
     # Appends component to form
     #
     # @param \Nette\Application\UI\Form $form
     # @param array $property
     protected function createFieldComponent($property)
     {
-        $validationSettings = array(
-            FOXY_NULLABLE => TRUE,
-            FOXY_IS_INT => FALSE,
-            FOXY_IS_FLOAT => FALSE,
-            FOXY_MAX_LENGTH => NULL,
-            FOXY_HTML5_SUPPORT => FALSE,
-        );
-
-        if ($this->validation & FOXY_NULLABLE
-            && isset($property['nullable'])
-            && $property['nullable'] === FALSE) {
-            $validationSettings[FOXY_NULLABLE] = FALSE;
-        }
-
-        if ($this->validation & FOXY_IS_INT) {
-            $validationSettings[FOXY_IS_INT] = TRUE;
-        }
-
-        if ($this->validation & FOXY_IS_FLOAT) {
-            $validationSettings[FOXY_IS_FLOAT] = TRUE;
-        }
-
-        if ($this->validation & FOXY_HTML5_SUPPORT) {
-            $validationSettings[FOXY_HTML5_SUPPORT] = TRUE;
-        }
-
-        if ($this->validation & FOXY_MAX_LENGTH
-            && in_array($property['type'], array('string','text'))
-            ) {
-            $validationSettings[FOXY_MAX_LENGTH] = $property['length'];
-        }
-
-        if ($this->validation & FOXY_HTML5_SUPPORT) {
-            $validationSettings[FOXY_HTML5_SUPPORT] = TRUE;
-        }
-
         $params = array(
             &$this,
             $property,
-            $validationSettings
+        );
+
+        # Relation from second side is ignored
+        if ($property['type'] == FOXY_ONE_TO_ONE
+            && count($property['joinColumns']) === 0) {
+            return;
+        }
+
+        $relations = array(
+            FOXY_ONE_TO_ONE,
+            FOXY_MANY_TO_ONE,
+            FOXY_ONE_TO_MANY,
+            FOXY_MANY_TO_MANY
         );
 
         # Relations have data for select-box as 5nd parameter
-        if (in_array($property['type'], array(1,2,4))) {
+        if (in_array($property['type'], $relations)) {
             $params[] = $this->getSelectData(
                 $property['targetEntity'],
                 $property['fieldName']
@@ -266,9 +265,19 @@ abstract class Form extends \Nette\Application\UI\Form {
         # Relation
         } elseif (array_key_exists($field, $assocMappings)) {
             $properties[$field] = $assocMappings[$field];
+            $properties[$field]['nullable'] = TRUE;
+            if (isset($properties[$field]['joinColumns'])) {
+                foreach($properties[$field]['joinColumns'] as $col) {
+                    if (! $col['nullable']) {
+                        $properties[$field]['nullable'] = FALSE;
+                        break;
+                    }
+                }
+            }
         } else {
             return;
         }
+
         $properties[$field]['defaultValue'] = $rp->getValue($this->instance);
     }
 
@@ -307,7 +316,140 @@ abstract class Form extends \Nette\Application\UI\Form {
             $properties[$identifier]['identifier'] = TRUE;
         }
 
+        #dump($properties);exit;
         return $properties;
+    }
+
+    # Get cleaned property value for form component
+    #
+    # @param @array $property
+    # @return mixed
+    public function getFormValue($property)
+    {
+        $value = $property['defaultValue'];
+        if ($value instanceof \Doctrine\Common\Collections\ArrayCollection) {
+            $data = array();
+            $meta = $this->em->getClassMetadata($property['targetEntity']);
+            foreach($value as $entity) {
+                $rp = $meta->getReflectionClass()->getProperty(
+                    $this->getIdentifier($entity)
+                );
+                $rp->setAccessible(TRUE);
+                $data[] = $rp->getValue($entity);
+            }
+            return $data;
+        }
+
+        if( $value instanceof \Datetime) {
+            if ($property['type'] == 'datetime') {
+                return $value->format('Y-m-d\TH:i:s');
+            }
+            if ($property['type'] == 'date') {
+                return $value->format('Y-m-d');
+            }
+            if ($property['type'] == 'time') {
+                return $value->format('H:i:s');
+            }
+        }
+
+        if (is_object($value)) {
+            $meta = $this->em->getClassMetadata($property['targetEntity']);
+            $rp = $meta->getReflectionClass()->getProperty(
+                $this->getIdentifier($property['targetEntity'])
+            );
+            $rp->setAccessible(TRUE);
+            return $rp->getValue($value);
+        }
+        return $value;
+    }
+
+    public function setPropertyValue($field, $value)
+    {
+        if (! array_key_exists($field, $this->properties)) {
+            return;
+        }
+
+        $property = $this->properties[$field];
+        $setter = 'set'.ucfirst($field);
+        $getter = 'get'.ucfirst($name);
+        $inverseProp = NULL;
+        $inverseGetter = NULL;
+        $meta = $this->em->getClassMetadata($this->model);
+        $rp = $meta->getReflectionClass()->getProperty($property['fieldName']);
+        $rp->setAccessible(TRUE);
+
+        # Rewrite $value on One to n
+        if ($property['type'] == FOXY_ONE_TO_ONE
+            || $property['type'] == FOXY_ONE_TO_MANY
+        ) {
+            $value = $this->em->find($property['targetValue'], $value);
+        }
+
+        # Clear all data from many to many
+        if ($property['type'] == FOXY_MANY_TO_MANY) {
+            $arrayCol = NULL;
+            if (method_exists($this->instance, $getter)) {
+                $arrayCol = $this->instance->$getter();
+            } else {
+                $arrayCol = $rp->getValue($this->instance);
+            }
+
+            $inverseProp = isset($property['inversedBy'])
+                ? $property['inversedBy']
+                    : $property['mappedBy'];
+            $inverseGetter = 'get'.ucfirst($inverseProp);
+
+            foreach($arrayCol as $entity) {
+                if (method_exists($entity,$inverseGetter)) {
+                    $e->$inverseGetter()->removeElement(
+                        $this->instance
+                    );
+                    $this->em->persist($entity);
+                } else {
+                    $rpr = $meta->getReflectionClass()->getProperty($inverseProp);
+                    $rpr->setAccessible(TRUE);
+                    $rpr->getValue($entity)->removeElement(
+                        $this->instance
+                    );
+                    $this->em->persist($entity);
+                }
+            }
+        }
+
+        # Add entities to relation
+        if ($property['type'] == FOXY_MANY_TO_ONE
+            || $property['type'] == FOXY_MANY_TO_MANY
+        ) {
+            foreach($value as $id) {
+                $entity = $this->em->find($property['targetValue'], $id);
+
+                if (method_exists($this->instance,$getter)) {
+                    $this->instances->$getter()->add($entity);
+                } else {
+                    $rp->getValue($this->instance)->add($entity);
+                }
+
+                # Add inverse entities on many to many
+                if($property['type'] == FOXY_MANY_TO_MANY){
+                    if (method_exists($entity,$inverseGetter)) {
+                        $entity>$inverseGetter()->add($this->instance);
+                        $this->em->persist($entity);
+                    } else {
+                        $rpr = $meta->getReflectionClass()->getProperty($inverseProp);
+                        $rpr->setAccessible(TRUE);
+                        $rpr->getValue($entity)->add($this->instance);
+                        $this->em->persist($entity);
+                    }
+                }
+            }
+            return;
+        }
+
+        if (method_exists($this->instance,$setter)) {
+            $this->instance->$setter($entity);
+        } else {
+            $rp->setValue($this->instance, $entity);
+        }
     }
 
     # Set entity instance and load values to form
@@ -317,9 +459,9 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function setInstance($entity)
     {
         $this->instance = $entity;
-        foreach($this->getCompletedProperties() as $property) {
+        foreach($this->properties as $property) {
             $this[$property['fieldName']]->setValue(
-                $property['defaultValue']
+                $this->getFormValue($property)
             );
         }
         return $this;
@@ -332,23 +474,26 @@ abstract class Form extends \Nette\Application\UI\Form {
     # @return bool
     private function uniqueCheck($property, $newValue)
     {
-        $entity = FALSE;
         if (isset($property['unique'])) {
             if($property['unique']) {
                 $entity = $this->em->getRepository($this->model)->findOneBy(
                     array($property['fieldName'] => $newValue)
                 );
+                if ($entity) {
+                    return FALSE;
+                }
             }
-        }
-        elseif(isset($property['joinColumns']['unique'])) {
-            if($property['joinColumns']['unique']) {
-                $entity = $this->em->getRepository($property['targetEntity'])->findOneBy(
-                    array($property['joinColumns']['name'] => $newValue)
-                );
+        } elseif(isset($property['joinColumns'])) {
+            foreach($property['joinColumns'] as $col) {
+                if ($col['unique']) {
+                    $entity = $this->em->getRepository($property['targetEntity'])->findOneBy(
+                        array($col['name'] => $newValue)
+                    );
+                    if ($entity) {
+                        return FALSE;
+                    }
+                }
             }
-        }
-        if ($entity) {
-            return FALSE;
         }
         return TRUE;
     }
@@ -362,7 +507,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function getValidationMessage($field, $level)
     {
         $msg = NULL;
-        if (method_exists($this,'getMessage')) {
+        if (method_exists($this,'getErrorMessage')) {
             $msg = $this->getMessage($field, $level);
         }
 
@@ -390,51 +535,16 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->instance = $this->em->find($this->model, $values[$identifier]);
         }
 
-        $metadata       = $this->em->getClassMetadata($this->model);
-        $fields         = $metadata->getFieldNames();
-        $assocMappings  = $metadata->getAssociationMappings();
-
         foreach($values as $name => $val) {
-            $setter = 'set'.ucfirst($name);
-            $getter = 'get'.ucfirst($name);
-
-            # Field
-            $key = array_search($name, $fields);
-            if ($key !== FALSE
-                || (array_key_exists($name, $assocMappings)
-                    && $assocMappings[$name]['type'] == 2)
-                ) {
-                # Unique check
-                if ($this->instance->$getter() != $val) {
-                    if (! $this->uniqueCheck($metadata->getFieldMapping($name), $val)) {
-                        $this->addError(
-                            $this->getValidationMessage($name,FOXY_UNIQUE)
-                        );
-                        return;
-                    }
-                }
-                $this->instance->$setter($val);
-                continue;
+            # Unique check
+            if (! $this->uniqueCheck($field, $val)) {
+                $this->addError(
+                    $this->getValidationMessage($name,FOXY_UNIQUE)
+                );
+                return;
             }
 
-            # Relations 1 and 4
-            if (array_key_exists($name, $assocMappings)) {
-                $field = $assocMappings[$name];
-
-                foreach($this->instance->$getter() as $rel) {
-                    $this->instance->$getter()->removeElement($rel);
-
-                    # Many to many
-                    if ($field['type'] === 1) {
-                        # TODO vykosit z druhe strany a napersistovat
-                    }
-                }
-                foreach($val as $id) {
-                    $entity = $this->em->find($field['targetEntity'], $id);
-                    $this->instance->$getter()->add($entity);
-                    $this->em->persist($entity);
-                }
-            }
+            $this->setPropertyValue($property, $val);
         }
 
         $this->em->persist($this->instance);

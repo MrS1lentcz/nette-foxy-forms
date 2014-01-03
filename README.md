@@ -89,7 +89,7 @@ class ProductForm extends Foxy\Form
 		$this->validationMessages[FOXY_NULLABLE] = 'Must fill this field, boy!';
 	}
 
-    public function getMessage($field, $level)
+    public function getErrorMessage($field, $level)
     {
 		if ($field == 'name' && $level == FOXY_NULLABLE) {
 			return 'Name is required';
