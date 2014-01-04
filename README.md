@@ -14,12 +14,16 @@ Instalace
 ------------
 
 - config.neon
+
+Prvni argument je media url, druhy media directory
+
 ```yaml
 services:
 	mediaStorage: Foxy\MediaStorage('/media', '/www/my_project/media')
 ```
 
 - presenter
+
 ```php
 	protected $mediaStorage;
 
@@ -130,7 +134,7 @@ class ProductForm extends Foxy\Form
 
 - setFieldComponent($field)
 
-Jestlize potrebujete pouzit vlastni filtr pro select box data nebo definovat vlastni sadu pravidel pro nejake komponenty, lzes pouzit getFkValues a setFieldComponent metody.
+Jestlize potrebujete pouzit vlastni filtr pro select box data nebo definovat vlastni sadu pravidel pro nejake komponenty, lze pouzit getFkValues a setFieldComponent metody.
 
 ```php
 class ProductForm extends Foxy\Form
@@ -150,3 +154,46 @@ class ProductForm extends Foxy\Form
     }
 }
 ```
+
+- uploadTo
+
+Nastaveni globalni cesty pro ukladani s podporou date masek. Pokud potrebujeme nastavit jinou cestu pro konkretni komponentu, lze definovat metodu getUploadTo. Pro vypnuti uploadu pro dany prvek musi tato metoda vracet FALSE.
+
+```php
+class ProductForm extends Foxy\Form
+{
+	protected
+		$uploadTo = 'images/%y-%m-%d/';
+
+	protected function getUploadTo($name)
+	{
+		if ($name == 'logo') {
+			return 'loga/%y-%m-%d/';
+		}
+		if ($name == 'image') {
+			return FALSE;
+		}
+	}
+}
+```
+
+Pro vlastni zpracovani 'image' komponenty je pak nutne podedit metodu saveModel a parentovi predat priznak $commit s hodnotou FALSE, aby se zabranilo flushi a redirectu po zavolani teto metody.
+
+```php
+class ProductForm extends Foxy\Form
+{
+	public function saveModel($form, $commit = TRUE)
+	{
+		parent::saveModel($form, $commit = FALSE);
+
+		# ...
+
+		$this->em->flush();
+		$this->presenter->redirect('to:hell');
+}
+```
+
+
+
+
+
