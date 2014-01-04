@@ -1,7 +1,7 @@
 nette-foxy-forms
 ================
 
-**Z anotaci Doctrine2 entit generuje formularove komponenty s validacemi, loadovanim a ukladanim samotnych entit vcetne vsech vazeb a podporou file uploadu**
+**Z anotaci Doctrine entit generuje formularove komponenty s validacemi, nacitanim a ukladanim samotnych entit vcetne vsech vazeb a podpory file uploadu**
 
 Pozadavky
 ------------
@@ -15,11 +15,14 @@ Instalace
 
 - config.neon
 
-Prvni argument je media url, druhy media directory
+Prvni argument je media url, druhy media directory. Toto nastaveni slouzi ke generovani spravnych url k souborum a ukladani do spravnych destinaci. Je take dobrym zvykem v konfiguraci web serveru pouzivat pro media url vlastni nastaveni, napriklad cachovani, apod.
 
 ```yaml
 services:
 	mediaStorage: Foxy\MediaStorage('/media', '/www/my_project/media')
+
+	# Priklad pouziti subdomeny
+	mediaStorage: Foxy\MediaStorage('http://media.mujprojekt.cz/', '/www/mujproject/media')
 ```
 
 - presenter
@@ -44,7 +47,7 @@ Pouziti
 - model
 - successUrl
 
-Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy postara.
+Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy postara. Jednoduche, ze?
 
 ```php
 class ProductForm extends Foxy\Form
@@ -56,10 +59,9 @@ class ProductForm extends Foxy\Form
 ```
 - fields
 - exclude
-- fieldsets
 
-Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete pouzit $exclude nebo definovat svuj vlastni seznam komponent do $fields.
-Pro vygenerovani fieldsetu musite definovat dvojrozmerne pole do $filedsets, kde prvni uroven je vzdy nazev fieldsetu (skupiny) a druha vycet komponent v nem.
+
+Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete jejich vycet zapsat do $exclude nebo definovat svuj vlastni seznam komponent do $fields. 
 
 ```php
 class ProductForm extends Foxy\Form
@@ -70,10 +72,23 @@ class ProductForm extends Foxy\Form
 
 		$exclude = array('name'),
 
-		# nebo (je to same jako $exlude vyse)
+		# nebo
 		$fields = array('id', 'price', 'category');
+}
+```
 
-		# nebo uziti fieldsetu
+- fieldsets
+
+Pro vygenerovani fieldsetu musite definovat dvojrozmerne pole do $fieldsets, kde prvni uroven je vzdy nazev fieldsetu (skupiny) a druha vycet komponent v nem. Pokud je $fieldsets nenulovy, vzdy je nadrazeny $fields. Exclude je u fieldsetu ignorovane.
+
+
+```php
+class ProductForm extends Foxy\Form
+{
+	protected
+		$model = 'Product',
+		$successUrl = 'default',
+
 		$fieldsets = array(
 			'main' => array('id, name'),
 			'additional' => array('price', 'category')
@@ -87,22 +102,21 @@ class ProductForm extends Foxy\Form
 	- FOXY_IS_INT and FOXY_IS_FLOAT - kontroluje validitu numerickych vstupu
 	- FOXY_MAX_LENGTH - nastavuje maximalni delku pro textove vstupy
 	- FOXY_HTML5_SUPPORT - pridava html5 atributy
-	- FOXY_UNIQUE - kontroluje unique bunky v save fazi
-	- FOXY_VALIDATE_ALL - aplikuje vsechny uvedene validace
+	- FOXY_UNIQUE - kontroluje unique bunky ve fazi ukladani entity
+	- FOXY_VALIDATE_ALL - aplikuje vsechny podporovane validace
 
 ```php
 class ProductForm extends Foxy\Form
 {
 	protected
-		$validation = FOXY_MAX_LENGTH,
+		$validation = FOXY_MAX_LENGTH;
 }
 ```
 
 - validationMessages
-
 - getErrorMessage($field, $level)
 
-Validace a jejich chybove zpravy jsou velice flexibilni. Muzete jednoduse nastavit uroven validace, globalni validacni zpravy, ale i validacni zpravy pro konkretni komponenty.
+Validace a jejich chybove zpravy jsou velice flexibilni. Muzete jednoduse nastavit uroven validace aktualniho formulare, globalni validacni zpravy, ale i validacni zpravy pro konkretni komponenty.
 
 ```php
 class ProductForm extends Foxy\Form
@@ -132,9 +146,7 @@ class ProductForm extends Foxy\Form
 
 - getFkValues($field, $repository)
 
-- setFieldComponent($field)
-
-Jestlize potrebujete pouzit vlastni filtr pro select box data nebo definovat vlastni sadu pravidel pro nejake komponenty, lze pouzit getFkValues a setFieldComponent metody.
+Jestlize potrebujete pouzit vlastni filtr pro select box data, staci definovat metodu getFkValues s nejakym prepinacem dle nazvu filedu - komponenty, ktera vrati pole entit.
 
 ```php
 class ProductForm extends Foxy\Form
@@ -145,7 +157,16 @@ class ProductForm extends Foxy\Form
 			return $repository->getProductCategories();
 		}
     }
+}
+```
 
+- setFieldComponent($field)
+
+Pro definici vlastni sady pravidel pro nejake komponenty zase slouzi setFieldComponent metoda.
+
+```php
+class ProductForm extends Foxy\Form
+{
     public function setFieldComponent($field)
     {
 		if ($field == 'name') {
@@ -168,7 +189,7 @@ class ProductForm extends Foxy\Form
 	protected function getUploadTo($name)
 	{
 		if ($name == 'logo') {
-			return 'loga/%y-%m-%d/';
+			return 'logs/%y-%m-%d/';
 		}
 		if ($name == 'image') {
 			return FALSE;
