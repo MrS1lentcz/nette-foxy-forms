@@ -1,27 +1,47 @@
 nette-foxy-forms
 ================
 
-**Generate nette form components using Doctrine2 entity annotations with validations and loading/saving model**
+**Z anotaci Doctrine2 entit generuje formularove komponenty s validacemi, loadovanim a ukladanim samotnych entit vcetne vsech vazeb a podporou file uploadu**
 
-Requirements
+Pozadavky
 ------------
 
-- Nette 2.0 and higher
-- Doctrine2 and higher
-- __toString Magic methods in every entity, which is used in select box
+- Nette 2.0 nebo vyssi
+- Doctrine2 neby vyssi
+- __toString Magickou methodu pro kazdou entitu, ktera je pouzita v select boxu
 
-Installation
+Instalace
 ------------
 
-TODO - MediaStorage
+- config.neon
+```yaml
+services:
+	mediaStorage: Foxy\MediaStorage('/media', '/www/my_project/media')
+```
 
-Using
+- presenter
+```php
+	protected $mediaStorage;
+
+    public function injectMediaStorage(\Foxy\MediaStorage $mediaStorage)
+    {
+        if ($this->mediaStorage)
+        {
+            throw new \Nette\InvalidStateException('Foxy\MediaStorage has already been set');
+        }
+
+        $this->mediaStorage = $mediaStorage;
+    }
+```
+
+Pouziti
 ------------
 
 - model
 - successUrl
 
-You can set doctrine entity name as model and success-url only, which it will be redirect page after save model. Now you can enjoy the convenience foxy forms.
+Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy postara.
+
 ```php
 class ProductForm extends Foxy\Form
 {
@@ -34,8 +54,9 @@ class ProductForm extends Foxy\Form
 - exclude
 - fieldsets
 
-If you wish to remove from the form of one or more components, you can use the $exclude, or define your own list of components in the order using the $fields.
-For adding fields to fieldsets you have to overload $fieldsets property.
+Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete pouzit $exclude nebo definovat svuj vlastni seznam komponent do $fields.
+Pro vygenerovani fieldsetu musite definovat dvojrozmerne pole do $filedsets, kde prvni uroven je vzdy nazev fieldsetu (skupiny) a druha vycet komponent v nem.
+
 ```php
 class ProductForm extends Foxy\Form
 {
@@ -45,10 +66,10 @@ class ProductForm extends Foxy\Form
 
 		$exclude = array('name'),
 
-		# OR (it's the same as $exclude above)
+		# nebo (je to same jako $exlude vyse)
 		$fields = array('id', 'price', 'category');
 
-		# OR use fieldsets
+		# nebo uziti fieldsetu
 		$fieldsets = array(
 			'main' => array('id, name'),
 			'additional' => array('price', 'category')
@@ -57,20 +78,27 @@ class ProductForm extends Foxy\Form
 ```
 
 - validation
-	- FOXY_NO_VALIDATION - generate form components only without any validations
-	- FOXY_NULLABLE - set components as required if fields are not nullable
-	- FOXY_IS_INT and FOXY_IS_FLOAT - checks numeric validity of input
-	- FOXY_MAX_LENGTH - max length for string fields
-	- FOXY_HTML5_SUPPORT - add html5 attributes
-	- FOXY_UNIQUE - unique checks in save model phase
-	- FOXY_VALIDATE_ALL - apply all avaliable validations
+	- FOXY_NO_VALIDATION - generovani komponent bez validaci
+	- FOXY_NULLABLE - nastavi komponenty jako povinne, pokud nejsou nullable
+	- FOXY_IS_INT and FOXY_IS_FLOAT - kontroluje validitu numerickych vstupu
+	- FOXY_MAX_LENGTH - nastavuje maximalni delku pro textove vstupy
+	- FOXY_HTML5_SUPPORT - pridava html5 atributy
+	- FOXY_UNIQUE - kontroluje unique bunky v save fazi
+	- FOXY_VALIDATE_ALL - aplikuje vsechny uvedene validace
+
+```php
+class ProductForm extends Foxy\Form
+{
+	protected
+		$validation = FOXY_MAX_LENGTH,
+}
+```
 
 - validationMessages
 
-- getMessage($field, $level)
+- getErrorMessage($field, $level)
 
-
-Validation and their messages are so flexible. You can customize validation level, global error messages and error messages for specific fields very easily.
+Validace a jejich chybove zpravy jsou velice flexibilni. Muzete jednoduse nastavit uroven validace, globalni validacni zpravy, ale i validacni zpravy pro konkretni komponenty.
 
 ```php
 class ProductForm extends Foxy\Form
@@ -80,19 +108,19 @@ class ProductForm extends Foxy\Form
         FOXY_IS_INT     => 'Has to be an integer',
         FOXY_IS_FLOAT   => 'has to be a float',
         FOXY_MAX_LENGTH => 'Text is too long',
-        FOXY_UNIQUE     => 'My custom message for unique error', # My custom unique error message
+        FOXY_UNIQUE     => 'Moje zprava pro unique chybu',
     );
 
     public function __construct(\Doctrine\ORM\EntityManager $em)
     {
         parent::__construct($em);
-		$this->validationMessages[FOXY_NULLABLE] = 'Must fill this field, boy!';
+		$this->validationMessages[FOXY_NULLABLE] = 'Tohle musis vyplnit!';
 	}
 
     public function getErrorMessage($field, $level)
     {
 		if ($field == 'name' && $level == FOXY_NULLABLE) {
-			return 'Name is required';
+			return 'Jmeno je povinna polozka';
 		}
     }
 }
@@ -102,7 +130,8 @@ class ProductForm extends Foxy\Form
 
 - setFieldComponent($field)
 
-If you need custom filter for select box data or form component builder for specific fields
+Jestlize potrebujete pouzit vlastni filtr pro select box data nebo definovat vlastni sadu pravidel pro nejake komponenty, lzes pouzit getFkValues a setFieldComponent metody.
+
 ```php
 class ProductForm extends Foxy\Form
 {
@@ -116,7 +145,7 @@ class ProductForm extends Foxy\Form
     public function setFieldComponent($field)
     {
 		if ($field == 'name') {
-			$this->addTextarea('name', 'Very long name');
+			$this->addTextarea('name', 'Super specialni jmeno');
 		}
     }
 }
