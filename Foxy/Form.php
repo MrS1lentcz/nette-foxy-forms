@@ -2,7 +2,7 @@
 
 # @package nette-foxy-forms
 #
-# Generate nette form component using Doctrine entity annotations
+# Generate nette form components using Doctrine entity annotations
 #
 # @author Jiri Dubansky <jiri@dubansky.cz>
 
@@ -56,6 +56,10 @@ abstract class Form extends \Nette\Application\UI\Form {
     # Redirect destination after save model action
     protected $successUrl = '';
 
+    # @string
+    # Relative upload directory with date masks supporting
+    protected $uploadTo = 'images/%y-%m-%d/';
+
     # @array
     protected $validationMessages = array(
         FOXY_NULLABLE   => 'Item is required',
@@ -97,11 +101,13 @@ abstract class Form extends \Nette\Application\UI\Form {
     {
         parent::__construct();
         $this->em = $em;
+
         if (is_object($this->model)) {
             $this->instance = $this->model;
         } else {
             $this->instance = new $this->model;
         }
+
         $this->onSuccess[] = array($this, 'saveModel');
     }
 
@@ -114,6 +120,7 @@ abstract class Form extends \Nette\Application\UI\Form {
 
         if ($presenter instanceof \Nette\Application\UI\Presenter) {
             $this->properties = $this->getCompletedProperties();
+
             foreach($this->properties as $property) {
                 $this->createFieldComponent($property);
             }
@@ -266,11 +273,15 @@ abstract class Form extends \Nette\Application\UI\Form {
         } elseif (array_key_exists($field, $assocMappings)) {
             $properties[$field] = $assocMappings[$field];
             $properties[$field]['nullable'] = TRUE;
+            $properties[$field]['unique'] = FALSE;
+
             if (isset($properties[$field]['joinColumns'])) {
                 foreach($properties[$field]['joinColumns'] as $col) {
                     if (! $col['nullable']) {
                         $properties[$field]['nullable'] = FALSE;
-                        break;
+                    }
+                    if ($col['unique']) {
+                        $properties[$field]['unique'] = TRUE;
                     }
                 }
             }
@@ -316,7 +327,6 @@ abstract class Form extends \Nette\Application\UI\Form {
             $properties[$identifier]['identifier'] = TRUE;
         }
 
-        #dump($properties);exit;
         return $properties;
     }
 
@@ -330,6 +340,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         if ($value instanceof \Doctrine\Common\Collections\ArrayCollection) {
             $data = array();
             $meta = $this->em->getClassMetadata($property['targetEntity']);
+
             foreach($value as $entity) {
                 $rp = $meta->getReflectionClass()->getProperty(
                     $this->getIdentifier($entity)
@@ -469,29 +480,34 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # Check is unique value is already unique
     #
-    # @param array $property
+    # @param array $field
     # @param mixed $newValue
     # @return bool
-    private function uniqueCheck($property, $newValue)
+    private function uniqueCheck($field, $newValue)
     {
-        if (isset($property['unique'])) {
-            if($property['unique']) {
+        if (! array_key_exists($field, $this->properties)) {
+            return TRUE;
+        }
+        $property = $this->properties[$field];
+
+        if ($property['unique']) {
+            if (isset($property['joinColumns'])) {
+                foreach($property['joinColumns'] as $col) {
+                    if ($col['unique']) {
+                        $entity = $this->em->getRepository($property['targetEntity'])->findOneBy(
+                            array($col['name'] => $newValue)
+                        );
+                        if ($entity) {
+                            return FALSE;
+                        }
+                    }
+                }
+            } else {
                 $entity = $this->em->getRepository($this->model)->findOneBy(
                     array($property['fieldName'] => $newValue)
                 );
                 if ($entity) {
                     return FALSE;
-                }
-            }
-        } elseif(isset($property['joinColumns'])) {
-            foreach($property['joinColumns'] as $col) {
-                if ($col['unique']) {
-                    $entity = $this->em->getRepository($property['targetEntity'])->findOneBy(
-                        array($col['name'] => $newValue)
-                    );
-                    if ($entity) {
-                        return FALSE;
-                    }
                 }
             }
         }
@@ -525,6 +541,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function saveModel($form, $commit = TRUE)
     {
         $values = $form->getValues();
+        $mediaStorage = $this->presenter->getByType('Foxy\MediaStorage');
 
         # Is update
         $identifier = $this->getIdentifier($this->model);
@@ -536,15 +553,29 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         foreach($values as $name => $val) {
+
+            # Upload file and rewrite $val value
+            if ($val instanceof \Nette\Http\FileUpload) {
+                $dest = NULL;
+                if (method_exists($this, 'getUploadTo')) {
+                    $dest = $this->getUploadTo($name);
+                }
+                if (is_null($dest)) {
+                    $dest = $this->uploadTo;
+                }
+                $mediaStorage->saveFile($val, $dest);
+                $val = $val->getTmpName();
+            }
+
             # Unique check
-            if (! $this->uniqueCheck($field, $val)) {
+            if ($this->canValidate(FOXY_UNIQUE) && ! $this->uniqueCheck($name, $val)) {
                 $this->addError(
                     $this->getValidationMessage($name,FOXY_UNIQUE)
                 );
                 return;
             }
 
-            $this->setPropertyValue($property, $val);
+            $this->setPropertyValue($name, $val);
         }
 
         $this->em->persist($this->instance);

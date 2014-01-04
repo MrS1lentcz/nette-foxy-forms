@@ -2,7 +2,7 @@
 
 # @package nette-foxy-forms
 #
-# Generate nette forms using Doctrine entity annotations
+# Generate nette form components using Doctrine entity annotations
 #
 # @author Jiri Dubansky <jiri@dubansky.cz>
 
@@ -229,7 +229,7 @@ class FormComponents
     # Creates selectbox component
     #
     # @param \Foxy\Form & $form
-    # @param array $property
+    # @param array $propertynes
     # @param array $data
     public static function createSelectBox(Form & $form,
                                          array $property,
@@ -244,6 +244,7 @@ class FormComponents
             );
         }
 
+        $form[$field]->setTranslator(NULL);
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
@@ -265,6 +266,7 @@ class FormComponents
             );
         }
 
+        $form[$field]->setTranslator(NULL);
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 }
