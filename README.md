@@ -47,7 +47,7 @@ Pouziti
 - model
 - successUrl
 
-Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy postara. Jednoduche, ze?
+Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy form postara. Jednoduche, ze?
 
 ```php
 class ProductForm extends Foxy\Form
@@ -216,5 +216,15 @@ class ProductForm extends Foxy\Form
 
 
 
-
-
+TODO 
+----
+	- FOXY_UPLOAD_TYPE 
+	- FOXY_EMAIL
+	- upload
+	- image
+	- password
+	- email
+	- $submitButton
+	- $successInsert
+	- $successUpdate
+	- $errorMessage

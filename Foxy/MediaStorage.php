@@ -41,10 +41,19 @@ class MediaStorage {
 	#
 	# @param \Nette\Http\FileUpload & $file
 	# @param string $dest
+	# @param bool $unlink
 	# @return \Nette\Http\FileUpload
-	public function saveFile(\Nette\Http\FileUpload & $file, $dest)
+	public function saveFile(\Nette\Http\FileUpload & $file, & $dest)
 	{
+		while ($this->fileExists($file, $dest)) {
+			$parts = explode('/',$dest);
+			$fileName = array_pop($parts);
+			$fileParts = explode('.', $fileName);
+			$dest = implode('/', $parts) . '/'
+					. sha1($fileName . microtime()) . '.' . $fileParts[1];
+		}
 		$absDirPath = $this->mediaDir . strftime($dest);
+
 		$file->move($absDirPath);
 	}
 
@@ -56,6 +65,6 @@ class MediaStorage {
 	public function fileExists(\Nette\Http\FileUpload & $file, $dest)
 	{
 		$absDirPath = $this->mediaDir . strftime($dest);
-		return file_exists($absDirPath . $file->getTmpName());
+		return file_exists($absDirPath);
 	}
 }

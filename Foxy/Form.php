@@ -6,6 +6,7 @@
 #
 # @author Jiri Dubansky <jiri@dubansky.cz>
 
+
 namespace Foxy;
 
 
@@ -16,7 +17,9 @@ define('FOXY_IS_FLOAT', 8);
 define('FOXY_MAX_LENGTH', 16);
 define('FOXY_HTML5_SUPPORT', 32);
 define('FOXY_UNIQUE', 64);
-define('FOXY_VALIDATE_ALL', 126);
+define('FOXY_UPLOAD_TYPE', 128);
+define('FOXY_EMAIL', 256);
+define('FOXY_VALIDATE_ALL', 510);
 define('FOXY_ONE_TO_ONE', 1);
 define('FOXY_MANY_TO_ONE', 2);
 define('FOXY_ONE_TO_MANY', 4);
@@ -58,7 +61,24 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @string
     # Relative upload directory with date masks supporting
-    protected $uploadTo = 'images/%y-%m-%d/';
+    protected $uploadTo = 'images/%Y-%m-%d/';
+
+	# @string
+	# Add submit button automatically if is not NULL
+	protected $submitButton = 'send';
+
+	# @string
+	# Flash message post insert
+	protected $successInsert = 'Model was created successfully';
+
+	# @string
+	# Flash message post update
+	protected $successUpdate= 'Model was edited successfully';
+
+	# @string
+	# Flash message post error
+	protected $errorMessage = 'Model was not saved';
+
 
     # @array
     protected $validationMessages = array(
@@ -67,6 +87,8 @@ abstract class Form extends \Nette\Application\UI\Form {
         FOXY_IS_FLOAT   => 'has to be a float',
         FOXY_MAX_LENGTH => 'Text is too long',
         FOXY_UNIQUE     => 'Entered value is already used',
+		FOXY_UPLOAD_TYPE=> 'Thubnail must be JPEG, PNG or GIF',
+		FOXY_EMAIL		=> 'Email is not valid',
     );
 
     # @array
@@ -85,6 +107,11 @@ abstract class Form extends \Nette\Application\UI\Form {
         FOXY_MANY_TO_ONE    => 'Foxy\FormComponents::createSelectBox',
         FOXY_ONE_TO_MANY    => 'Foxy\FormComponents::createMultipleSelectBox',
         FOXY_MANY_TO_MANY   => 'Foxy\FormComponents::createMultipleSelectBox',
+		# Additional widgets
+		'upload'			=> 'Foxy\FormComponents::createUpload',
+		'image'				=> 'Foxy\FormComponents::createImage',
+		'password'			=> 'Foxy\FormComponents::createPassword',
+		'email'				=> 'Foxy\FormComponents::createEmail',
     );
 
     # Properties with customized metadata
@@ -124,6 +151,10 @@ abstract class Form extends \Nette\Application\UI\Form {
             foreach($this->properties as $property) {
                 $this->createFieldComponent($property);
             }
+
+			if ($this->submitButton) {
+				$this->addSubmit($this->submitButton, $this->submitButton);
+			}
         }
     }
 
@@ -205,8 +236,13 @@ abstract class Form extends \Nette\Application\UI\Form {
         );
 
         # Relation from second side is ignored
-        if ($property['type'] == FOXY_ONE_TO_ONE
-            && count($property['joinColumns']) === 0) {
+        if (($property['type'] == FOXY_ONE_TO_ONE
+				||$property['type'] == FOXY_ONE_TO_MANY
+			)
+            && (! isset($property['joinColumns'])
+				|| count($property['joinColumns']) == 0
+			)) {
+			unset($this->properties[$property['fieldName']]);
             return;
         }
 
@@ -246,7 +282,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         call_user_func_array(
-            $this->componentsCallbackMap[$property['type']],
+            $this->componentsCallbackMap[$property['widget']],
             $params
         );
     }
@@ -268,19 +304,22 @@ abstract class Form extends \Nette\Application\UI\Form {
         $key = array_search($field, $fields);
         if ($key !== FALSE) {
             $properties[$field] = $metadata->getFieldMapping($field);
+			$properties[$field]['widget'] = $properties[$field]['type'];
             unset($fields[$key]);
+
         # Relation
         } elseif (array_key_exists($field, $assocMappings)) {
             $properties[$field] = $assocMappings[$field];
+			$properties[$field]['widget'] = $properties[$field]['type'];
             $properties[$field]['nullable'] = TRUE;
             $properties[$field]['unique'] = FALSE;
 
             if (isset($properties[$field]['joinColumns'])) {
                 foreach($properties[$field]['joinColumns'] as $col) {
-                    if (! $col['nullable']) {
+                    if (! isset($col['nullable']) || $col['nullable'] == FALSE) {
                         $properties[$field]['nullable'] = FALSE;
                     }
-                    if ($col['unique']) {
+                    if (isset($col['unique']) && $col['unique']) {
                         $properties[$field]['unique'] = TRUE;
                     }
                 }
@@ -288,6 +327,12 @@ abstract class Form extends \Nette\Application\UI\Form {
         } else {
             return;
         }
+
+		# Checks for custom widget
+		if (isset($properties[$field]['options'])
+			&& array_key_exists('widget', $properties[$field]['options'])) {
+			$properties[$field]['widget'] = $properties[$field]['options']['widget'];
+		}
 
         $properties[$field]['defaultValue'] = $rp->getValue($this->instance);
     }
@@ -327,6 +372,9 @@ abstract class Form extends \Nette\Application\UI\Form {
             $properties[$identifier]['identifier'] = TRUE;
         }
 
+		#if ($this->instance instanceof \Product) {
+		#	dump($properties);exit;
+		#}
         return $properties;
     }
 
@@ -336,14 +384,31 @@ abstract class Form extends \Nette\Application\UI\Form {
     # @return mixed
     public function getFormValue($property)
     {
-        $value = $property['defaultValue'];
-        if ($value instanceof \Doctrine\Common\Collections\ArrayCollection) {
+		# Password value cannot be loaded
+		if ($property['widget'] == 'password') {
+			return NULL;
+		}
+
+        $value = NULL;
+		$getter = ucfirst($property['fieldName']);
+		if (method_exists($this->instance, $getter)) {
+			$value = $this->instance->$getter();
+		} else {
+			$rc = $this->em->getClassMetadata($this->model)->getReflectionClass();
+			$rp = $rc->getProperty($property['fieldName']);
+			$rp->setAccessible(TRUE);
+			$value = $rp->getValue($this->instance);
+		}
+
+        if ($value instanceof \Doctrine\Common\Collections\ArrayCollection
+			|| $value instanceof \Doctrine\ORM\PersistentCollection) {
+
             $data = array();
             $meta = $this->em->getClassMetadata($property['targetEntity']);
 
             foreach($value as $entity) {
                 $rp = $meta->getReflectionClass()->getProperty(
-                    $this->getIdentifier($entity)
+                    $this->getIdentifier(get_class($entity))
                 );
                 $rp->setAccessible(TRUE);
                 $data[] = $rp->getValue($entity);
@@ -382,7 +447,7 @@ abstract class Form extends \Nette\Application\UI\Form {
 
         $property = $this->properties[$field];
         $setter = 'set'.ucfirst($field);
-        $getter = 'get'.ucfirst($name);
+        $getter = 'get'.ucfirst($field);
         $inverseProp = NULL;
         $inverseGetter = NULL;
         $meta = $this->em->getClassMetadata($this->model);
@@ -391,12 +456,11 @@ abstract class Form extends \Nette\Application\UI\Form {
 
         # Rewrite $value on One to n
         if ($property['type'] == FOXY_ONE_TO_ONE
-            || $property['type'] == FOXY_ONE_TO_MANY
+            || $property['type'] == FOXY_MANY_TO_ONE
         ) {
-            $value = $this->em->find($property['targetValue'], $value);
+            $value = $this->em->find($property['targetEntity'], $value);
         }
 
-        # Clear all data from many to many
         if ($property['type'] == FOXY_MANY_TO_MANY) {
             $arrayCol = NULL;
             if (method_exists($this->instance, $getter)) {
@@ -404,62 +468,42 @@ abstract class Form extends \Nette\Application\UI\Form {
             } else {
                 $arrayCol = $rp->getValue($this->instance);
             }
+			$arrayCol->clear();
 
             $inverseProp = isset($property['inversedBy'])
                 ? $property['inversedBy']
                     : $property['mappedBy'];
             $inverseGetter = 'get'.ucfirst($inverseProp);
 
-            foreach($arrayCol as $entity) {
-                if (method_exists($entity,$inverseGetter)) {
-                    $e->$inverseGetter()->removeElement(
-                        $this->instance
-                    );
-                    $this->em->persist($entity);
-                } else {
-                    $rpr = $meta->getReflectionClass()->getProperty($inverseProp);
-                    $rpr->setAccessible(TRUE);
-                    $rpr->getValue($entity)->removeElement(
-                        $this->instance
-                    );
-                    $this->em->persist($entity);
-                }
-            }
-        }
-
-        # Add entities to relation
-        if ($property['type'] == FOXY_MANY_TO_ONE
-            || $property['type'] == FOXY_MANY_TO_MANY
-        ) {
+			# Add entities to relation
             foreach($value as $id) {
-                $entity = $this->em->find($property['targetValue'], $id);
-
-                if (method_exists($this->instance,$getter)) {
-                    $this->instances->$getter()->add($entity);
-                } else {
-                    $rp->getValue($this->instance)->add($entity);
-                }
+                $entity = $this->em->find($property['targetEntity'], $id);
+                $arrayCol->add($entity);
 
                 # Add inverse entities on many to many
-                if($property['type'] == FOXY_MANY_TO_MANY){
-                    if (method_exists($entity,$inverseGetter)) {
-                        $entity>$inverseGetter()->add($this->instance);
-                        $this->em->persist($entity);
-                    } else {
-                        $rpr = $meta->getReflectionClass()->getProperty($inverseProp);
-                        $rpr->setAccessible(TRUE);
-                        $rpr->getValue($entity)->add($this->instance);
-                        $this->em->persist($entity);
-                    }
-                }
+				if (method_exists($entity,$inverseGetter)) {
+					$entity->$inverseGetter()->add($this->instance);
+					$this->em->persist($entity);
+				} else {
+					$rpr = $meta->getReflectionClass()->getProperty($inverseProp);
+					$rpr->setAccessible(TRUE);
+					$rpr->getValue($entity)->add($this->instance);
+					$this->em->persist($entity);
+				}
+				$this->em->persist($this->instance);
             }
-            return;
+
+			$value = $arrayCol;
         }
 
+		if (in_array($property['type'], array('datetime','date','time'))) {
+			$value = new \Datetime($value);
+		}
+
         if (method_exists($this->instance,$setter)) {
-            $this->instance->$setter($entity);
+            $this->instance->$setter($value);
         } else {
-            $rp->setValue($this->instance, $entity);
+            $rp->setValue($this->instance, $value);
         }
     }
 
@@ -471,7 +515,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     {
         $this->instance = $entity;
         foreach($this->properties as $property) {
-            $this[$property['fieldName']]->setValue(
+            $this[$property['fieldName']]->setDefaultValue(
                 $this->getFormValue($property)
             );
         }
@@ -541,7 +585,8 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function saveModel($form, $commit = TRUE)
     {
         $values = $form->getValues();
-        $mediaStorage = $this->presenter->getByType('Foxy\MediaStorage');
+        $mediaStorage = $this->presenter->context->getByType('Foxy\MediaStorage');
+		$status = 'successInsert';
 
         # Is update
         $identifier = $this->getIdentifier($this->model);
@@ -550,12 +595,19 @@ abstract class Form extends \Nette\Application\UI\Form {
             && $values[$identifier]) {
 
             $this->instance = $this->em->find($this->model, $values[$identifier]);
+			$status = 'successUpdate';
         }
 
         foreach($values as $name => $val) {
 
+			# Prevent rewriting password of NULL value
+			if ($this->properties[$name]['widget'] == 'password'
+				&& strlen($val) == 0) {
+				continue;
+			}
+
             # Upload file and rewrite $val value
-            if ($val instanceof \Nette\Http\FileUpload) {
+            if ($val instanceof \Nette\Http\FileUpload && $val->getSize() > 0) {
                 $dest = NULL;
                 if (method_exists($this, 'getUploadTo')) {
                     $dest = $this->getUploadTo($name);
@@ -563,8 +615,17 @@ abstract class Form extends \Nette\Application\UI\Form {
                 if (is_null($dest)) {
                     $dest = $this->uploadTo;
                 }
+				$uploadedName = NULL;
+				if (method_exists($this, 'getUploadedName')) {
+					$uploadedName = $this->getUploadedName($name, $val);
+				}
+                if (is_null($uploadedName)) {
+                    $uploadedName = $val->getName();
+                }
+
+				$dest .= $uploadedName;
                 $mediaStorage->saveFile($val, $dest);
-                $val = $val->getTmpName();
+                $val = $dest;
             }
 
             # Unique check
@@ -581,11 +642,20 @@ abstract class Form extends \Nette\Application\UI\Form {
         $this->em->persist($this->instance);
 
         if ($commit) {
-            $this->em->flush();
+			try {
+				$this->em->flush();
+				if ($this->{$status}) {
+					$this->presenter->flashMessage($this->{$status});
+				}
+			} catch (\Exception $e) {
+				if ($this->errorMessage) {
+					$this->presenter->flashMessage($this->errorMessage, 'error');
+				}
+			}
         }
 
         if ($this->successUrl) {
-            $this->presenter($this->successUrl);
+            $this->presenter->redirect($this->successUrl);
         }
     }
 }
