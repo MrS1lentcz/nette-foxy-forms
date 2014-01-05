@@ -6,7 +6,7 @@
         "license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
         "authors": [
                 {
-                        "name": "Jiri Dubansky",
+                        "name": "Jiri Dubansky"
                 }
         ],
         "support": {
@@ -15,7 +15,7 @@
         },
         "require": {
 				"nette/nette": ">= 2.0.7",
-				"doctrine/orm": "2.*",
+				"doctrine/orm": "2.*"
         },
         "autoload": {
                 "psr-0": {
