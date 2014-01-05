@@ -1,0 +1,25 @@
+{
+        "name": "nette-foxy-forms",
+        "type": "library",
+        "description": "Easy forms for Nette Framework",
+        "keywords": ["nette", "form", "doctrine"],
+        "license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+        "authors": [
+                {
+                        "name": "Jiri Dubansky",
+                }
+        ],
+        "support": {
+                "email": "jiri@dubansky.cz",
+                "issues": "https://github.com/MrS1lentcz/nette-foxy-forms/issues"
+        },
+        "require": {
+				"nette/nette": ">= 2.0.7",
+				"doctrine/orm": "2.*",
+        },
+        "autoload": {
+                "psr-0": {
+                        "nette-foxy-forms": "Foxy/"
+                }
+        }
+}

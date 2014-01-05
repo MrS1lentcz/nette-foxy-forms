@@ -1,0 +1,13 @@
+tests/log/*
+tests/temp/*
+tests/libs/*
+.idea
+*.swp
+composer.lock
+
+.DS_Store
+!.gitignore
+!.htaccess
+!web.config
+tests/app/config/config.local.neon
+tests/www/media/*

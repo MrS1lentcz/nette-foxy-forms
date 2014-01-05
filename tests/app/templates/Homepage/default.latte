@@ -1,0 +1,34 @@
+{block content}
+
+	<div>
+		<h3>Sprava kategorii</h3>
+		{foreach $categories as $c}
+			<a href="{plink detail, model => 'Category', id => $c->getId()}">
+				Upravit {$c}<br />
+			</a>
+		{/foreach}
+
+		{control categoryForm}
+
+
+		<h3>Sprava produktu</h3>
+		{foreach $products as $p}
+			<a href="{plink detail, model => 'Product', id => $p->getId()}">
+				Upravit {$p}<br />
+			</a>
+		{/foreach}
+
+		{control productForm}
+
+
+		<h3>Sprava parametru</h3>
+		{foreach $parameters as $p}
+			<a href="{plink detail, model => 'Parameter', id => $p->getId()}">
+				Upravit {$p}<br />
+			</a>
+		{/foreach}
+
+		{control parameterForm}
+	</div>
+
+{/block}

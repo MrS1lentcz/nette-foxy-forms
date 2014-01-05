@@ -1,0 +1,25 @@
+{block content}
+
+	<div>
+		{if $entity instanceof Category}
+			<h3>Detail kategorie {$entity}</h3>
+
+			{control categoryForm}
+		{/if}
+
+
+		{if $entity instanceof Product}
+			<h3>Detail produktu {$entity}</h3>
+
+			{control productForm}
+		{/if}
+
+
+		{if $entity instanceof Parameter}
+			<h3>Detail parametru {$entity}</h3>
+
+			{control parameterForm}
+		{/if}
+	</div>
+
+{/block}

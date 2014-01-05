@@ -1,0 +1,55 @@
+#
+# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
+# http://nette.org/security-warning
+#
+common:
+    php:
+        date.timezone: Europe/Prague
+        # zlib.output_compression: yes
+
+    nette:
+        application:
+            errorPresenter: Error
+
+        session:
+            expiration: 14 days
+
+        forms:
+            messages:
+                FILLED: 'Vyplňte tuto povinou položku.'
+
+    services:
+        routerFactory: RouterFactory
+        router: @routerFactory::createRouter
+        doctrineConfiguration:
+            class: Doctrine\ORM\Configuration
+            factory: \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration
+            arguments:
+                paths:
+                    - %appDir%/model
+                isDevMode: true
+            setup:
+                - setProxyDir( %appDir%/proxies )
+        doctrine:
+            class: \Doctrine\ORM\EntityManager
+            factory: \Doctrine\ORM\EntityManager::create
+            arguments:
+                conn:
+                    #driverClass: PDODblibModule\Doctrine\DBAL\Driver\PDODblib\Driver
+                    dbname: %database.dbname%
+                    user: %database.user%
+                    password: %database.password%
+                    host: %database.host%
+                    driver: %database.driver%
+                    driverOptions:
+                        1002: 'SET NAMES utf8'
+                config: @doctrineConfiguration
+
+        mediaStorage: Foxy\MediaStorage('\media', '/home/s1lent/Desktop/www-projects/foxy-tests/www/media/')
+
+
+production < common:
+
+development < common:

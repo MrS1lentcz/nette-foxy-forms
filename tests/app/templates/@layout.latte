@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Nette foxy forms | testing</title>
+</head>
+<body>
+
+    <div>
+
+        <div n:foreach="$flashes as $flash" class="alert alert-{if $flash->type=='error'}danger{else}{$flash->type}{/if}">{$flash->message}</div>
+
+        {include #content}
+
+    </div>
+
+</body>
+</html>

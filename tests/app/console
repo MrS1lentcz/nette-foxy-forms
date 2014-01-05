@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../env.php';
+
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
+$helperSet = null;
+$container = require __DIR__ . '/bootstrap.php';
+
+
+
+// Create a simple "default" Doctrine ORM configuration for Annotations
+$isDevMode = true;
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/model"), $isDevMode);
+
+// obtaining the entity manager
+$em = EntityManager::create(
+    $container->parameters['database'],
+    $config
+);
+
+$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection()),
+    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
+));
+
+foreach ($GLOBALS as $helperSetCandidate) {
+    if ($helperSetCandidate instanceof \Symfony\Component\Console\Helper\HelperSet) {
+        $helperSet = $helperSetCandidate;
+        break;
+    }
+}
+
+$helperSet = ($helperSet) ?: new \Symfony\Component\Console\Helper\HelperSet();
+
+\Doctrine\ORM\Tools\Console\ConsoleRunner::run($helperSet);
