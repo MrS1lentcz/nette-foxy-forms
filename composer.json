@@ -16,10 +16,5 @@
         "require": {
 				"nette/nette": ">= 2.0.7",
 				"doctrine/orm": "2.*"
-        },
-        "autoload": {
-                "psr-0": {
-                        "nette-foxy-forms": "Foxy/"
-                }
         }
 }
