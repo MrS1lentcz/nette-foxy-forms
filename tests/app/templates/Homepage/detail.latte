@@ -20,6 +20,12 @@
 
 			{control parameterForm}
 		{/if}
+
+		{if $entity instanceof User}
+			<h3>Detail uzivatele {$entity}</h3>
+
+			{control userForm}
+		{/if}
 	</div>
 
 {/block}

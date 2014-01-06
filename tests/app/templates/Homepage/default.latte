@@ -1,34 +1,73 @@
 {block content}
 
 	<div>
-		<h3>Sprava kategorii</h3>
-		{foreach $categories as $c}
-			<a href="{plink detail, model => 'Category', id => $c->getId()}">
-				Upravit {$c}<br />
-			</a>
-		{/foreach}
+		<div style="float:left; width:300px;">
+			<h3>Nova kategorie</h3>
 
-		{control categoryForm}
+			{control categoryForm}
+		</div>
 
+		<div style="float:left; width:300px;">
+			<h3>Novy produkt</h3>
 
-		<h3>Sprava produktu</h3>
-		{foreach $products as $p}
-			<a href="{plink detail, model => 'Product', id => $p->getId()}">
-				Upravit {$p}<br />
-			</a>
-		{/foreach}
+			{control productForm}
+		</div>
 
-		{control productForm}
+		<div style="float:left; width:300px;">
+			<h3>Novy parametr</h3>
 
+			{control parameterForm}
+		</div>
 
-		<h3>Sprava parametru</h3>
-		{foreach $parameters as $p}
-			<a href="{plink detail, model => 'Parameter', id => $p->getId()}">
-				Upravit {$p}<br />
-			</a>
-		{/foreach}
+		<div style="float:left; width:300px;">
+			<h3>Novy uzivatel</h3>
 
-		{control parameterForm}
+			{control userForm}
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+	<div>
+		<div style="float:left; width:300px;">
+			<h3>Seznam kategorii</h3>
+
+			{foreach $categories as $c}
+				<a href="{plink detail, model => 'Category', id => $c->getId()}">
+					Upravit {$c}<br />
+				</a>
+			{/foreach}
+		</div>
+
+		<div style="float:left; width:300px;">
+			<h3>Seznam produktu</h3>
+
+			{foreach $products as $p}
+				<a href="{plink detail, model => 'Product', id => $p->getId()}">
+					Upravit {$p}<br />
+				</a>
+			{/foreach}
+		</div>
+
+		<div style="float:left; width:300px;">
+			<h3>Seznam parametru</h3>
+
+			{foreach $parameters as $p}
+				<a href="{plink detail, model => 'Parameter', id => $p->getId()}">
+					Upravit {$p}<br />
+				</a>
+			{/foreach}
+		</div>
+
+		<div style="float:left; width:300px;">
+			<h3>Seznam uzivatelu</h3>
+
+			{foreach $users as $p}
+				<a href="{plink detail, model => 'User', id => $p->getId()}">
+					Upravit {$p}<br />
+				</a>
+			{/foreach}
+		</div>
 	</div>
 
 {/block}

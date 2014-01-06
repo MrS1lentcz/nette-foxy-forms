@@ -30,6 +30,7 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
         $this->template->categories = $this->em->getRepository('Category')->findAll();
         $this->template->products = $this->em->getRepository('Product')->findAll();
         $this->template->parameters = $this->em->getRepository('Parameter')->findAll();
+        $this->template->users = $this->em->getRepository('User')->findAll();
     }
 
     public function actionDetail($model, $id)
@@ -52,5 +53,10 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     public function createComponentParameterForm()
     {
         return new ParameterForm($this->em);
+    }
+
+    public function createComponentUserForm()
+    {
+        return new UserForm($this->em);
     }
 }

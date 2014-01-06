@@ -35,10 +35,10 @@ class Category
 
 
 
-
 	public function __construct()
 	{
 		$this->products = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->createdDatetime = new \Datetime();
 	}
 
 	public function __toString()
@@ -65,5 +65,16 @@ class Category
     public function getProducts()
     {
         return $this->products;
+    }
+
+    public function getCreatedDatetime()
+    {
+        return $this->createdDatetime;
+    }
+
+    public function setCreatedDatetime($createdDatetime)
+    {
+        $this->createdDatetime = $createdDatetime;
+        return $this;
     }
 }

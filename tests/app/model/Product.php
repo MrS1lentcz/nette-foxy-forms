@@ -39,6 +39,19 @@ class Product
 	 */
 	protected $parameters;
 
+    /**
+     * @ManyToOne(targetEntity="User", inversedBy="products")
+     * @JoinColumn(name="author_id", referencedColumnName="id")
+     * @var Category
+     */
+    protected $author;
+
+    /**
+     * @Column(type="string",nullable=true,options={"widget"="upload"})
+     * @var string
+     */
+    protected $manual;
+
 
 	public function __construct()
 	{

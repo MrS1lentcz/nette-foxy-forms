@@ -45,15 +45,15 @@ class MediaStorage {
 	# @return \Nette\Http\FileUpload
 	public function saveFile(\Nette\Http\FileUpload & $file, & $dest)
 	{
-		while ($this->fileExists($file, $dest)) {
+		do {
 			$parts = explode('/',$dest);
 			$fileName = array_pop($parts);
 			$fileParts = explode('.', $fileName);
-			$dest = implode('/', $parts) . '/'
-					. sha1($fileName . microtime()) . '.' . $fileParts[1];
-		}
-		$absDirPath = $this->mediaDir . strftime($dest);
+			$ext = isset($fileParts[1]) ? '.'.$fileParts[1] : '';
+			$dest = implode('/', $parts) . '/' . sha1($fileName . microtime()) . $ext;
+		} while ($this->fileExists($file, $dest));
 
+		$absDirPath = $this->mediaDir . strftime($dest);
 		$file->move($absDirPath);
 	}
 

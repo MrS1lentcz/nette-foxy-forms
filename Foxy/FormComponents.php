@@ -193,7 +193,7 @@ class FormComponents
             );
         }
 
-        if ($this->canValidate(FOXY_HTML5_SUPPORT)) {
+        if ($form->canValidate(FOXY_HTML5_SUPPORT)) {
             $form[$field]->setType('date');
         }
 

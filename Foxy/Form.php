@@ -632,6 +632,7 @@ abstract class Form extends \Nette\Application\UI\Form {
                 }
 
                 $dest .= $uploadedName;
+
                 $mediaStorage->saveFile($val, $dest);
                 $val = $dest;
             }
