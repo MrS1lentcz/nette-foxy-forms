@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../env.php';
-
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
