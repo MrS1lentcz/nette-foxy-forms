@@ -57,11 +57,30 @@ class ProductForm extends Foxy\Form
 		$successUrl = 'default';
 }
 ```
+
+- successInsert
+- successUpdate
+- errorInsert
+- errorUpdate
+
+Flash messages po zpracovani formulare
+
+```php
+class ProductForm extends Foxy\Form
+{
+	protected
+		$successInsert = 'Produkt byl uspesne vytvoren',
+		$successUpdate = 'Produkt byl uspesne upraven',
+		$errorInsert = 'Produkt nebyl vytvoren',
+		$errorUpdate = 'Produkt nebyl upraven';
+}
+```
+
 - fields
 - exclude
 
 
-Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete jejich vycet zapsat do $exclude nebo definovat svuj vlastni seznam komponent do $fields. 
+Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete jejich vycet zapsat do $exclude nebo definovat svuj vlastni seznam komponent do $fields.
 
 ```php
 class ProductForm extends Foxy\Form
@@ -176,6 +195,25 @@ class ProductForm extends Foxy\Form
 }
 ```
 
+- widget
+
+Pro kazdy field lze specifikovat widget, ktery pretizi nativni typ z doctrine anotace. V tuto chvili se to resi pomoci options (customSchemaOptions). Podporovane jsou nasledujici:
+
+	- upload
+	- image
+	- password
+	- email
+
+```php
+class ProductEntity
+{
+    /**
+     * @Column(type="string",nullable=true,options={"widget"="image"})
+     */
+    protected $image;
+}
+```
+
 - uploadTo
 
 Nastaveni globalni cesty pro ukladani s podporou date masek. Pokud potrebujeme nastavit jinou cestu pro konkretni komponentu, lze definovat metodu getUploadTo. Pro vypnuti uploadu pro dany prvek musi tato metoda vracet FALSE.
@@ -213,18 +251,3 @@ class ProductForm extends Foxy\Form
 		$this->presenter->redirect('to:hell');
 }
 ```
-
-
-
-TODO 
-----
-	- FOXY_UPLOAD_TYPE 
-	- FOXY_EMAIL
-	- upload
-	- image
-	- password
-	- email
-	- $submitButton
-	- $successInsert
-	- $successUpdate
-	- $errorMessage
