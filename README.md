@@ -9,6 +9,7 @@ Pozadavky
 - Nette 2.0 nebo vyssi
 - Doctrine2 neby vyssi
 - __toString Magickou methodu pro kazdou entitu, ktera je pouzita v select boxu
+- v konstruktoru kazde entity definovane Doctrine\Common\Collections\ArrayCollection() inicializace pro "toMany" vazby 
 
 Instalace
 ------------
@@ -251,3 +252,26 @@ class ProductForm extends Foxy\Form
 		$this->presenter->redirect('to:hell');
 }
 ```
+
+- submitButton
+
+Foxy forms automaticky pridava do formulare nakonec submit button s nazvem "send". Pro upraveni tohoto tlacitka slouzi property $submitButton. V pripade nastaveni hodnoty na NULL nebude submit button generovan.
+
+```php
+class ProductForm extends Foxy\Form
+{
+	protected
+		$submitButton = 'odeslat';
+}
+```
+
+```php
+class ProductForm extends Foxy\Form
+{
+	protected
+		# anebo bez odesilaciho tlactika
+		$submitButton = NULL;
+}
+```
+
+
