@@ -296,11 +296,12 @@ class FormComponents
         self::createUpload($form, $property);
         $field = $property['fieldName'];
 
-        $form[$field]->addCondition($form::FILLED)
-            ->addRule(
+        if ($form->canValidate(FOXY_UPLOAD_TYPE)) {
+            $form[$field]->addCondition($form::FILLED)->addRule(
                 $form::IMAGE,
                 $form->getValidationMessage($field, FOXY_UPLOAD_TYPE)
             );
+        }
     }
 
     # Creates password component
@@ -328,10 +329,12 @@ class FormComponents
         self::createString($form, $property);
         $field = $property['fieldName'];
 
-        $form[$field]->addRule(
-            $form::EMAIL,
-            $form->getValidationMessage($field, FOXY_EMAIL)
-        );
+        if ($form->canValidate(FOXY_EMAIL)) {
+            $form[$field]->addRule(
+                $form::EMAIL,
+                $form->getValidationMessage($field, FOXY_EMAIL)
+            );
+        }
 
         if ($form->canValidate(FOXY_HTML5_SUPPORT)) {
             $form[$field]->setType('email');

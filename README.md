@@ -9,7 +9,7 @@ Pozadavky
 - Nette 2.0 nebo vyssi
 - Doctrine2 neby vyssi
 - __toString Magickou methodu pro kazdou entitu, ktera je pouzita v select boxu
-- v konstruktoru kazde entity definovane Doctrine\Common\Collections\ArrayCollection() inicializace pro "toMany" vazby 
+- v konstruktoru kazde entity inicializace "toMany" vazeb pomoci Doctrine\Common\Collections\ArrayCollection()
 
 Instalace
 ------------

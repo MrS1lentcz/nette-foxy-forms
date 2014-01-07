@@ -620,6 +620,9 @@ abstract class Form extends \Nette\Application\UI\Form {
                 if (method_exists($this, 'getUploadTo')) {
                     $dest = $this->getUploadTo($name);
                 }
+				if ($dest === FALSE) {
+					continue; # no upload automatically
+				}
                 if (is_null($dest)) {
                     $dest = $this->uploadTo;
                 }
