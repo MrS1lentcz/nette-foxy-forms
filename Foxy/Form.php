@@ -53,7 +53,7 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @object
     # Instance of model
-    private $instance;
+    protected $instance;
 
     # @string
     # Redirect destination after save model action
@@ -666,10 +666,10 @@ abstract class Form extends \Nette\Application\UI\Form {
                     $this->presenter->flashMessage($this->errorMessage, 'error');
                 }
             }
-        }
 
-        if ($this->successUrl) {
-            $this->presenter->redirect($this->successUrl);
+			if ($this->successUrl) {
+				$this->presenter->redirect($this->successUrl);
+			}
         }
     }
 }
