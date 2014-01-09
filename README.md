@@ -8,7 +8,7 @@ Pozadavky
 
 - Nette 2.0 nebo vyssi
 - Doctrine2 neby vyssi
-- __toString Magickou methodu pro kazdou entitu, ktera je pouzita v select boxu
+- __toString Magickou methodu v kazde entite
 - v konstruktoru kazde entity inicializace "toMany" vazeb pomoci Doctrine\Common\Collections\ArrayCollection()
 
 Instalace
@@ -299,3 +299,17 @@ class ProductForm extends Foxy\Form
         $submitButton = NULL;
 }
 ```
+
+TODO
+----
+
+- media macro
+- custom file upload/image component s podporou nahledu
+- isNew() pro pohodlnejsi pouziti custom flash message po pretizeni saveModel
+- getSuccessUrl() pro redirect na detail ci jinou dynamickou url
+- LoginForm
+- ChangePasswordForm
+- ForggotenPasswordForm
+- PasswordRecoveryForm
+- CreateForm
+- UpdateForm

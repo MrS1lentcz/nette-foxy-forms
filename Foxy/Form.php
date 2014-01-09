@@ -87,7 +87,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     # Flash message post error
     protected $errorMessage = 'Model was not saved';
 
-
+ 
     # @array
     protected $validationMessages = array(
         FOXY_NULLABLE   => 'Item is required',
@@ -429,23 +429,23 @@ abstract class Form extends \Nette\Application\UI\Form {
             $data = array();
             $meta = $this->em->getClassMetadata($property['targetEntity']);
 
-			# as label
-			if ($asLabel) {
-				$data = '';
-				foreach($value as $entity) {
-					$data .= (string) $entity . ', ';
-				}
-				$data = rtrim($data, ',');
-			# to form
-			} else {
-				foreach($value as $entity) {
-					$rp = $meta->getReflectionClass()->getProperty(
-						$this->getIdentifier(get_class($entity))
-					);
-					$rp->setAccessible(TRUE);
-					$data[] = $rp->getValue($entity);
-				}
-			}
+            # as label
+            if ($asLabel) {
+                $data = '';
+                foreach($value as $entity) {
+                    $data .= (string) $entity . ', ';
+                }
+                $data = rtrim($data, ',');
+            # to form
+            } else {
+                foreach($value as $entity) {
+                    $rp = $meta->getReflectionClass()->getProperty(
+                        $this->getIdentifier(get_class($entity))
+                    );
+                    $rp->setAccessible(TRUE);
+                    $data[] = $rp->getValue($entity);
+                }
+            }
 
             return $data;
         }
@@ -463,12 +463,12 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         if (is_object($value)) {
-			# as label
-			if ($asLabel) {
-				return (string) $value;
-			}
+            # as label
+            if ($asLabel) {
+                return (string) $value;
+            }
 
-			# to form
+            # to form
             $meta = $this->em->getClassMetadata($property['targetEntity']);
             $rp = $meta->getReflectionClass()->getProperty(
                 $this->getIdentifier($property['targetEntity'])
@@ -555,11 +555,11 @@ abstract class Form extends \Nette\Application\UI\Form {
     {
         $this->instance = $entity;
         foreach($this->properties as $property) {
-			$asLabel = FALSE;
+            $asLabel = FALSE;
 
-			if ($this[$property['fieldName']] instanceof DisabledComponent) {
-				$asLabel = TRUE;
-			}
+            if ($this[$property['fieldName']] instanceof DisabledComponent) {
+                $asLabel = TRUE;
+            }
             $this[$property['fieldName']]->setDefaultValue(
                 $this->getFormValue($property, $asLabel)
             );

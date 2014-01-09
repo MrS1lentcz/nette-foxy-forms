@@ -13,11 +13,11 @@ namespace Foxy;
 class DisabledComponent extends \Nette\Forms\Controls\BaseControl
 {
 
-	# @Foxy\MediaStorage
-	protected $mediaStorage;
+    # @Foxy\MediaStorage
+    protected $mediaStorage;
 
-	# @array
-	protected $property;
+    # @array
+    protected $property;
 
 
     # Construct Foxy\DisabledComponent
@@ -32,49 +32,49 @@ class DisabledComponent extends \Nette\Forms\Controls\BaseControl
 
         parent::__construct($label);
 
-		$this->mediaStorage = $form->presenter->context->getByType('Foxy\MediaStorage');;
-		$this->property = $property;
-		$this->setDisabled();
+        $this->mediaStorage = $form->presenter->context->getByType('Foxy\MediaStorage');;
+        $this->property = $property;
+        $this->setDisabled();
 
-		$this->_controlBuilder(
-			$form->getFormValue($property, $asLabel = TRUE)
-		);
+        $this->_controlBuilder(
+            $form->getFormValue($property, $asLabel = TRUE)
+        );
     }
 
 
-	# Builds custom control
-	#
-	# @param mixed $value
-	protected function _controlBuilder($value)
-	{
+    # Builds custom control
+    #
+    # @param mixed $value
+    protected function _controlBuilder($value)
+    {
         if (in_array($this->property['widget'], array('upload', 'image'))) {
-			$this->control = \Nette\Utils\Html::el('a')
-				->setText($value)
-				->setHref($this->mediaStorage->getUrl($value));
-		} elseif($this->property['widget'] == 'email') {
-			$this->control = \Nette\Utils\Html::el('a')
-				->setText($value)
-				->setHref('mailto:'.$value);
+            $this->control = \Nette\Utils\Html::el('a')
+                ->setText($value)
+                ->setHref($this->mediaStorage->getUrl($value));
+        } elseif($this->property['widget'] == 'email') {
+            $this->control = \Nette\Utils\Html::el('a')
+                ->setText($value)
+                ->setHref('mailto:'.$value);
         } elseif (preg_match('|http://|', $value)) {
-			$this->control = \Nette\Utils\Html::el('a')
-				->setText($value)
-				->setHref($value)
-				->setTarget('_blank');
-		} else {
-			$this->control = \Nette\Utils\Html::el('span')->setText((string) $value);
-		}
-	}
+            $this->control = \Nette\Utils\Html::el('a')
+                ->setText($value)
+                ->setHref($value)
+                ->setTarget('_blank');
+        } else {
+            $this->control = \Nette\Utils\Html::el('span')->setText((string) $value);
+        }
+    }
 
 
-	# Sets control's value
-	#
-	# @param mixed $value
-	# @return self
-	public function setValue($value)
-	{
-		if ($this->parent) {
-			$this->_controlBuilder($value);
-		}
-		return $this;
-	}
+    # Sets control's value
+    #
+    # @param mixed $value
+    # @return self
+    public function setValue($value)
+    {
+        if ($this->parent) {
+            $this->_controlBuilder($value);
+        }
+        return $this;
+    }
 }
