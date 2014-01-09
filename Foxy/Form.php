@@ -57,7 +57,7 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @string
     # Redirect destination after save model action
-    protected $successUrl = '';
+    protected $successUrl = 'default';
 
     # @string
     # Relative upload directory with date masks supporting
@@ -99,6 +99,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         'string'            => 'Foxy\FormComponents::createString',
         'text'              => 'Foxy\FormComponents::createText',
         'decimal'           => 'Foxy\FormComponents::createDecimal',
+		'float'           => 'Foxy\FormComponents::createDecimal',
         'boolean'           => 'Foxy\FormComponents::createBoolean',
         'datetime'          => 'Foxy\FormComponents::createDatetime',
         'date'              => 'Foxy\FormComponents::createDate',
