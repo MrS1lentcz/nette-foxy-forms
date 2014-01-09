@@ -51,6 +51,14 @@ abstract class Form extends \Nette\Application\UI\Form {
     # Validation level
     protected $validation = FOXY_VALIDATE_ALL;
 
+    # @array
+    # Excluded validations
+    protected $excludedValidations;
+
+    # @array
+    # Read only fields
+    protected $readOnly;
+
     # @object
     # Instance of model
     protected $instance;
@@ -88,7 +96,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         FOXY_MAX_LENGTH => 'Text is too long',
         FOXY_UNIQUE     => 'Entered value is already used',
         FOXY_UPLOAD_TYPE=> 'Thubnail must be JPEG, PNG or GIF',
-        FOXY_EMAIL        => 'Email is not valid',
+        FOXY_EMAIL      => 'Email is not valid',
     );
 
     # @array
@@ -99,7 +107,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         'string'            => 'Foxy\FormComponents::createString',
         'text'              => 'Foxy\FormComponents::createText',
         'decimal'           => 'Foxy\FormComponents::createDecimal',
-		'float'           => 'Foxy\FormComponents::createDecimal',
+        'float'             => 'Foxy\FormComponents::createDecimal',
         'boolean'           => 'Foxy\FormComponents::createBoolean',
         'datetime'          => 'Foxy\FormComponents::createDatetime',
         'date'              => 'Foxy\FormComponents::createDate',
@@ -110,9 +118,9 @@ abstract class Form extends \Nette\Application\UI\Form {
         FOXY_MANY_TO_MANY   => 'Foxy\FormComponents::createMultipleSelectBox',
         # Additional widgets
         'upload'            => 'Foxy\FormComponents::createUpload',
-        'image'                => 'Foxy\FormComponents::createImage',
-        'password'            => 'Foxy\FormComponents::createPassword',
-        'email'                => 'Foxy\FormComponents::createEmail',
+        'image'             => 'Foxy\FormComponents::createImage',
+        'password'          => 'Foxy\FormComponents::createPassword',
+        'email'             => 'Foxy\FormComponents::createEmail',
     );
 
     # Properties with customized metadata
@@ -134,6 +142,12 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->instance = $this->model;
         } else {
             $this->instance = new $this->model;
+        }
+
+        if (is_array($this->excludedValidations)) {
+            foreach($this->excludedValidations as $ex) {
+                $this->validation ^= $ex;
+            }
         }
 
         $this->onSuccess[] = array($this, 'saveModel');
@@ -236,6 +250,8 @@ abstract class Form extends \Nette\Application\UI\Form {
             $property,
         );
 
+        $fieldName = $property['fieldName'];
+
         # Relation from second side is ignored
         if (($property['type'] == FOXY_ONE_TO_ONE
                 ||$property['type'] == FOXY_ONE_TO_MANY
@@ -243,7 +259,7 @@ abstract class Form extends \Nette\Application\UI\Form {
             && (! isset($property['joinColumns'])
                 || count($property['joinColumns']) == 0
             )) {
-            unset($this->properties[$property['fieldName']]);
+            unset($this->properties[$fieldName]);
             return;
         }
 
@@ -258,7 +274,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         if (in_array($property['type'], $relations)) {
             $params[] = $this->getSelectData(
                 $property['targetEntity'],
-                $property['fieldName']
+                $fieldName
             );
         }
 
@@ -269,15 +285,15 @@ abstract class Form extends \Nette\Application\UI\Form {
 
         # Create identifier as hidden field
         if (isset($property['identifier'])) {
-            $this->addHidden($property['fieldName']);
+            $this->addHidden($fieldName);
             return;
         }
 
         # Custom creating component for field
         if (method_exists($this, 'setFieldComponent')) {
-            $this->setFieldComponent($property['fieldName']);
+            $this->setFieldComponent($fieldName);
 
-            if (isset($this[$property['fieldName']])) {
+            if (isset($this[$fieldName])) {
                 return;
             }
         }
@@ -286,6 +302,14 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->componentsCallbackMap[$property['widget']],
             $params
         );
+
+        # If readOnly
+        if (is_array($this->readOnly)
+            && in_array($property['fieldName'], $this->readOnly)) {
+            $this->removeComponent($this[$fieldName]);
+            $this[$fieldName] = new DisabledComponent($this, $property);
+        }
+
     }
 
     # Customize property metadata
@@ -373,17 +397,15 @@ abstract class Form extends \Nette\Application\UI\Form {
             $properties[$identifier]['identifier'] = TRUE;
         }
 
-        #if ($this->instance instanceof \Product) {
-        #    dump($properties);exit;
-        #}
         return $properties;
     }
 
     # Get cleaned property value for form component
     #
     # @param @array $property
+    # @param @bool $asLabel
     # @return mixed
-    public function getFormValue($property)
+    public function getFormValue($property, $asLabel = FALSE)
     {
         # Password value cannot be loaded
         if ($property['widget'] == 'password') {
@@ -407,13 +429,24 @@ abstract class Form extends \Nette\Application\UI\Form {
             $data = array();
             $meta = $this->em->getClassMetadata($property['targetEntity']);
 
-            foreach($value as $entity) {
-                $rp = $meta->getReflectionClass()->getProperty(
-                    $this->getIdentifier(get_class($entity))
-                );
-                $rp->setAccessible(TRUE);
-                $data[] = $rp->getValue($entity);
-            }
+			# as label
+			if ($asLabel) {
+				$data = '';
+				foreach($value as $entity) {
+					$data .= (string) $entity . ', ';
+				}
+				$data = rtrim($data, ',');
+			# to form
+			} else {
+				foreach($value as $entity) {
+					$rp = $meta->getReflectionClass()->getProperty(
+						$this->getIdentifier(get_class($entity))
+					);
+					$rp->setAccessible(TRUE);
+					$data[] = $rp->getValue($entity);
+				}
+			}
+
             return $data;
         }
 
@@ -430,6 +463,12 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         if (is_object($value)) {
+			# as label
+			if ($asLabel) {
+				return (string) $value;
+			}
+
+			# to form
             $meta = $this->em->getClassMetadata($property['targetEntity']);
             $rp = $meta->getReflectionClass()->getProperty(
                 $this->getIdentifier($property['targetEntity'])
@@ -516,8 +555,13 @@ abstract class Form extends \Nette\Application\UI\Form {
     {
         $this->instance = $entity;
         foreach($this->properties as $property) {
+			$asLabel = FALSE;
+
+			if ($this[$property['fieldName']] instanceof DisabledComponent) {
+				$asLabel = TRUE;
+			}
             $this[$property['fieldName']]->setDefaultValue(
-                $this->getFormValue($property)
+                $this->getFormValue($property, $asLabel)
             );
         }
         return $this;
@@ -535,30 +579,30 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         $property = $this->properties[$field];
-		$entity = NULL;
+        $entity = NULL;
 
         if ($property['unique']) {
             if (in_array($property['type'], array(FOXY_ONE_TO_ONE, FOXY_MANY_TO_ONE))
-				&& isset($property['joinColumns']))
-			{
+                && isset($property['joinColumns']))
+            {
                 $entity = $this->em->getRepository($this->model)->findOneBy(
                     array($property['targetEntity'] => $newValue)
                 );
             } else {
-				if (in_array($property['type'], array('datetime', 'date', 'time'))) {
-					$newValue = new \Datetime($newValue);
-				}
+                if (in_array($property['type'], array('datetime', 'date', 'time'))) {
+                    $newValue = new \Datetime($newValue);
+                }
 
                 $entity = $this->em->getRepository($this->model)->findOneBy(
                     array($field => $newValue)
                 );
             }
-			if ($entity) {
-				if ($entity === $this->instance) {
-					return TRUE;
-				}
-				return FALSE;
-			}
+            if ($entity) {
+                if ($entity === $this->instance) {
+                    return TRUE;
+                }
+                return FALSE;
+            }
         }
         return TRUE;
     }
@@ -621,9 +665,9 @@ abstract class Form extends \Nette\Application\UI\Form {
                 if (method_exists($this, 'getUploadTo')) {
                     $dest = $this->getUploadTo($name);
                 }
-				if ($dest === FALSE) {
-					continue; # no upload automatically
-				}
+                if ($dest === FALSE) {
+                    continue; # no upload automatically
+                }
                 if (is_null($dest)) {
                     $dest = $this->uploadTo;
                 }
@@ -636,7 +680,6 @@ abstract class Form extends \Nette\Application\UI\Form {
                 }
 
                 $dest .= $uploadedName;
-
                 $mediaStorage->saveFile($val, $dest);
                 $val = $dest;
             }
@@ -667,9 +710,9 @@ abstract class Form extends \Nette\Application\UI\Form {
                 }
             }
 
-			if ($this->successUrl) {
-				$this->presenter->redirect($this->successUrl);
-			}
+            if ($this->successUrl) {
+                $this->presenter->redirect($this->successUrl);
+            }
         }
     }
 }

@@ -57,6 +57,7 @@ class User
     protected $products;
 
 
+
 	public function __construct()
 	{
 		$this->products = new \Doctrine\Common\Collections\ArrayCollection();

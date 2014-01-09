@@ -20,16 +20,16 @@ Prvni argument je media url, druhy media directory. Toto nastaveni slouzi ke gen
 
 ```yaml
 services:
-	mediaStorage: Foxy\MediaStorage('/media', '/www/my_project/media')
+    mediaStorage: Foxy\MediaStorage('/media', '/www/my_project/media')
 
-	# Priklad pouziti subdomeny
-	mediaStorage: Foxy\MediaStorage('http://media.mujprojekt.cz/', '/www/mujproject/media')
+    # Priklad pouziti subdomeny
+    mediaStorage: Foxy\MediaStorage('http://media.mujprojekt.cz/', '/www/mujproject/media')
 ```
 
 - presenter
 
 ```php
-	protected $mediaStorage;
+    protected $mediaStorage;
 
     public function injectMediaStorage(\Foxy\MediaStorage $mediaStorage)
     {
@@ -53,9 +53,9 @@ Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po usp
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$model = 'Product',
-		$successUrl = 'default';
+    protected
+        $model = 'Product',
+        $successUrl = 'default';
 }
 ```
 
@@ -69,11 +69,11 @@ Flash messages po zpracovani formulare
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$successInsert = 'Produkt byl uspesne vytvoren',
-		$successUpdate = 'Produkt byl uspesne upraven',
-		$errorInsert = 'Produkt nebyl vytvoren',
-		$errorUpdate = 'Produkt nebyl upraven';
+    protected
+        $successInsert = 'Produkt byl uspesne vytvoren',
+        $successUpdate = 'Produkt byl uspesne upraven',
+        $errorInsert = 'Produkt nebyl vytvoren',
+        $errorUpdate = 'Produkt nebyl upraven';
 }
 ```
 
@@ -86,14 +86,14 @@ Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete jejich v
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$model = 'Product',
-		$successUrl = 'default',
+    protected
+        $model = 'Product',
+        $successUrl = 'default',
 
-		$exclude = array('name'),
+        $exclude = array('name'),
 
-		# nebo
-		$fields = array('id', 'price', 'category');
+        # nebo
+        $fields = array('id', 'price', 'category');
 }
 ```
 
@@ -105,31 +105,57 @@ Pro vygenerovani fieldsetu musite definovat dvojrozmerne pole do $fieldsets, kde
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$model = 'Product',
-		$successUrl = 'default',
+    protected
+        $model = 'Product',
+        $successUrl = 'default',
 
-		$fieldsets = array(
-			'main' => array('id, name'),
-			'additional' => array('price', 'category')
-		);
+        $fieldsets = array(
+            'main' => array('id, name'),
+            'additional' => array('price', 'category')
+        );
 }
 ```
 
-- validation
-	- FOXY_NO_VALIDATION - generovani komponent bez validaci
-	- FOXY_NULLABLE - nastavi komponenty jako povinne, pokud nejsou nullable
-	- FOXY_IS_INT and FOXY_IS_FLOAT - kontroluje validitu numerickych vstupu
-	- FOXY_MAX_LENGTH - nastavuje maximalni delku pro textove vstupy
-	- FOXY_HTML5_SUPPORT - pridava html5 atributy
-	- FOXY_UNIQUE - kontroluje unique bunky ve fazi ukladani entity
-	- FOXY_VALIDATE_ALL - aplikuje vsechny podporovane validace
+- readOnly
+
+V urcitych situacich potrebujeme mit formularove polozky pouze ke cteni at uz z duvodu nedostatecnych prav nebo kdyz jsou tyto polozky generovany. Toto lze ovlivnit deklaraci readOnly property. Vypis hodnot je proveden defaultne do "span" tagu vcetne serialize objektu (datetime, vazebni entita), anebo do "a" tagu v pripade, ze ma tvar url adresy (pridan blank), mailu (pridan mailto atribut), anebo se jedna o uploadovany soubor, v tom pripade dostaneme kompletni link na uploadovany dokument/obrazek.
 
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$validation = FOXY_MAX_LENGTH;
+    protected
+        $model = 'Product',
+        $successUrl = 'default',
+        $readOnly = array('author');
+}
+```
+
+- validation
+    - FOXY_NO_VALIDATION - generovani komponent bez validaci
+    - FOXY_NULLABLE - nastavi komponenty jako povinne, pokud nejsou nullable
+    - FOXY_IS_INT and FOXY_IS_FLOAT - kontroluje validitu numerickych vstupu
+    - FOXY_MAX_LENGTH - nastavuje maximalni delku pro textove vstupy
+    - FOXY_HTML5_SUPPORT - pridava html5 atributy
+    - FOXY_UNIQUE - kontroluje unique bunky ve fazi ukladani entity
+    - FOXY_VALIDATE_ALL - aplikuje vsechny podporovane validace
+
+```php
+class ProductForm extends Foxy\Form
+{
+    protected
+        $validation = FOXY_MAX_LENGTH;
+}
+```
+
+- excludedValidations
+
+Deaktivaci jednotlivich pravidel muzeme provest deklaraci excludedValidations
+
+```php
+class ProductForm extends Foxy\Form
+{
+    protected
+        $excludedValidations = array(FOXY_HTML5_SUPPORT);
 }
 ```
 
@@ -152,14 +178,14 @@ class ProductForm extends Foxy\Form
     public function __construct(\Doctrine\ORM\EntityManager $em)
     {
         parent::__construct($em);
-		$this->validationMessages[FOXY_NULLABLE] = 'Tohle musis vyplnit!';
-	}
+        $this->validationMessages[FOXY_NULLABLE] = 'Tohle musis vyplnit!';
+    }
 
     public function getErrorMessage($field, $level)
     {
-		if ($field == 'name' && $level == FOXY_NULLABLE) {
-			return 'Jmeno je povinna polozka';
-		}
+        if ($field == 'name' && $level == FOXY_NULLABLE) {
+            return 'Jmeno je povinna polozka';
+        }
     }
 }
 ```
@@ -173,9 +199,9 @@ class ProductForm extends Foxy\Form
 {
     public function getFkValues($field, $repository)
     {
-		if ($field == 'category') {
-			return $repository->getProductCategories();
-		}
+        if ($field == 'category') {
+            return $repository->getProductCategories();
+        }
     }
 }
 ```
@@ -189,9 +215,9 @@ class ProductForm extends Foxy\Form
 {
     public function setFieldComponent($field)
     {
-		if ($field == 'name') {
-			$this->addTextarea('name', 'Super specialni jmeno');
-		}
+        if ($field == 'name') {
+            $this->addTextarea('name', 'Super specialni jmeno');
+        }
     }
 }
 ```
@@ -200,10 +226,10 @@ class ProductForm extends Foxy\Form
 
 Pro kazdy field lze specifikovat widget, ktery pretizi nativni typ z doctrine anotace. V tuto chvili se to resi pomoci options (customSchemaOptions). Podporovane jsou nasledujici:
 
-	- upload
-	- image
-	- password
-	- email
+    - upload
+    - image
+    - password
+    - email
 
 ```php
 class ProductEntity
@@ -222,18 +248,18 @@ Nastaveni globalni cesty pro ukladani s podporou date masek. Pokud potrebujeme n
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$uploadTo = 'images/%y-%m-%d/';
+    protected
+        $uploadTo = 'images/%y-%m-%d/';
 
-	protected function getUploadTo($name)
-	{
-		if ($name == 'logo') {
-			return 'logs/%y-%m-%d/';
-		}
-		if ($name == 'image') {
-			return FALSE;
-		}
-	}
+    protected function getUploadTo($name)
+    {
+        if ($name == 'logo') {
+            return 'logs/%y-%m-%d/';
+        }
+        if ($name == 'image') {
+            return FALSE;
+        }
+    }
 }
 ```
 
@@ -242,14 +268,14 @@ Pro vlastni zpracovani 'image' komponenty je pak nutne podedit metodu saveModel 
 ```php
 class ProductForm extends Foxy\Form
 {
-	public function saveModel($form, $commit = TRUE)
-	{
-		parent::saveModel($form, $commit = FALSE);
+    public function saveModel($form, $commit = TRUE)
+    {
+        parent::saveModel($form, $commit = FALSE);
 
-		# ...
+        # ...
 
-		$this->em->flush();
-		$this->presenter->redirect('to:hell');
+        $this->em->flush();
+        $this->presenter->redirect('to:hell');
 }
 ```
 
@@ -260,18 +286,16 @@ Foxy forms automaticky pridava do formulare nakonec submit button s nazvem "send
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		$submitButton = 'odeslat';
+    protected
+        $submitButton = 'odeslat';
 }
 ```
 
 ```php
 class ProductForm extends Foxy\Form
 {
-	protected
-		# anebo bez odesilaciho tlactika
-		$submitButton = NULL;
+    protected
+        # anebo bez odesilaciho tlactika
+        $submitButton = NULL;
 }
 ```
-
-

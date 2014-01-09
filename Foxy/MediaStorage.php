@@ -17,15 +17,21 @@ class MediaStorage {
 	# @string
 	protected $mediaDir;
 
+	# @string
+	protected $imagePattern;
+
 
 	# Construct MediaStorage
 	#
 	# @param string $mediaUrl
 	# @param string $mediaDir
-	public function __construct($mediaUrl, $mediaDir)
+	public function __construct($mediaUrl,
+								$mediaDir,
+								$imagePattern = 'IMG_%04d')
 	{
 		$this->mediaUrl = $mediaUrl;
 		$this->mediaDir = $mediaDir;
+		$this->imagePattern = $imagePattern;
 	}
 
 	# Returns completed url to file
@@ -34,7 +40,7 @@ class MediaStorage {
 	# @return string
 	public function getUrl($filepath)
 	{
-		return $this->mediaUrl . $filepath;
+		return $this->mediaUrl . '/' . $filepath;
 	}
 
 	# Saves file to media directory
@@ -45,16 +51,36 @@ class MediaStorage {
 	# @return \Nette\Http\FileUpload
 	public function saveFile(\Nette\Http\FileUpload & $file, & $dest)
 	{
-		do {
-			$parts = explode('/',$dest);
-			$fileName = array_pop($parts);
-			$fileParts = explode('.', $fileName);
-			$ext = isset($fileParts[1]) ? '.'.$fileParts[1] : '';
-			$dest = implode('/', $parts) . '/' . sha1($fileName . microtime()) . $ext;
-		} while ($this->fileExists($file, $dest));
+		$mediaDir = $this->mediaDir;
+		$imagePattern = $this->imagePattern;
 
-		$absDirPath = $this->mediaDir . strftime($dest);
-		$file->move($absDirPath);
+		$dest = preg_replace_callback(
+			'|(.+)\/(.+)\.(.+)$|',
+			function($matches) use($mediaDir, $imagePattern) {
+				$dir = strftime($matches[1]) . '/';
+				$absDir = $mediaDir . $dir;
+				$i = 0;
+
+				if ($handle = opendir($absDir)) {
+					while (($file = readdir($handle)) !== false){
+						if (! in_array($file, array('.', '..'))
+							&& ! is_dir($absDir.$file)) {
+							$i++;
+						}
+					}
+				}
+
+				return sprintf(
+					'%s'.$imagePattern.'.%s',
+					$dir,
+					$i,
+					strtoupper($matches[3])
+				);
+			},
+			$dest
+		);
+
+		$file->move($mediaDir . $dest);
 	}
 
 	# Checks if file exists
