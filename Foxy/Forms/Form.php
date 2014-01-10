@@ -29,10 +29,10 @@ define('FOXY_MANY_TO_MANY', 8);
 abstract class Form extends \Nette\Application\UI\Form {
 
     # @\Doctrine\ORM\EntityManager
-    private $em;
+    protected $em;
 
     # @string
-    private $status;
+    protected $status;
 
     # @string
     # Model name
@@ -688,17 +688,8 @@ abstract class Form extends \Nette\Application\UI\Form {
                 if (is_null($dest)) {
                     $dest = $this->uploadTo;
                 }
-                $uploadedName = NULL;
-                if (method_exists($this, 'getUploadedName')) {
-                    $uploadedName = $this->getUploadedName($name, $val);
-                }
-                if (is_null($uploadedName)) {
-                    $uploadedName = $val->getName();
-                }
 
-                $dest .= $uploadedName;
-                $mediaControler->saveFile($val, $dest);
-                $val = $dest;
+                $val = $mediaControler->saveFile($val, $dest);
             }
 
             # Unique check

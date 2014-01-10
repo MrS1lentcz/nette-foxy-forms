@@ -43,8 +43,11 @@ class Controler {
 	# @param string $dest
 	# @param bool $unlink
 	# @return \Nette\Http\FileUpload
-	public function saveFile(\Nette\Http\FileUpload $file, & $dest)
+	public function saveFile(\Nette\Http\FileUpload $file, $dest)
 	{
-		$dest = $this->storage->saveFile($file, $dest);
+		return $this->storage->saveFile(
+			$file,
+			strftime($dest)
+		);
 	}
 }

@@ -38,11 +38,12 @@ class Storage implements IStorage
 	{
 		$mediaDir = $this->mediaDir;
 		$imagePattern = $this->imagePattern;
+		$dest .= $file->getName();
 
 		$dest = preg_replace_callback(
 			'|(.+)\/(.+)\.(.+)$|',
 			function($matches) use($mediaDir, $imagePattern) {
-				$dir = strftime($matches[1]) . '/';
+				$dir = $matches[1] . '/';
 				$absDir = $mediaDir . $dir;
 				$i = 0;
 
