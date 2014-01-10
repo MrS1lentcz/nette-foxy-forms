@@ -31,8 +31,8 @@ abstract class Form extends \Nette\Application\UI\Form {
     # @\Doctrine\ORM\EntityManager
     private $em;
 
-	# @string
-	private $status;
+    # @string
+    private $status;
 
     # @string
     # Model name
@@ -93,13 +93,13 @@ abstract class Form extends \Nette\Application\UI\Form {
     # Flash error message post update
     protected $errorUpdate = 'Model was not updated';
 
-	# @mixed
-	# Wrapper for upload control
-	public $uploadWrapper = 'div';
+    # @mixed
+    # Wrapper for upload control
+    public $uploadWrapper = 'div';
 
-	# @mixed
-	# Separator between upload control and link
-	public $uploadSeparator = 'br';
+    # @mixed
+    # Separator between upload control and link
+    public $uploadSeparator = 'br';
 
 
     # @array
@@ -115,26 +115,26 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @array
     protected $componentsCallbackMap = array(
-        'integer'           => 'Foxy\ComponentsFactory::createInteger',
-        'bigint'            => 'Foxy\ComponentsFactory::createBigInteger',
-        'smallint'          => 'Foxy\ComponentsFactory::createSmallInteger',
-        'string'            => 'Foxy\ComponentsFactory::createString',
-        'text'              => 'Foxy\ComponentsFactory::createText',
-        'decimal'           => 'Foxy\ComponentsFactory::createDecimal',
-        'float'             => 'Foxy\ComponentsFactory::createDecimal',
-        'boolean'           => 'Foxy\ComponentsFactory::createBoolean',
-        'datetime'          => 'Foxy\ComponentsFactory::createDatetime',
-        'date'              => 'Foxy\ComponentsFactory::createDate',
-        'time'              => 'Foxy\ComponentsFactory::createTime',
-        FOXY_ONE_TO_ONE     => 'Foxy\ComponentsFactory::createSelectBox',
-        FOXY_MANY_TO_ONE    => 'Foxy\ComponentsFactory::createSelectBox',
-        FOXY_ONE_TO_MANY    => 'Foxy\ComponentsFactory::createMultipleSelectBox',
-        FOXY_MANY_TO_MANY   => 'Foxy\ComponentsFactory::createMultipleSelectBox',
+        'integer'           => 'Foxy\ControlsFactory::createInteger',
+        'bigint'            => 'Foxy\ControlsFactory::createBigInteger',
+        'smallint'          => 'Foxy\ControlsFactory::createSmallInteger',
+        'string'            => 'Foxy\ControlsFactory::createString',
+        'text'              => 'Foxy\ControlsFactory::createText',
+        'decimal'           => 'Foxy\ControlsFactory::createDecimal',
+        'float'             => 'Foxy\ControlsFactory::createDecimal',
+        'boolean'           => 'Foxy\ControlsFactory::createBoolean',
+        'datetime'          => 'Foxy\ControlsFactory::createDatetime',
+        'date'              => 'Foxy\ControlsFactory::createDate',
+        'time'              => 'Foxy\ControlsFactory::createTime',
+        FOXY_ONE_TO_ONE     => 'Foxy\ControlsFactory::createSelectBox',
+        FOXY_MANY_TO_ONE    => 'Foxy\ControlsFactory::createSelectBox',
+        FOXY_ONE_TO_MANY    => 'Foxy\ControlsFactory::createMultipleSelectBox',
+        FOXY_MANY_TO_MANY   => 'Foxy\ControlsFactory::createMultipleSelectBox',
         # Additional widgets
-        'upload'            => 'Foxy\ComponentsFactory::createUpload',
-        'image'             => 'Foxy\ComponentsFactory::createImage',
-        'password'          => 'Foxy\ComponentsFactory::createPassword',
-        'email'             => 'Foxy\ComponentsFactory::createEmail',
+        'upload'            => 'Foxy\ControlsFactory::createUpload',
+        'image'             => 'Foxy\ControlsFactory::createImage',
+        'password'          => 'Foxy\ControlsFactory::createPassword',
+        'email'             => 'Foxy\ControlsFactory::createEmail',
     );
 
     # Properties with customized metadata
@@ -322,9 +322,9 @@ abstract class Form extends \Nette\Application\UI\Form {
             && in_array($property['fieldName'], $this->readOnly)) {
             $this->removeComponent($this[$fieldName]);
             $this[$fieldName] = new \Foxy\Controls\Disabled(
-				$this,
-				$property
-			);
+                $this,
+                $property
+            );
         }
 
     }
@@ -651,7 +651,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function saveModel($form, $commit = TRUE)
     {
         $values = $form->getValues();
-        $mediaStorage = $this->presenter->context->getByType('Foxy\MediaStorage');
+        $mediaControler = $this->presenter->context->getByType('Foxy\Media\Controler');
         $this->status = 'Insert';
 
         # Is update
@@ -697,7 +697,7 @@ abstract class Form extends \Nette\Application\UI\Form {
                 }
 
                 $dest .= $uploadedName;
-                $mediaStorage->saveFile($val, $dest);
+                $mediaControler->saveFile($val, $dest);
                 $val = $dest;
             }
 
@@ -717,15 +717,15 @@ abstract class Form extends \Nette\Application\UI\Form {
         if ($commit) {
             try {
                 $this->em->flush();
-				$this->invokeFlashMessage();
+                $this->invokeFlashMessage();
             } catch (\Exception $e) {
                 $this->invokeFlashMessage('error');
             }
 
-			$urlParams = array();
-			if (method_exists($this, 'getUrlParams')) {
-				$urlParams = $this->getUrlParams();
-			}
+            $urlParams = array();
+            if (method_exists($this, 'getUrlParams')) {
+                $urlParams = $this->getUrlParams();
+            }
 
             if ($this->successUrl) {
                 $this->presenter->redirect($this->successUrl, $urlParams);
@@ -733,12 +733,12 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
     }
 
-	# Invokes flash message
-	#
-	# @param string $status
-	public function invokeFlashMessage($status = 'success')
-	{
-		$status = $status . $this->status;
-		$this->presenter->flashMessage($this->{$status}, $status);
-	}
+    # Invokes flash message
+    #
+    # @param string $status
+    public function invokeFlashMessage($status = 'success')
+    {
+        $status = $status . $this->status;
+        $this->presenter->flashMessage($this->{$status}, $status);
+    }
 }

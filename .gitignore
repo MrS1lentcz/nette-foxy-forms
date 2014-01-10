@@ -4,6 +4,7 @@ tests/libs/*
 .idea
 *.swp
 composer.lock
+*.komodoproject
 
 .DS_Store
 !.gitignore

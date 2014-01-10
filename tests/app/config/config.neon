@@ -47,7 +47,7 @@ common:
                         1002: 'SET NAMES utf8'
                 config: @doctrineConfiguration
 
-        mediaStorage: Foxy\MediaStorage('/media', '/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/www/media/')
+        mediaControler: Foxy\Media\Controler('/media', new Foxy\Media\Storage('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/www/media/'))
 
 
 production < common:

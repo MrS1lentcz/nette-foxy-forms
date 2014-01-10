@@ -13,7 +13,7 @@ namespace Foxy\Controls;
 class Disabled extends \Nette\Forms\Controls\BaseControl
 {
 
-    # @Foxy\MediaStorage
+    # @Foxy\Media\Controler
     protected $mediaStorage;
 
     # @array
@@ -32,7 +32,7 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
 
         parent::__construct($label);
 
-        $this->mediaStorage = $form->presenter->context->getByType('Foxy\MediaStorage');
+        $this->mediaStorage = $form->presenter->context->getByType('Foxy\Media\Controler');
         $this->property = $property;
         $this->setDisabled();
 

@@ -5,8 +5,8 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     /** @var \Doctrine\ORM\EntityManager $em */
     protected $em;
 
-    /** @var \Foxy\MediaStorage $mediaStorage */
-    protected $mediaStorage;
+    /** @var \Foxy\MediaControler $mediaStorage */
+    protected $mediaControler;
 
     /**
      * @param \Doctrine\ORM\EntityManager $em
@@ -19,10 +19,10 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     /**
      * @param \Foxy\MediaStorage $em
      */
-    public function injectMediaStorage(\Foxy\MediaStorage $mediaStorage)
+    public function injectMediaControler(\Foxy\Media\Controler $mediaControler)
     {
 
-        $this->mediaStorage = $mediaStorage;
+        $this->mediaControler = $mediaControler;
     }
 
     public function actionDefault()

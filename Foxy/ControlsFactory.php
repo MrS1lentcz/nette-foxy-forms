@@ -9,7 +9,7 @@
 namespace Foxy;
 
 
-class ComponentsFactory
+class ControlsFactory
 {
     # Creates integer component
     #

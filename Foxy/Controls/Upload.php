@@ -13,7 +13,7 @@ namespace Foxy\Controls;
 class Upload extends \Nette\Forms\Controls\UploadControl
 {
 
-    # @Foxy\MediaStorage
+    # @Foxy\Media\Controler
     protected $mediaStorage;
 
     # @string
@@ -28,7 +28,7 @@ class Upload extends \Nette\Forms\Controls\UploadControl
         parent::attached($form);
         if ($form instanceof \Nette\Forms\Form) {
             $this->mediaStorage
-                = $form->presenter->context->getByType('Foxy\MediaStorage');
+                = $form->presenter->context->getByType('Foxy\Media\Controler');
         }
     }
 
