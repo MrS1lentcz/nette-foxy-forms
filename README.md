@@ -51,7 +51,7 @@ Pouziti
 Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy form postara. Jednoduche, ze?
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $model = 'Product',
@@ -67,7 +67,7 @@ class ProductForm extends Foxy\Form
 Flash messages po zpracovani formulare
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $successInsert = 'Produkt byl uspesne vytvoren',
@@ -84,7 +84,7 @@ class ProductForm extends Foxy\Form
 Jestli si prejete vyjmout jednu nebo vice komponent z formulare, muzete jejich vycet zapsat do $exclude nebo definovat svuj vlastni seznam komponent do $fields.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $model = 'Product',
@@ -103,7 +103,7 @@ Pro vygenerovani fieldsetu musite definovat dvojrozmerne pole do $fieldsets, kde
 
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $model = 'Product',
@@ -121,7 +121,7 @@ class ProductForm extends Foxy\Form
 V urcitych situacich potrebujeme mit formularove polozky pouze ke cteni at uz z duvodu nedostatecnych prav nebo kdyz jsou tyto polozky generovany. Toto lze ovlivnit deklaraci readOnly property. Vypis hodnot je proveden defaultne do "span" tagu vcetne serialize objektu (datetime, vazebni entita), anebo do "a" tagu v pripade, ze ma tvar url adresy (pridan blank), mailu (pridan mailto atribut), anebo se jedna o uploadovany soubor, v tom pripade dostaneme kompletni link na uploadovany dokument/obrazek.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $model = 'Product',
@@ -140,7 +140,7 @@ class ProductForm extends Foxy\Form
     - FOXY_VALIDATE_ALL - aplikuje vsechny podporovane validace
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $validation = FOXY_MAX_LENGTH;
@@ -152,7 +152,7 @@ class ProductForm extends Foxy\Form
 Deaktivaci jednotlivich pravidel muzeme provest deklaraci excludedValidations
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $excludedValidations = array(FOXY_HTML5_SUPPORT);
@@ -165,7 +165,7 @@ class ProductForm extends Foxy\Form
 Validace a jejich chybove zpravy jsou velice flexibilni. Muzete jednoduse nastavit uroven validace aktualniho formulare, globalni validacni zpravy, ale i validacni zpravy pro konkretni komponenty.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected $validationMessages = array(
         FOXY_NULLABLE   => 'Item is required',
@@ -195,7 +195,7 @@ class ProductForm extends Foxy\Form
 Jestlize potrebujete pouzit vlastni filtr pro select box data, staci definovat metodu getFkValues s nejakym prepinacem dle nazvu filedu - komponenty, ktera vrati pole entit.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     public function getFkValues($field, $repository)
     {
@@ -211,7 +211,7 @@ class ProductForm extends Foxy\Form
 Pro definici vlastni sady pravidel pro nejake komponenty zase slouzi setFieldComponent metoda.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     public function setFieldComponent($field)
     {
@@ -246,7 +246,7 @@ class ProductEntity
 Nastaveni globalni cesty pro ukladani s podporou date masek. Pokud potrebujeme nastavit jinou cestu pro konkretni komponentu, lze definovat metodu getUploadTo. Pro vypnuti uploadu pro dany prvek musi tato metoda vracet FALSE.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $uploadTo = 'images/%y-%m-%d/';
@@ -266,7 +266,7 @@ class ProductForm extends Foxy\Form
 Pro vlastni zpracovani 'image' komponenty je pak nutne podedit metodu saveModel a parentovi predat priznak $commit s hodnotou FALSE, aby se zabranilo flushi a redirectu po zavolani teto metody.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     public function saveModel($form, $commit = TRUE)
     {
@@ -284,7 +284,7 @@ class ProductForm extends Foxy\Form
 Foxy forms automaticky pridava do formulare nakonec submit button s nazvem "send". Pro upraveni tohoto tlacitka slouzi property $submitButton. V pripade nastaveni hodnoty na NULL nebude submit button generovan.
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         $submitButton = 'odeslat';
@@ -292,7 +292,7 @@ class ProductForm extends Foxy\Form
 ```
 
 ```php
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
     protected
         # anebo bez odesilaciho tlactika
@@ -300,13 +300,70 @@ class ProductForm extends Foxy\Form
 }
 ```
 
+- uploadWrapper
+- uploadSeparator
+
+Upload/image widgety v zakladu renderuji link na uploadovany dokument. Toto chovani muzeme ovlivnit redeklaraci uploadWrapper a to s hodnotnou NULL, ktera vypne renderovani linku nebo vlastnim wrapperem. Wrapper a separator mohou byt stringy, ktere budou argumenty pro \Nette\Utils\Html, anebo primo instance teto tridy.
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+    public
+        $uploadWrapper = 'span';
+
+	protected function attached($presenter)
+	{
+		parent::attached($presenter);
+		$this->uploadSeparator = \Nette\Utils\Html::el('br');
+	}
+}
+```
+
+- getUrlParams()
+
+V pripade, ze bychom chteli po ulozeni nebo vytvoreni entity presmerovat na jeji detail, tezko bychom skladali tento dynamicky odkaz pres $successUrl property, proto byla zavedena nepovinna metoda getUrlParams(), ktera kdyz je definovana, musi vracet prazdne ci naplnene pole url parametru.
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+	protected
+		$successUrl = 'detail';
+
+	protected function getUrlParams()
+	{
+		return array('id' => $this->instance->id);
+	}
+}
+```
+
+- invokeFlashMessage($status = 'success')
+
+Budeme-li chtit jednoduse vyvolat flash message po zpracovani formulare, kde jsme pretizili saveModel metodu, muzeme pouzit invokeFlashMessage
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+    public function saveModel($form, $commit = TRUE)
+    {
+        parent::saveModel($form, $commit = FALSE);
+
+        # ...
+
+		try {
+			$this->em->flush();
+			$this->invokeFlashMessage();
+		} catch(\Exception $e) {
+			$this->invokeFlashMessage('error');
+		}
+
+        $this->presenter->redirect($this->successUrl);
+}
+```
+
 TODO
 ----
 
 - media macro
-- custom file upload/image component s podporou nahledu
-- isNew() pro pohodlnejsi pouziti custom flash message po pretizeni saveModel
-- getSuccessUrl() pro redirect na detail ci jinou dynamickou url
 - LoginForm
 - ChangePasswordForm
 - ForggotenPasswordForm

@@ -1,6 +1,6 @@
 <?php
 
-class ProductForm extends Foxy\Form
+class ProductForm extends Foxy\Forms\Form
 {
 	protected $model = 'Product';
 	protected $successUrl = 'default';

@@ -7,10 +7,10 @@
 # @author Jiri Dubansky <jiri@dubansky.cz>
 
 
-namespace Foxy;
+namespace Foxy\Controls;
 
 
-class DisabledComponent extends \Nette\Forms\Controls\BaseControl
+class Disabled extends \Nette\Forms\Controls\BaseControl
 {
 
     # @Foxy\MediaStorage
@@ -20,11 +20,11 @@ class DisabledComponent extends \Nette\Forms\Controls\BaseControl
     protected $property;
 
 
-    # Construct Foxy\DisabledComponent
+    # Construct Foxy\Controls\Disabled
     #
-    # @param Foxy\Form $form
+    # @param Foxy\Forms\Form $form
     # @param @array $property
-    public function __construct(Form $form, $property)
+    public function __construct(\Foxy\Forms\Form $form, $property)
     {
         $label = ($form->getTranslator())
             ? $form->getTranslator()->translate($property['fieldName'])
@@ -32,7 +32,7 @@ class DisabledComponent extends \Nette\Forms\Controls\BaseControl
 
         parent::__construct($label);
 
-        $this->mediaStorage = $form->presenter->context->getByType('Foxy\MediaStorage');;
+        $this->mediaStorage = $form->presenter->context->getByType('Foxy\MediaStorage');
         $this->property = $property;
         $this->setDisabled();
 

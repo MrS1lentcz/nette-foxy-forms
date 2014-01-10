@@ -7,7 +7,7 @@
 # @author Jiri Dubansky <jiri@dubansky.cz>
 
 
-namespace Foxy;
+namespace Foxy\Forms;
 
 
 define('FOXY_NO_VALIDATION', 0);
@@ -30,6 +30,9 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @\Doctrine\ORM\EntityManager
     private $em;
+
+	# @string
+	private $status;
 
     # @string
     # Model name
@@ -76,18 +79,29 @@ abstract class Form extends \Nette\Application\UI\Form {
     protected $submitButton = 'send';
 
     # @string
-    # Flash message post insert
+    # Flash success message post insert
     protected $successInsert = 'Model was created successfully';
 
     # @string
-    # Flash message post update
+    # Flash success message post update
     protected $successUpdate= 'Model was edited successfully';
 
     # @string
-    # Flash message post error
-    protected $errorMessage = 'Model was not saved';
+    # Flash error message post insert
+    protected $errorInsert = 'Model was not created';
 
- 
+    # Flash error message post update
+    protected $errorUpdate = 'Model was not updated';
+
+	# @mixed
+	# Wrapper for upload control
+	public $uploadWrapper = 'div';
+
+	# @mixed
+	# Separator between upload control and link
+	public $uploadSeparator = 'br';
+
+
     # @array
     protected $validationMessages = array(
         FOXY_NULLABLE   => 'Item is required',
@@ -101,26 +115,26 @@ abstract class Form extends \Nette\Application\UI\Form {
 
     # @array
     protected $componentsCallbackMap = array(
-        'integer'           => 'Foxy\FormComponents::createInteger',
-        'bigint'            => 'Foxy\FormComponents::createBigInteger',
-        'smallint'          => 'Foxy\FormComponents::createSmallInteger',
-        'string'            => 'Foxy\FormComponents::createString',
-        'text'              => 'Foxy\FormComponents::createText',
-        'decimal'           => 'Foxy\FormComponents::createDecimal',
-        'float'             => 'Foxy\FormComponents::createDecimal',
-        'boolean'           => 'Foxy\FormComponents::createBoolean',
-        'datetime'          => 'Foxy\FormComponents::createDatetime',
-        'date'              => 'Foxy\FormComponents::createDate',
-        'time'              => 'Foxy\FormComponents::createTime',
-        FOXY_ONE_TO_ONE     => 'Foxy\FormComponents::createSelectBox',
-        FOXY_MANY_TO_ONE    => 'Foxy\FormComponents::createSelectBox',
-        FOXY_ONE_TO_MANY    => 'Foxy\FormComponents::createMultipleSelectBox',
-        FOXY_MANY_TO_MANY   => 'Foxy\FormComponents::createMultipleSelectBox',
+        'integer'           => 'Foxy\ComponentsFactory::createInteger',
+        'bigint'            => 'Foxy\ComponentsFactory::createBigInteger',
+        'smallint'          => 'Foxy\ComponentsFactory::createSmallInteger',
+        'string'            => 'Foxy\ComponentsFactory::createString',
+        'text'              => 'Foxy\ComponentsFactory::createText',
+        'decimal'           => 'Foxy\ComponentsFactory::createDecimal',
+        'float'             => 'Foxy\ComponentsFactory::createDecimal',
+        'boolean'           => 'Foxy\ComponentsFactory::createBoolean',
+        'datetime'          => 'Foxy\ComponentsFactory::createDatetime',
+        'date'              => 'Foxy\ComponentsFactory::createDate',
+        'time'              => 'Foxy\ComponentsFactory::createTime',
+        FOXY_ONE_TO_ONE     => 'Foxy\ComponentsFactory::createSelectBox',
+        FOXY_MANY_TO_ONE    => 'Foxy\ComponentsFactory::createSelectBox',
+        FOXY_ONE_TO_MANY    => 'Foxy\ComponentsFactory::createMultipleSelectBox',
+        FOXY_MANY_TO_MANY   => 'Foxy\ComponentsFactory::createMultipleSelectBox',
         # Additional widgets
-        'upload'            => 'Foxy\FormComponents::createUpload',
-        'image'             => 'Foxy\FormComponents::createImage',
-        'password'          => 'Foxy\FormComponents::createPassword',
-        'email'             => 'Foxy\FormComponents::createEmail',
+        'upload'            => 'Foxy\ComponentsFactory::createUpload',
+        'image'             => 'Foxy\ComponentsFactory::createImage',
+        'password'          => 'Foxy\ComponentsFactory::createPassword',
+        'email'             => 'Foxy\ComponentsFactory::createEmail',
     );
 
     # Properties with customized metadata
@@ -307,7 +321,10 @@ abstract class Form extends \Nette\Application\UI\Form {
         if (is_array($this->readOnly)
             && in_array($property['fieldName'], $this->readOnly)) {
             $this->removeComponent($this[$fieldName]);
-            $this[$fieldName] = new DisabledComponent($this, $property);
+            $this[$fieldName] = new \Foxy\Controls\Disabled(
+				$this,
+				$property
+			);
         }
 
     }
@@ -557,7 +574,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         foreach($this->properties as $property) {
             $asLabel = FALSE;
 
-            if ($this[$property['fieldName']] instanceof DisabledComponent) {
+            if ($this[$property['fieldName']] instanceof \Foxy\Controls\Disabled) {
                 $asLabel = TRUE;
             }
             $this[$property['fieldName']]->setDefaultValue(
@@ -635,7 +652,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     {
         $values = $form->getValues();
         $mediaStorage = $this->presenter->context->getByType('Foxy\MediaStorage');
-        $status = 'successInsert';
+        $this->status = 'Insert';
 
         # Is update
         $identifier = $this->getIdentifier($this->model);
@@ -644,7 +661,7 @@ abstract class Form extends \Nette\Application\UI\Form {
             && $values[$identifier]) {
 
             $this->instance = $this->em->find($this->model, $values[$identifier]);
-            $status = 'successUpdate';
+            $this->status = 'Update';
         }
 
         foreach($values as $name => $val) {
@@ -700,19 +717,28 @@ abstract class Form extends \Nette\Application\UI\Form {
         if ($commit) {
             try {
                 $this->em->flush();
-                if ($this->{$status}) {
-                    $this->presenter->flashMessage($this->{$status});
-                }
+				$this->invokeFlashMessage();
             } catch (\Exception $e) {
-                throw $e;
-                if ($this->errorMessage) {
-                    $this->presenter->flashMessage($this->errorMessage, 'error');
-                }
+                $this->invokeFlashMessage('error');
             }
 
+			$urlParams = array();
+			if (method_exists($this, 'getUrlParams')) {
+				$urlParams = $this->getUrlParams();
+			}
+
             if ($this->successUrl) {
-                $this->presenter->redirect($this->successUrl);
+                $this->presenter->redirect($this->successUrl, $urlParams);
             }
         }
     }
+
+	# Invokes flash message
+	#
+	# @param string $status
+	public function invokeFlashMessage($status = 'success')
+	{
+		$status = $status . $this->status;
+		$this->presenter->flashMessage($this->{$status}, $status);
+	}
 }
