@@ -31,6 +31,9 @@ abstract class Form extends \Nette\Application\UI\Form {
     # @\Doctrine\ORM\EntityManager
     protected $em;
 
+	# @\Foxy\Media\Controler
+	protected $mediaControler;
+
     # @string
     protected $status;
 
@@ -175,6 +178,8 @@ abstract class Form extends \Nette\Application\UI\Form {
         parent::attached($presenter);
 
         if ($presenter instanceof \Nette\Application\UI\Presenter) {
+			$this->mediaControler
+				= $this->presenter->context->getByType('Foxy\Media\Controler');
             $this->properties = $this->getCompletedProperties();
 
             foreach($this->properties as $property) {
@@ -651,7 +656,6 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function saveModel($form, $commit = TRUE)
     {
         $values = $form->getValues();
-        $mediaControler = $this->presenter->context->getByType('Foxy\Media\Controler');
         $this->status = 'Insert';
 
         # Is update
@@ -689,7 +693,7 @@ abstract class Form extends \Nette\Application\UI\Form {
                     $dest = $this->uploadTo;
                 }
 
-                $val = $mediaControler->saveFile($val, $dest);
+                $val = $this->mediaControler->saveFile($val, $dest);
             }
 
             # Unique check
