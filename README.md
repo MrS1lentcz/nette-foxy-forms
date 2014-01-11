@@ -185,7 +185,7 @@ class ProductForm extends Foxy\Forms\Form
 
 - excludeValidations
 
-Deaktivaci jednotlivich pravidel muzeme provest deklaraci excludeValidations
+Deaktivaci jednotlivych pravidel muzeme provest deklaraci excludeValidations
 
 ```php
 class ProductForm extends Foxy\Forms\Form
@@ -211,9 +211,9 @@ class ProductForm extends Foxy\Forms\Form
         FOXY_UNIQUE     => 'Moje zprava pro unique chybu',
     );
 
-    public function __construct(\Doctrine\ORM\EntityManager $em)
+    public function __construct()
     {
-        parent::__construct($em);
+        parent::__construct();
         $this->validationMessages[FOXY_NULLABLE] = 'Tohle musis vyplnit!';
     }
 
@@ -236,7 +236,7 @@ class ProductForm extends Foxy\Forms\Form
     public function getFkValues($field, $repository)
     {
         if ($field == 'category') {
-            return $repository->getProductCategories();
+            return $repository->getSpecialCategories();
         }
     }
 }
@@ -244,7 +244,7 @@ class ProductForm extends Foxy\Forms\Form
 
 - setFieldComponent($field)
 
-Pro definici vlastni sady pravidel pro nejake komponenty zase slouzi setFieldComponent metoda.
+Pro definici vlastni sady pravidel pro nejake komponenty zase slouzi setFieldComponent metoda. V pripade, ze takto manualne vytvorime komponentu, nette-foxy-forms se ji nebude pokouset generovat a ani pregenerovavat.
 
 ```php
 class ProductForm extends Foxy\Forms\Form
@@ -395,7 +395,7 @@ class ProductForm extends Foxy\Forms\Form
 
 - flashMessage($status = 'success')
 
-Budeme-li chtit jednoduse vyvolat flash message po zpracovani formulare, kde jsme pretizili saveModel metodu, muzeme pouzit invokeFlashMessage
+Budeme-li chtit jednoduse vyvolat flash message po zpracovani formulare, kde jsme pretizili saveModel metodu, muzeme pouzit flashMessage
 
 ```php
 class ProductForm extends Foxy\Forms\Form
