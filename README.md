@@ -10,8 +10,18 @@ Pozadavky
 - Doctrine2 neby vyssi
 - __toString Magickou methodu v kazde entite
 - v konstruktoru kazde entity inicializace "toMany" vazeb pomoci Doctrine\Common\Collections\ArrayCollection()
+- [PHP-GD](http://www.php.net/manual/en/image.installation.php) pokud chceme pouzivat resizer media macra
 
 Instalace
+------------
+
+Nejjednodussi cesta pro ziskani nette-foxy-forms je pomoci [Composeru](http://getcomposer.org/)
+
+```sh
+	$ composer require mrS1lentcz/nette-foxy-forms:@dev-master
+```
+
+Konfigurace
 ------------
 
 - config.neon
@@ -414,10 +424,31 @@ Pokud jsme si zaregistrovali media macro, muzeme jej v latte pouzit ke zkompleto
 
 ```
 
+Pres media macro muzeme takze jednoduse menit rozmery obrazku. Lze pouzit zapis s pojmenovanymi parametry, anebo anonymnimi, avsak oba tyto zpusoby nelze kombinovat.
+
+```html
+
+	<!-- Obrazek o rozmeru 100x200, ktery bude zmensen a orezan  -->
+	<img src="{media $entity->image, 100, 200, TRUE}"  />
+
+	<!-- Obrazek o rozmeru 150x300, ktery bude zmensen v pomeru sran -->
+	<img src="{media $entity->image, 150, 300, FALSE}"  />
+
+	<!-- Obrazek o rozmeru nx25, ktery bude zmensen v pomeru sran -->
+	<img src="{media $entity->image, height=>25}"  />
+
+	<!-- Obrazek o rozmeru nx100, ktery bude zmensen a orezan (defaultne) -->
+	<img src="{media $entity->image, NULL, 100}"  />
+
+	<!-- Obrazek o rozmeru 50x100, ktery bude zmensen bez pomeru stran -->
+	<img src="{media $entity->image, 50, 100, Nette\Image::STRETCH}"  />
+
+```
+
 TODO
 ----
 
-- media macro parameters: height, width, crop
+- help_text
 - LoginForm
 - ChangePasswordForm
 - ForggotenPasswordForm

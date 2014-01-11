@@ -24,13 +24,12 @@ interface IStorage
 	 */
 	public function saveFile(\Nette\Http\FileUpload $file, $dest);
 
-	
+
 	/**
 	 * Checks if file exists
 	 *
-	 * @param \Nette\Http\FileUpload $file
 	 * @param string $dest
 	 * @return bool
 	 */
-	public function fileExists(\Nette\Http\FileUpload $file, $dest);
+	public function fileExists($dest);
 }

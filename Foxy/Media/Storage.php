@@ -82,15 +82,23 @@ class Storage implements IStorage
 
 
 	/**
+	 * Returns media dir
+	 *
+	 * @return string
+	 */
+	public function getMediaDir()
+	{
+		return $this->mediaDir;
+	}
+
+	/**
 	 * Checks if file exists
 	 *
-	 * @param \Nette\Http\FileUpload $file
 	 * @param string $dest
 	 * @return bool
 	 */
-	public function fileExists(\Nette\Http\FileUpload $file, $dest)
+	public function fileExists($dest)
 	{
-		$absDirPath = $this->mediaDir . strftime($dest);
-		return file_exists($absDirPath);
+		return file_exists($this->mediaDir . strftime($dest));
 	}
 }
