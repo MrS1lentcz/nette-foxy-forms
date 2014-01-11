@@ -26,16 +26,17 @@ Konfigurace
 
 - config.neon
 
-Toto nastaveni slouzi ke generovani spravnych url k souborum a ukladani do spravnych destinaci. Je take dobrym zvykem v konfiguraci web serveru pouzivat pro media url vlastni nastaveni, napriklad cachovani, apod.
+Toto nastaveni slouzi ke generovani spravnych url k souborum a ukladani do spravnych destinaci. Je take dobrym zvykem v konfiguraci web serveru pouzivat pro media url vlastni nastaveni, napriklad cachovani, apod. Prvni parametr pro sluzbu mediaStorage je absolutni cesta do adresare, kam chceme soubory ukladat, druhy nepovinny, je pattern nazvu souboru, ktery v zakladu generuje nazvy ve tvaru IMG_%04d.EXT. Pote staci nastavit mediaControleru url do uloziste a v druhem parametru predat mediaStorage.
 
 
 ```yaml
 services:
     mediaStorage: Foxy\Media\Storage('/www/my_project/media/')
-    # Priklad pouziti subdomeny
-    mediaStorage: Foxy\Media\Storage('http://media.mujprojekt.cz/', @mediaStorage)
 
     mediaControler: Foxy\Media\Controler('/media', @mediaStorage)
+
+    # Priklad pouziti subdomeny
+    mediaControler: Foxy\Media\Controler('http://media.mujprojekt.cz/', @mediaStorage)
 ```
 
 Pokud chceme mit k dispozici i media macro, pak jej musime zaregistrovat do latte, avsak k pouzivani media macra vas nikdo nenuti a tak tato konfigurace neni povinna.
