@@ -14,31 +14,10 @@ namespace Foxy\Controls;
 
 class Upload extends \Nette\Forms\Controls\UploadControl
 {
-
-    /**
-     * @var Foxy\Media\Controler
-     */
-    protected $mediaStorage;
-
     /**
      * @var string
      */
     protected $infoValue;
-
-
-    /**
-     * Adds component to form
-     *
-     * @param object $form
-     */
-    protected function attached($form)
-    {
-        parent::attached($form);
-        if ($form instanceof \Nette\Forms\Form) {
-            $this->mediaStorage
-                = $form->presenter->context->getByType('Foxy\Media\Controler');
-        }
-    }
 
 
     /**
@@ -95,6 +74,6 @@ class Upload extends \Nette\Forms\Controls\UploadControl
     {
         return \Nette\Utils\Html::el('a')
             ->setText($this->infoValue)
-            ->setHref($this->mediaStorage->getUrl($this->infoValue));
+            ->setHref($this->parent->mediaControler->getUrl($this->infoValue));
     }
 }

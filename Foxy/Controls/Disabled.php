@@ -16,14 +16,19 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
 {
 
     /**
-     * @var Foxy\Media\Controler
+     * @var string
      */
-    protected $mediaStorage;
+    protected $infoValue;
 
     /**
      * @var array
      */
     protected $property;
+
+    /**
+     * @var bool
+     */
+    protected $replaced = FALSE;
 
 
     /**
@@ -34,19 +39,9 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
      */
     public function __construct(\Foxy\Forms\Form $form, $property)
     {
-        $label = ($form->getTranslator())
-            ? $form->getTranslator()->translate($property['fieldName'])
-                : $property['fieldName'];
-
-        parent::__construct($label);
-
-        $this->mediaStorage = $form->presenter->context->getByType('Foxy\Media\Controler');
+        parent::__construct($property['fieldName']);
         $this->property = $property;
         $this->setDisabled();
-
-        $this->controlBuilder(
-            $form->getFormValue($property, $asLabel = TRUE)
-        );
     }
 
 
@@ -55,24 +50,30 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
      *
      * @param mixed $value
      */
-    protected function controlBuilder($value)
+    public function getControl()
     {
-        if (in_array($this->property['widget'], array('upload', 'image'))) {
-            $this->control = \Nette\Utils\Html::el('a')
-                ->setText($value)
-                ->setHref($this->mediaStorage->getUrl($value));
-        } elseif($this->property['widget'] == 'email') {
-            $this->control = \Nette\Utils\Html::el('a')
-                ->setText($value)
-                ->setHref('mailto:'.$value);
-        } elseif (preg_match('|http://|', $value)) {
-            $this->control = \Nette\Utils\Html::el('a')
-                ->setText($value)
-                ->setHref($value)
-                ->setTarget('_blank');
-        } else {
-            $this->control = \Nette\Utils\Html::el('span')->setText((string) $value);
+        if ($this->replaced === FALSE)
+        {
+            $value = $this->infoValue;
+            if (in_array($this->property['widget'], array('upload', 'image'))) {
+                $this->control = \Nette\Utils\Html::el('a')
+                    ->setText($value)
+                    ->setHref($this->parent->mediaControler->getUrl($value));
+            } elseif($this->property['widget'] == 'email') {
+                $this->control = \Nette\Utils\Html::el('a')
+                    ->setText($value)
+                    ->setHref('mailto:'.$value);
+            } elseif (preg_match('|http://|', $value)) {
+                $this->control = \Nette\Utils\Html::el('a')
+                    ->setText($value)
+                    ->setHref($value)
+                    ->setTarget('_blank');
+            } else {
+                $this->control = \Nette\Utils\Html::el('span')->setText((string) $value);
+            }
+            $this->replaced = TRUE;
         }
+        return $this->control;
     }
 
 
@@ -85,7 +86,7 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
     public function setValue($value)
     {
         if ($this->parent) {
-            $this->controlBuilder($value);
+            $this->infoValue = $value;
         }
         return $this;
     }

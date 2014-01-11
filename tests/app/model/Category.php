@@ -24,7 +24,7 @@ class Category
 
     /**
      * @Column(type="string",nullable=true)
-     * @Widget(name="upload")
+     * @Widget(type="upload")
      * @var string
      */
     protected $image;
@@ -73,6 +73,11 @@ class Category
     {
         return $this->createdDatetime;
     }
+
+	public function getImage()
+	{
+		return $this->image;
+	}
 
     public function setCreatedDatetime($createdDatetime)
     {

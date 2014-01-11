@@ -12,4 +12,3 @@ class CategoryForm extends Foxy\Forms\Form
 		$this->uploadSeparator = \Nette\Utils\Html::el('br');
 	}
 }
-

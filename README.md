@@ -28,6 +28,16 @@ services:
     mediaControler: Foxy\Media\Controler('/media', @mediaStorage)
 ```
 
+Pokud chceme mit k dispozici i media macro, pak jej musime zaregistrovat do latte, avsak k pouzivani media macra vas nikdo nenuti a tak tato konfigurace neni povinna.
+
+```yaml
+    services:
+        nette.latte:
+            class: Nette\Latte\Engine
+            setup:
+                - 'Foxy\Macros\Media::install(?->getCompiler())'(@self)
+```
+
 - presenter
 
 U starich verzi Nette nez 2.1 je potreba manualne injectovat Media Controler.
@@ -150,8 +160,8 @@ class ProductForm extends Foxy\Forms\Form
     - FOXY_MAX_LENGTH - nastavuje maximalni delku pro textove vstupy
     - FOXY_HTML5_SUPPORT - pridava html5 atributy
     - FOXY_UNIQUE - kontroluje unique bunky ve fazi ukladani entity
-	- FOXY_UPLOAD_TYPE - validuje typ uploadovaneho souboru u upload widgetu (typ image)
-	- FOXY_EMAIL - validuje email widgety
+    - FOXY_UPLOAD_TYPE - validuje typ uploadovaneho souboru u upload widgetu (typ image)
+    - FOXY_EMAIL - validuje email widgety
     - FOXY_VALIDATE_ALL - aplikuje vsechny podporovane validace
 
 ```php
@@ -251,7 +261,7 @@ class ProductEntity
 {
     /**
      * @Column(type="string",nullable=true)
-	 * @Foxy\Annotations\Widget(type="image")
+     * @Foxy\Annotations\Widget(type="image")
      */
     protected $image;
 }
@@ -271,7 +281,7 @@ class ProductEntity
 {
     /**
      * @Column(type="string",nullable=true)
-	 * @Widget(type="image")
+     * @Widget(type="image")
      */
     protected $image;
 }
@@ -396,10 +406,18 @@ class ProductForm extends Foxy\Forms\Form
 }
 ```
 
+Pokud jsme si zaregistrovali media macro, muzeme jej v latte pouzit ke zkompletovani absolutni url uploadovaneho dokumentu dle konfigurace.
+
+```html
+
+	<img src="{media $entity->image}"  />
+
+```
+
 TODO
 ----
 
-- media macro
+- media macro parameters: height, width, crop
 - LoginForm
 - ChangePasswordForm
 - ForggotenPasswordForm

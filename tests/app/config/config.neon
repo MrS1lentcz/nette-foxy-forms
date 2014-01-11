@@ -50,6 +50,10 @@ common:
         mediaStorage: Foxy\Media\Storage('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/www/media/')
         mediaControler: Foxy\Media\Controler('/media', @mediaStorage)
 
+        nette.latte:
+            class: Nette\Latte\Engine
+            setup:
+                - 'Foxy\Macros\Media::install(?->getCompiler())'(@self)
 
 production < common:
 
