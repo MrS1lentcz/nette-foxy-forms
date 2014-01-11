@@ -1,10 +1,12 @@
 <?php
 
-# @package nette-foxy-forms
-#
-# Generate nette form components using Doctrine entity annotations
-#
-# @author Jiri Dubansky <jiri@dubansky.cz>
+/**
+ * @package nette-foxy-forms
+ *
+ * Generate nette form components using Doctrine entity annotations
+ *
+ * @author Jiri Dubansky <jiri@dubansky.cz>
+ */
 
 
 namespace Foxy\Controls;
@@ -13,16 +15,22 @@ namespace Foxy\Controls;
 class Upload extends \Nette\Forms\Controls\UploadControl
 {
 
-    # @Foxy\Media\Controler
+    /**
+     * @var Foxy\Media\Controler
+     */
     protected $mediaStorage;
 
-    # @string
+    /**
+     * @var string
+     */
     protected $infoValue;
 
 
-    # Adds component to form
-    #
-    # @param mixed $form
+    /**
+     * Adds component to form
+     *
+     * @param object $form
+     */
     protected function attached($form)
     {
         parent::attached($form);
@@ -33,10 +41,12 @@ class Upload extends \Nette\Forms\Controls\UploadControl
     }
 
 
-    # Set value for generating link
-    #
-    # @param mixed $value
-    # @return self
+    /**
+     * Set value for generating link
+     *
+     * @param mixed $value
+     * @return self
+     */
     public function setValue($value)
     {
         $this->infoValue = $value;
@@ -44,9 +54,11 @@ class Upload extends \Nette\Forms\Controls\UploadControl
     }
 
 
-    # Get wrappered control
-    #
-    # @return \Nette\Utils\Html
+    /**
+     * Get wrappered control
+     *
+     * @return \Nette\Utils\Html
+     */
     public function getControl()
     {
         if (! $this->form->uploadWrapper) {
@@ -74,9 +86,11 @@ class Upload extends \Nette\Forms\Controls\UploadControl
     }
 
 
-    # Get info link
-    #
-    # @return \Nette\Utils\Html
+    /**
+     * Get info link
+     *
+     * @return \Nette\Utils\Html
+     */
     public function getLink()
     {
         return \Nette\Utils\Html::el('a')

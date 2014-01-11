@@ -12,16 +12,23 @@ namespace Foxy\Media;
 class Storage implements IStorage
 {
 
-	# @string
+	/**
+	 * @var string
+	 */
 	protected $mediaDir;
 
-	# @string
+	/**
+	 * @var string
+	 */
 	protected $imagePattern;
 
 
-	# Construct Storage
-	#
-	# @param string $mediaDir
+	/**
+	 * Construct Storage
+	 *
+	 * @param string $mediaDir
+	 * @param string $imagePattern
+	 */
 	public function __construct($mediaDir, $imagePattern = 'IMG_%04d')
 	{
 		$this->mediaDir = $mediaDir;
@@ -29,11 +36,13 @@ class Storage implements IStorage
 	}
 
 
-	# Saves file to media directory
-	#
-	# @param \Nette\Http\FileUpload $file
-	# @param string $dest
-	# @return string
+	/**
+	 * Saves file to media directory
+	 *
+	 * @param \Nette\Http\FileUpload $file
+	 * @param string $dest
+	 * @return string
+	 */
 	public function saveFile(\Nette\Http\FileUpload $file, $dest)
 	{
 		$mediaDir = $this->mediaDir;
@@ -45,7 +54,7 @@ class Storage implements IStorage
 			function($matches) use($mediaDir, $imagePattern) {
 				$dir = $matches[1] . '/';
 				$absDir = $mediaDir . $dir;
-				$i = 0;
+				$i = 1;
 
 				if ($handle = @opendir($absDir)) {
 					while (($file = readdir($handle)) !== false){
@@ -72,11 +81,13 @@ class Storage implements IStorage
 	}
 
 
-	# Checks if file exists
-	#
-	# @param \Nette\Http\FileUpload & $file
-	# @param string $dest
-	# @return bool
+	/**
+	 * Checks if file exists
+	 *
+	 * @param \Nette\Http\FileUpload $file
+	 * @param string $dest
+	 * @return bool
+	 */
 	public function fileExists(\Nette\Http\FileUpload $file, $dest)
 	{
 		$absDirPath = $this->mediaDir . strftime($dest);

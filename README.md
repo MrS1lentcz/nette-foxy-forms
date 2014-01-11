@@ -16,30 +16,35 @@ Instalace
 
 - config.neon
 
-Prvni argument je media url, druhy media directory. Toto nastaveni slouzi ke generovani spravnych url k souborum a ukladani do spravnych destinaci. Je take dobrym zvykem v konfiguraci web serveru pouzivat pro media url vlastni nastaveni, napriklad cachovani, apod.
+Toto nastaveni slouzi ke generovani spravnych url k souborum a ukladani do spravnych destinaci. Je take dobrym zvykem v konfiguraci web serveru pouzivat pro media url vlastni nastaveni, napriklad cachovani, apod.
+
 
 ```yaml
 services:
-    mediaStorage: Foxy\MediaStorage('/media', '/www/my_project/media')
-
+    mediaStorage: Foxy\Media\Storage('/www/my_project/media/')
     # Priklad pouziti subdomeny
-    mediaStorage: Foxy\MediaStorage('http://media.mujprojekt.cz/', '/www/mujproject/media')
+    mediaStorage: Foxy\Media\Storage('http://media.mujprojekt.cz/', @mediaStorage)
+
+    mediaControler: Foxy\Media\Controler('/media', @mediaStorage)
 ```
 
 - presenter
 
+U starich verzi Nette nez 2.1 je potreba manualne injectovat Media Controler.
+
 ```php
-    protected $mediaStorage;
+class HomepagePresenter extends Nette\Application\UI\Presenter
+{
+    protected $mediaControler;
 
-    public function injectMediaStorage(\Foxy\MediaStorage $mediaStorage)
+    public function injectMediaStorage(\Foxy\Media\Controler $mediaControler)
     {
-        if ($this->mediaStorage)
-        {
-            throw new \Nette\InvalidStateException('Foxy\MediaStorage has already been set');
+        if ($this->mediaControler) {
+            throw new \Nette\InvalidStateException('Foxy\Media\Controler has already been set');
         }
-
-        $this->mediaStorage = $mediaStorage;
+        $this->mediaStorage = $mediaControler;
     }
+}
 ```
 
 Pouziti
@@ -48,7 +53,7 @@ Pouziti
 - model
 - successUrl
 
-Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy form postara. Jednoduche, ze?
+Foxy formy se pouzivaji stejne jako klasicke Nette UI formy v tovarnickach na komponenty. Staci definovat pouze nazev modelu (entity) a successUrl pro presmerovani po uspesnem ulozeni a o vse ostatni se foxy form postara. Jednoduche, ze?
 
 ```php
 class ProductForm extends Foxy\Forms\Form
@@ -56,6 +61,14 @@ class ProductForm extends Foxy\Forms\Form
     protected
         $model = 'Product',
         $successUrl = 'default';
+}
+
+class HomepagePresenter extends Nette\Application\UI\Presenter
+{
+    createComponentProductForm()
+    {
+        return new ProductForm();
+    }
 }
 ```
 
@@ -137,6 +150,8 @@ class ProductForm extends Foxy\Forms\Form
     - FOXY_MAX_LENGTH - nastavuje maximalni delku pro textove vstupy
     - FOXY_HTML5_SUPPORT - pridava html5 atributy
     - FOXY_UNIQUE - kontroluje unique bunky ve fazi ukladani entity
+	- FOXY_UPLOAD_TYPE - validuje typ uploadovaneho souboru u upload widgetu (typ image)
+	- FOXY_EMAIL - validuje email widgety
     - FOXY_VALIDATE_ALL - aplikuje vsechny podporovane validace
 
 ```php
@@ -147,15 +162,15 @@ class ProductForm extends Foxy\Forms\Form
 }
 ```
 
-- excludedValidations
+- excludeValidations
 
-Deaktivaci jednotlivich pravidel muzeme provest deklaraci excludedValidations
+Deaktivaci jednotlivich pravidel muzeme provest deklaraci excludeValidations
 
 ```php
 class ProductForm extends Foxy\Forms\Form
 {
     protected
-        $excludedValidations = array(FOXY_HTML5_SUPPORT);
+        $excludeValidations = array(FOXY_HTML5_SUPPORT);
 }
 ```
 
@@ -224,7 +239,7 @@ class ProductForm extends Foxy\Forms\Form
 
 - widget
 
-Pro kazdy field lze specifikovat widget, ktery pretizi nativni typ z doctrine anotace. V tuto chvili se to resi pomoci options (customSchemaOptions). Podporovane jsou nasledujici:
+Pro kazdy field lze specifikovat widget, ktery pretizi nativni typ z doctrine anotace. Widget lze upravovat pomoci Foxy\Annotation\Widget anotaci. Podporovane jsou nasledujici:
 
     - upload
     - image
@@ -235,7 +250,28 @@ Pro kazdy field lze specifikovat widget, ktery pretizi nativni typ z doctrine an
 class ProductEntity
 {
     /**
-     * @Column(type="string",nullable=true,options={"widget"="image"})
+     * @Column(type="string",nullable=true)
+	 * @Foxy\Annotations\Widget(type="image")
+     */
+    protected $image;
+}
+```
+
+- annotationNamespace
+
+Muzeme pouzit i zapis bez namespace, avsak tuto volbu musime nastavit ve formulari prepinacem annotationNamespace.
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+    protected $annotationNamespace = FALSE;
+}
+
+class ProductEntity
+{
+    /**
+     * @Column(type="string",nullable=true)
+	 * @Widget(type="image")
      */
     protected $image;
 }
@@ -311,11 +347,11 @@ class ProductForm extends Foxy\Forms\Form
     public
         $uploadWrapper = 'span';
 
-	protected function attached($presenter)
-	{
-		parent::attached($presenter);
-		$this->uploadSeparator = \Nette\Utils\Html::el('br');
-	}
+    protected function attached($presenter)
+    {
+        parent::attached($presenter);
+        $this->uploadSeparator = \Nette\Utils\Html::el('br');
+    }
 }
 ```
 
@@ -326,17 +362,17 @@ V pripade, ze bychom chteli po ulozeni nebo vytvoreni entity presmerovat na jeji
 ```php
 class ProductForm extends Foxy\Forms\Form
 {
-	protected
-		$successUrl = 'detail';
+    protected
+        $successUrl = 'detail';
 
-	protected function getUrlParams()
-	{
-		return array('id' => $this->instance->id);
-	}
+    protected function getUrlParams()
+    {
+        return array('id' => $this->instance->id);
+    }
 }
 ```
 
-- invokeFlashMessage($status = 'success')
+- flashMessage($status = 'success')
 
 Budeme-li chtit jednoduse vyvolat flash message po zpracovani formulare, kde jsme pretizili saveModel metodu, muzeme pouzit invokeFlashMessage
 
@@ -349,12 +385,12 @@ class ProductForm extends Foxy\Forms\Form
 
         # ...
 
-		try {
-			$this->em->flush();
-			$this->invokeFlashMessage();
-		} catch(\Exception $e) {
-			$this->invokeFlashMessage('error');
-		}
+        try {
+            $this->em->flush();
+            $this->flashMessage();
+        } catch(\Exception $e) {
+            $this->flashMessage('error');
+        }
 
         $this->presenter->redirect($this->successUrl);
 }

@@ -1,10 +1,12 @@
 <?php
 
-# @package nette-foxy-forms
-#
-# Generate nette form components using Doctrine entity annotations
-#
-# @author Jiri Dubansky <jiri@dubansky.cz>
+/**
+ * @package nette-foxy-forms
+ *
+ * Generate nette form components using Doctrine entity annotations
+ *
+ * @author Jiri Dubansky <jiri@dubansky.cz>
+ */
 
 
 namespace Foxy\Controls;
@@ -13,17 +15,23 @@ namespace Foxy\Controls;
 class Disabled extends \Nette\Forms\Controls\BaseControl
 {
 
-    # @Foxy\Media\Controler
+    /**
+     * @var Foxy\Media\Controler
+     */
     protected $mediaStorage;
 
-    # @array
+    /**
+     * @var array
+     */
     protected $property;
 
 
-    # Construct Foxy\Controls\Disabled
-    #
-    # @param Foxy\Forms\Form $form
-    # @param @array $property
+    /**
+     * Construct Foxy\Controls\Disabled
+     *
+     * @param Foxy\Forms\Form $form
+     * @param @array $property
+     */
     public function __construct(\Foxy\Forms\Form $form, $property)
     {
         $label = ($form->getTranslator())
@@ -36,16 +44,18 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
         $this->property = $property;
         $this->setDisabled();
 
-        $this->_controlBuilder(
+        $this->controlBuilder(
             $form->getFormValue($property, $asLabel = TRUE)
         );
     }
 
 
-    # Builds custom control
-    #
-    # @param mixed $value
-    protected function _controlBuilder($value)
+    /**
+     * Builds custom control
+     *
+     * @param mixed $value
+     */
+    protected function controlBuilder($value)
     {
         if (in_array($this->property['widget'], array('upload', 'image'))) {
             $this->control = \Nette\Utils\Html::el('a')
@@ -66,14 +76,16 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
     }
 
 
-    # Sets control's value
-    #
-    # @param mixed $value
-    # @return self
+    /**
+     * Sets control's value
+     *
+     * @param mixed $value
+     * @return self
+     */
     public function setValue($value)
     {
         if ($this->parent) {
-            $this->_controlBuilder($value);
+            $this->controlBuilder($value);
         }
         return $this;
     }

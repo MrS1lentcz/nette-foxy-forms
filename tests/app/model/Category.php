@@ -1,5 +1,7 @@
 <?php
 
+# @Foxy\Annotations\Widget(name="upload")
+
 /**
  * Category Entity
  *
@@ -21,9 +23,9 @@ class Category
     protected $name;
 
     /**
-     * @Column(type="string",nullable=true,options={"widget"="image"})
+     * @Column(type="string",nullable=true)
+     * @Widget(name="upload")
      * @var string
-     * @ NOTE has not getter/setter methods
      */
     protected $image;
 
@@ -43,7 +45,7 @@ class Category
 
 	public function __toString()
 	{
-		return $this->name;
+		return (string) $this->name;
 	}
 
 	public function getId()

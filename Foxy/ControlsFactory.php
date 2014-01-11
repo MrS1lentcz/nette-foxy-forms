@@ -1,20 +1,25 @@
 <?php
 
-# @package nette-foxy-forms
-#
-# Generate nette form components using Doctrine entity annotations
-#
-# @author Jiri Dubansky <jiri@dubansky.cz>
+/**
+ * @package nette-foxy-forms
+ *
+ * Generate nette form components using Doctrine entity annotations
+ *
+ * @author Jiri Dubansky <jiri@dubansky.cz>
+ */
+
 
 namespace Foxy;
 
 
 class ControlsFactory
 {
-    # Creates integer component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+    /**
+     * Creates integer component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createInteger(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -41,29 +46,36 @@ class ControlsFactory
     }
 
 
-    # Creates big integer component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+    /**
+     * Creates big integer component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createBigInteger(Forms\Form $form, array $property)
     {
         self::createInteger($form, $property, $validationSettings);
     }
 
 
-    # Creates small integer component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+    /**
+     * Creates small integer component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createSmallInteger(Forms\Form $form, array $property)
     {
         self::createInteger($form, $property, $validationSettings);
     }
 
-    # Creates string component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates string component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createString(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -86,10 +98,13 @@ class ControlsFactory
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
-    # Creates text component
-    #
-    # @param Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates text component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createText(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -112,10 +127,13 @@ class ControlsFactory
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
-    # Creates decimal component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates decimal component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createDecimal(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -141,10 +159,13 @@ class ControlsFactory
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
-    # Creates boolean component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates boolean component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createBoolean(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -152,10 +173,13 @@ class ControlsFactory
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
-    # Creates datetime component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates datetime component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createDatetime(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -178,10 +202,13 @@ class ControlsFactory
         }
     }
 
-    # Creates date component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates date component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createDate(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -204,10 +231,13 @@ class ControlsFactory
         }
     }
 
-    # Creates time component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates time component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createTime(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -226,11 +256,13 @@ class ControlsFactory
         }
     }
 
-    # Creates selectbox component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $propertynes
-    # @param array $data
+
+    /**
+     * Creates selectbox component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createSelectBox(Forms\Form $form,
                                          array $property,
                                          array $data)
@@ -248,11 +280,13 @@ class ControlsFactory
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
-    # Creates mutiple selectbox component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
-    # @param array $data
+
+    /**
+     * Creates mutiple selectbox component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createMultipleSelectBox(Forms\Form $form,
                                          array $property,
                                          array $data)
@@ -269,10 +303,13 @@ class ControlsFactory
         $form[$field]->setTranslator(NULL);
     }
 
-    # Creates upload component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates upload component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createUpload(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -286,10 +323,13 @@ class ControlsFactory
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
-    # Creates upload component with image validation
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates upload component with image validation
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createImage(Forms\Form $form, array $property)
     {
         self::createUpload($form, $property);
@@ -303,10 +343,13 @@ class ControlsFactory
         }
     }
 
-    # Creates password component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates password component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createPassword(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
@@ -319,10 +362,13 @@ class ControlsFactory
         }
     }
 
-    # Creates email component
-    #
-    # @param \Foxy\Forms\Form $form
-    # @param array $property
+
+    /**
+     * Creates email component
+     *
+     * @param \Foxy\Forms\Form $form
+     * @param array $property
+     */
     public static function createEmail(Forms\Form $form, array $property)
     {
         self::createString($form, $property);

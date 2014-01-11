@@ -1,11 +1,12 @@
 <?php
 
-# @package nette-foxy-forms
-#
-# Generate nette form components using Doctrine entity annotations
-#
-# @author Jiri Dubansky <jiri@dubansky.cz>
-
+/**
+ * @package nette-foxy-forms
+ *
+ * Generate nette form components using Doctrine entity annotations
+ *
+ * @author Jiri Dubansky <jiri@dubansky.cz>
+ */
 
 namespace Foxy\Forms;
 
@@ -28,84 +29,147 @@ define('FOXY_MANY_TO_MANY', 8);
 
 abstract class Form extends \Nette\Application\UI\Form {
 
-    # @\Doctrine\ORM\EntityManager
-    protected $em;
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     * @inject
+     */
+    public $em;
 
-	# @\Foxy\Media\Controler
-	protected $mediaControler;
+    /**
+     * @var \Foxy\Media\Controler
+     * @inject
+     */
+    public $mediaControler;
 
-    # @string
+    /**
+     * @var \Nette\Caching\IStorage
+     * @inject
+     */
+    public $cachingStorage;
+
+    /**
+     * @var \Nette\Caching/Cache
+     */
+    private $cache;
+
+    /**
+     * @var string
+     */
     protected $status;
 
-    # @string
-    # Model name
+    /**
+     * @var string
+     */
     protected $model;
 
-    # @mixed
-    # Creates these fields only if is set
+    /**
+     * @var array | NULL
+     */
     protected $fields;
 
-    # @mixed
-    # Remove these fields from form
+    /**
+     * @var array | NULL
+     */
     protected $exclude;
 
-    # @mixed
-    # Form fieldsets
+    /**
+     * @var array | NULL
+     */
     protected $fieldsets;
 
-    # @int
-    # Validation level
+    /**
+     * @var int
+     */
     protected $validation = FOXY_VALIDATE_ALL;
 
-    # @array
-    # Excluded validations
-    protected $excludedValidations;
+    /**
+     * @var array | NULL
+     */
+    protected $excludeValidations;
 
-    # @array
-    # Read only fields
+    /**
+     * @var array | NULL
+     */
     protected $readOnly;
 
-    # @object
-    # Instance of model
+    /**
+     * @var object
+     */
     protected $instance;
 
-    # @string
-    # Redirect destination after save model action
+    /**
+     * @var string
+     */
     protected $successUrl = 'default';
 
-    # @string
-    # Relative upload directory with date masks supporting
+    /**
+     * @var string
+     */
     protected $uploadTo = 'images/%Y-%m-%d/';
 
-    # @string
-    # Add submit button automatically if is not NULL
+    /**
+     * @var string | NULL
+     */
     protected $submitButton = 'send';
 
-    # @string
-    # Flash success message post insert
+    /**
+     * @var string
+     */
     protected $successInsert = 'Model was created successfully';
 
-    # @string
-    # Flash success message post update
+    /**
+     * @var string
+     */
     protected $successUpdate= 'Model was edited successfully';
 
-    # @string
-    # Flash error message post insert
+    /**
+     * @var string
+     */
     protected $errorInsert = 'Model was not created';
 
-    # Flash error message post update
+    /**
+     * @var string
+     */
     protected $errorUpdate = 'Model was not updated';
 
-    # @mixed
-    # Wrapper for upload control
+    /**
+     * @var string | Nette\Utils\Html | NULL
+     */
     public $uploadWrapper = 'div';
 
-    # @mixed
-    # Separator between upload control and link
+    /**
+     * @var string | Nette\Utils\Html | NULL
+     */
     public $uploadSeparator = 'br';
 
+    /**
+     * @var bool
+     */
+    protected static $annotationNamespace = TRUE;
 
-    # @array
+    /**
+     * @var array
+     */
+    private $properties = array();
+
+    /**
+     * @var bool
+     */
+    private static $isInited = FALSE;
+
+    /**
+     * @var Doctrine\Common\Annotations\SimpleAnnotationReader
+     */
+    private static $simpleReader = NULL;
+
+    /**
+     * @var bool
+     */
+    protected $enableCaching = TRUE;
+
+    /**
+     * @var array
+     */
     protected $validationMessages = array(
         FOXY_NULLABLE   => 'Item is required',
         FOXY_IS_INT     => 'Has to be an integer',
@@ -116,7 +180,9 @@ abstract class Form extends \Nette\Application\UI\Form {
         FOXY_EMAIL      => 'Email is not valid',
     );
 
-    # @array
+    /**
+     * @var array
+     */
     protected $componentsCallbackMap = array(
         'integer'           => 'Foxy\ControlsFactory::createInteger',
         'bigint'            => 'Foxy\ControlsFactory::createBigInteger',
@@ -140,20 +206,27 @@ abstract class Form extends \Nette\Application\UI\Form {
         'email'             => 'Foxy\ControlsFactory::createEmail',
     );
 
-    # Properties with customized metadata
-    # @array
-    private $properties = array();
 
-
-    # Construct Foxy\Form
-    #
-    # @param \Doctrine\ORM\EntityManager $em
-    # @param Nette\ComponentModel\IContainer $parent
-    # @param string $name
-    public function __construct(\Doctrine\ORM\EntityManager $em)
+    /**
+     * Construct Foxy\Forms\Form
+     *
+     */
+    public function __construct()
     {
         parent::__construct();
-        $this->em = $em;
+
+        if (self::$isInited == FALSE) {
+            \Doctrine\Common\Annotations\AnnotationRegistry
+                ::registerFile(__DIR__ . '/../Annotations/Widget.php');
+
+            self::$simpleReader
+                = new \Doctrine\Common\Annotations\SimpleAnnotationReader();
+
+            if (self::$annotationNamespace) {
+                self::$simpleReader->addNamespace('Foxy\Annotations');
+            }
+            self::$isInited = TRUE;
+        }
 
         if (is_object($this->model)) {
             $this->instance = $this->model;
@@ -161,8 +234,8 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->instance = new $this->model;
         }
 
-        if (is_array($this->excludedValidations)) {
-            foreach($this->excludedValidations as $ex) {
+        if (is_array($this->excludeValidations)) {
+            foreach($this->excludeValidations as $ex) {
                 $this->validation ^= $ex;
             }
         }
@@ -170,20 +243,43 @@ abstract class Form extends \Nette\Application\UI\Form {
         $this->onSuccess[] = array($this, 'saveModel');
     }
 
-    # Creates form components after attached to presenter
-    #
-    # @param object
+
+    /**
+     * Creates form components after attached to presenter
+     *
+     * @param object
+     */
     protected function attached($presenter)
     {
         parent::attached($presenter);
 
         if ($presenter instanceof \Nette\Application\UI\Presenter) {
-			$this->mediaControler
-				= $this->presenter->context->getByType('Foxy\Media\Controler');
-            $this->properties = $this->getCompletedProperties();
+
+			$context = $this->presenter->getContext();
+			if (method_exists($context, 'callInjects')) {
+				$context->callInjects($this);
+			} else {
+				$this->em = $context->getByType('Doctrine\ORM\EntityManager');
+				$this->mediaControler = $context->getByType('Foxy\Media\Controler');
+				$this->cachingStorage = $context->getByType('Nette\Caching\IStorage');
+			}
+
+            $this->cache = new \Nette\Caching\Cache(
+                $this->cachingStorage,
+                'nette-foxy-forms'
+            );
+
+            $this->properties = $this->cache->load($this->model.'_properties');
+            if ($this->properties === NULL) {
+                $this->properties = $this->getCompletedProperties();
+            }
 
             foreach($this->properties as $property) {
                 $this->createFieldComponent($property);
+            }
+
+            if ($this->enableCaching) {
+                $this->cache->save($this->model.'_properties', $this->properties);
             }
 
             if ($this->submitButton) {
@@ -192,20 +288,25 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
     }
 
-    # Returns entity's identifier name
-    #
-    # @param string $entity
-    # @return string
+    /**
+     * Returns entity's identifier name
+     *
+     * @param string $entity
+     * @return string
+     */
     protected function getIdentifier($entity)
     {
         return $this->em->getClassMetadata($entity)->getIdentifier()[0];
     }
 
-    # Get related data for select box
-    #
-    # @param mixed $entity
-    # @param string $fieldName
-    # @return array
+
+    /**
+     * Get related data for select box
+     *
+     * @param mixed $entity
+     * @param string $fieldName
+     * @return array
+     */
     protected function getSelectData($entity, $fieldName)
     {
         $data = NULL;
@@ -230,9 +331,12 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $result;
     }
 
-    # Return fields for create
-    #
-    # @return array
+
+    /**
+     * Return available fields
+     *
+     * @return array
+     */
     public function getFields()
     {
         if (is_null($this->fields)) {
@@ -250,18 +354,24 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $this->fields;
     }
 
-    # Check if validation is allowed for choosen level
-    #
-    # @return boolean
+
+    /**
+     * Check if validation is allowed for choosen level
+     *
+     * @return boolean
+     */
     public function canValidate($level)
     {
         return $this->validation & $level;
     }
 
-    # Appends component to form
-    #
-    # @param \Nette\Application\UI\Form $form
-    # @param array $property
+
+    /**
+     * Create component for property
+     *
+     * @param array $property
+     * @return boolean
+     */
     protected function createFieldComponent($property)
     {
         $params = array(
@@ -279,7 +389,7 @@ abstract class Form extends \Nette\Application\UI\Form {
                 || count($property['joinColumns']) == 0
             )) {
             unset($this->properties[$fieldName]);
-            return;
+            return FALSE;
         }
 
         $relations = array(
@@ -305,7 +415,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         # Create identifier as hidden field
         if (isset($property['identifier'])) {
             $this->addHidden($fieldName);
-            return;
+            return TRUE;
         }
 
         # Custom creating component for field
@@ -313,7 +423,7 @@ abstract class Form extends \Nette\Application\UI\Form {
             $this->setFieldComponent($fieldName);
 
             if (isset($this[$fieldName])) {
-                return;
+                return TRUE;
             }
         }
 
@@ -331,13 +441,16 @@ abstract class Form extends \Nette\Application\UI\Form {
                 $property
             );
         }
-
+        return TRUE;
     }
 
-    # Customize property metadata
-    #
-    # @param string $field
-    # @param array & $properties
+
+    /**
+     * Customize property metadata
+     *
+     * @param string $field
+     * @param array & $properties
+     */
     private function customizeMetadata($field, array & $properties)
     {
         $metadata       = $this->em->getClassMetadata($this->model);
@@ -376,17 +489,21 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         # Checks for custom widget
-        if (isset($properties[$field]['options'])
-            && array_key_exists('widget', $properties[$field]['options'])) {
-            $properties[$field]['widget'] = $properties[$field]['options']['widget'];
+        foreach(self::$simpleReader->getPropertyAnnotations($rp) as $a) {
+            if ($a instanceof \Foxy\Annotations\Widget) {
+                $properties[$field]['widget'] = $a->type;
+            }
         }
 
         $properties[$field]['defaultValue'] = $rp->getValue($this->instance);
     }
 
-    # Get completed properties
-    #
-    # @return array
+
+    /**
+	 * Get completed properties
+	 *
+	 * @return array
+	 */
     protected function getCompletedProperties()
     {
         $result         = array();
@@ -422,11 +539,14 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $properties;
     }
 
-    # Get cleaned property value for form component
-    #
-    # @param @array $property
-    # @param @bool $asLabel
-    # @return mixed
+
+    /**
+	 * Get cleaned property value for form component
+	 *
+	 * @param array $property
+	 * @param bool $asLabel
+	 * @return mixed
+	 */
     public function getFormValue($property, $asLabel = FALSE)
     {
         # Password value cannot be loaded
@@ -501,6 +621,14 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $value;
     }
 
+
+    /**
+	 * Set POST value to property
+	 *
+	 * @param string $field
+	 * @param bool $asLabel
+	 * @return mixed
+	 */
     public function setPropertyValue($field, $value)
     {
         if (! array_key_exists($field, $this->properties)) {
@@ -569,10 +697,13 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
     }
 
-    # Set entity instance and load values to form
-    #
-    # @param object $entity
-    # @return self
+
+    /**
+	 * Set entity instance and load values to form
+	 *
+	 * @param object $entity
+	 * @return self
+	 */
     public function setInstance($entity)
     {
         $this->instance = $entity;
@@ -589,11 +720,14 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $this;
     }
 
-    # Check is unique value is already unique
-    #
-    # @param array $field
-    # @param mixed $newValue
-    # @return bool
+
+    /**
+	 * Check is unique value is already unique
+	 *
+	 * @param array $field
+	 * @param mixed $newValue
+	 * @return bool
+	 */
     private function uniqueCheck($field, $newValue)
     {
         if (! array_key_exists($field, $this->properties)) {
@@ -629,12 +763,14 @@ abstract class Form extends \Nette\Application\UI\Form {
         return TRUE;
     }
 
-    # Returns validation message for level
-    # Prepared for overload of custom messages
-    #
-    # @param string $field
-    # @param int $level
-    # @return string
+
+    /**
+	 * Returns validation message for level
+	 *
+	 * @param array $field
+	 * @param int $level
+	 * @return string
+	 */
     public function getValidationMessage($field, $level)
     {
         $msg = NULL;
@@ -649,10 +785,13 @@ abstract class Form extends \Nette\Application\UI\Form {
         return $msg;
     }
 
-    # Save model
-    #
-    # @param Foxy\Form $form
-    # @param $commit
+
+    /**
+	 * Save model
+	 *
+	 * @param Foxy\Forms\Form $form
+	 * @param $commit
+	 */
     public function saveModel($form, $commit = TRUE)
     {
         $values = $form->getValues();
@@ -712,9 +851,9 @@ abstract class Form extends \Nette\Application\UI\Form {
         if ($commit) {
             try {
                 $this->em->flush();
-                $this->invokeFlashMessage();
+                $this->flashMessage();
             } catch (\Exception $e) {
-                $this->invokeFlashMessage('error');
+                $this->flashMessage('error');
             }
 
             $urlParams = array();
@@ -728,10 +867,13 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
     }
 
-    # Invokes flash message
-    #
-    # @param string $status
-    public function invokeFlashMessage($status = 'success')
+
+    /**
+	 * Evokes flash message
+	 *
+	 * @param string $status
+	 */
+    public function flashMessage($status = 'success')
     {
         $status = $status . $this->status;
         $this->presenter->flashMessage($this->{$status}, $status);
