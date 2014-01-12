@@ -27,30 +27,32 @@ define('FOXY_ONE_TO_MANY', 4);
 define('FOXY_MANY_TO_MANY', 8);
 
 
-abstract class Form extends \Nette\Application\UI\Form {
-
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     * @inject
-     */
-    public $em;
-
-    /**
-     * @var \Foxy\Media\Controler
-     * @inject
-     */
-    public $mediaControler;
-
-    /**
-     * @var \Nette\Caching\IStorage
-     * @inject
-     */
-    public $cachingStorage;
-
+abstract class Form extends \Nette\Application\UI\Form
+{
     /**
      * @var \Nette\Caching/Cache
      */
     private $cache;
+
+    /**
+     * @var \Foxy|RenderContext
+     */
+    private $renderContext;
+
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var \Foxy\Media\Controler
+     */
+    protected $mediaControler;
+
+    /**
+     * @var \Nette\Caching\IStorage
+     */
+    protected $cachingStorage;
 
     /**
      * @var string
@@ -135,12 +137,12 @@ abstract class Form extends \Nette\Application\UI\Form {
     /**
      * @var string | Nette\Utils\Html | NULL
      */
-    public $uploadWrapper = 'div';
+    protected $uploadWrapper = 'div';
 
     /**
      * @var string | Nette\Utils\Html | NULL
      */
-    public $uploadSeparator = 'br';
+    protected $uploadSeparator = 'br';
 
     /**
      * @var bool
@@ -166,6 +168,21 @@ abstract class Form extends \Nette\Application\UI\Form {
      * @var bool
      */
     protected $enableCaching = TRUE;
+
+	/**
+	 * @var string
+	 */
+	protected $datetimeFormat = 'Y-m-d H:i:s';
+
+	/**
+	 * @var string
+	 */
+	protected $dateFormat = 'Y-m-d H:i:s';
+
+	/**
+	 * @var string
+	 */
+	protected $timeFormat = 'H:i:s';
 
     /**
      * @var array
@@ -222,7 +239,7 @@ abstract class Form extends \Nette\Application\UI\Form {
             self::$simpleReader
                 = new \Doctrine\Common\Annotations\SimpleAnnotationReader();
 
-            if (self::$annotationNamespace) {
+            if (! self::$annotationNamespace) {
                 self::$simpleReader->addNamespace('Foxy\Annotations');
             }
             self::$isInited = TRUE;
@@ -256,13 +273,9 @@ abstract class Form extends \Nette\Application\UI\Form {
         if ($presenter instanceof \Nette\Application\UI\Presenter) {
 
 			$context = $this->presenter->getContext();
-			if (method_exists($context, 'callInjects')) {
-				$context->callInjects($this);
-			} else {
-				$this->em = $context->getByType('Doctrine\ORM\EntityManager');
-				$this->mediaControler = $context->getByType('Foxy\Media\Controler');
-				$this->cachingStorage = $context->getByType('Nette\Caching\IStorage');
-			}
+			$this->em = $context->getByType('Doctrine\ORM\EntityManager');
+			$this->mediaControler = $context->getByType('Foxy\Media\Controler');
+			$this->cachingStorage = $context->getByType('Nette\Caching\IStorage');
 
             $this->cache = new \Nette\Caching\Cache(
                 $this->cachingStorage,
@@ -428,7 +441,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         }
 
         call_user_func_array(
-            $this->componentsCallbackMap[$property['widget']],
+            $this->componentsCallbackMap[$property['type']],
             $params
         );
 
@@ -464,13 +477,11 @@ abstract class Form extends \Nette\Application\UI\Form {
         $key = array_search($field, $fields);
         if ($key !== FALSE) {
             $properties[$field] = $metadata->getFieldMapping($field);
-            $properties[$field]['widget'] = $properties[$field]['type'];
             unset($fields[$key]);
 
         # Relation
         } elseif (array_key_exists($field, $assocMappings)) {
             $properties[$field] = $assocMappings[$field];
-            $properties[$field]['widget'] = $properties[$field]['type'];
             $properties[$field]['nullable'] = TRUE;
             $properties[$field]['unique'] = FALSE;
 
@@ -491,7 +502,18 @@ abstract class Form extends \Nette\Application\UI\Form {
         # Checks for custom widget
         foreach(self::$simpleReader->getPropertyAnnotations($rp) as $a) {
             if ($a instanceof \Foxy\Annotations\Widget) {
-                $properties[$field]['widget'] = $a->type;
+				if (! is_null($a->type)) {
+					$properties[$field]['type'] = $a->type;
+				}
+				if (! is_null($a->nullable)) {
+					$properties[$field]['nullable'] = $a->nullable;
+				}
+				if (! is_null($a->unique)) {
+					$properties[$field]['unique'] = $a->unique;
+				}
+				if (! is_null($a->length)) {
+					$properties[$field]['length'] = $a->length;
+				}
             }
         }
 
@@ -550,7 +572,7 @@ abstract class Form extends \Nette\Application\UI\Form {
     public function getFormValue($property, $asLabel = FALSE)
     {
         # Password value cannot be loaded
-        if ($property['widget'] == 'password') {
+        if ($property['type'] == 'password') {
             return NULL;
         }
 
@@ -594,13 +616,13 @@ abstract class Form extends \Nette\Application\UI\Form {
 
         if( $value instanceof \Datetime) {
             if ($property['type'] == 'datetime') {
-                return $value->format('Y-m-d\TH:i:s');
+                return $value->format($this->datetimeFormat);
             }
             if ($property['type'] == 'date') {
-                return $value->format('Y-m-d');
+                return $value->format($this->dateFormat);
             }
             if ($property['type'] == 'time') {
-                return $value->format('H:i:s');
+                return $value->format($this->timeFormat);
             }
         }
 
@@ -810,7 +832,7 @@ abstract class Form extends \Nette\Application\UI\Form {
         foreach($values as $name => $val) {
 
             # Prevent rewriting password of NULL value
-            if ($this->properties[$name]['widget'] == 'password'
+            if ($this->properties[$name]['type'] == 'password'
                 && strlen($val) == 0) {
                 continue;
             }
@@ -878,4 +900,24 @@ abstract class Form extends \Nette\Application\UI\Form {
         $status = $status . $this->status;
         $this->presenter->flashMessage($this->{$status}, $status);
     }
+
+
+	/**
+	 * Get context for rendering
+	 *
+	 * @return \Foxy\RenderContext
+	 */
+	public function getRenderContext()
+	{
+		if (is_null($this->renderContext)) {
+			$this->renderContext = new \Foxy\RenderContext();
+			$this->renderContext->uploadWrapper = $this->uploadWrapper;
+			$this->renderContext->uploadSeparator = $this->uploadSeparator;
+			$this->renderContext->datetimeFormat = $this->datetimeFormat;
+			$this->renderContext->dateFormat = $this->dateFormat;
+			$this->renderContext->timeFormat = $this->timeFormat;
+			$this->renderContext->mediaControler = $this->mediaControler;
+		}
+		return $this->renderContext;
+	}
 }

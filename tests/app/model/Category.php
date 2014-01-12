@@ -1,7 +1,5 @@
 <?php
 
-# @Foxy\Annotations\Widget(name="upload")
-
 /**
  * Category Entity
  *
@@ -24,7 +22,7 @@ class Category
 
     /**
      * @Column(type="string",nullable=true)
-     * @Widget(type="upload")
+     * @Foxy\Annotations\Widget(type="upload")
      * @var string
      */
     protected $image;

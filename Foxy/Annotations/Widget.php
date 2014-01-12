@@ -22,4 +22,19 @@ class Widget implements \Doctrine\ORM\Mapping\Annotation
 	 * @var string
 	 */
 	public $type;
+
+	/**
+	 * @var bool
+	 */
+	public $nullable;
+
+	/**
+	 * @var bool
+	 */
+	public $unique;
+
+	/**
+	 * @var int
+	 */
+	public $length;
 }

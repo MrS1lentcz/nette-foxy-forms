@@ -40,22 +40,24 @@ class Upload extends \Nette\Forms\Controls\UploadControl
      */
     public function getControl()
     {
-        if (! $this->form->uploadWrapper) {
+        $context = $this->form->getRenderContext();
+
+        if (! $context->uploadWrapper) {
             return parent::getControl();
         }
 
-        $wrapper = $this->form->uploadWrapper;
-        if (! $this->form->uploadWrapper instanceof \Nette\Utils\Html) {
-            $wrapper = \Nette\Utils\Html::el($this->form->uploadWrapper);
+        $wrapper = $context->uploadWrapper;
+        if (! $context->uploadWrapper instanceof \Nette\Utils\Html) {
+            $wrapper = \Nette\Utils\Html::el($context->uploadWrapper);
         }
 
         $wrapper->add(parent::getControl());
-        if ($this->form->uploadSeparator) {
-            if ($this->form->uploadSeparator instanceof \Nette\Utils\Html) {
-                $wrapper->add($this->form->uploadSeparator);
+        if ($context->uploadSeparator) {
+            if ($context->uploadSeparator instanceof \Nette\Utils\Html) {
+                $wrapper->add($context->uploadSeparator);
             } else {
                 $wrapper->add(
-                    \Nette\Utils\Html::el($this->form->uploadSeparator)
+                    \Nette\Utils\Html::el($context->uploadSeparator)
                 );
             }
         }
@@ -72,8 +74,9 @@ class Upload extends \Nette\Forms\Controls\UploadControl
      */
     public function getLink()
     {
+        $context = $this->form->getRenderContext();
         return \Nette\Utils\Html::el('a')
             ->setText($this->infoValue)
-            ->setHref($this->parent->mediaControler->getUrl($this->infoValue));
+            ->setHref($context->mediaControler->getUrl($this->infoValue));
     }
 }

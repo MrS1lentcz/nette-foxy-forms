@@ -195,9 +195,10 @@ class ControlsFactory
             $form[$field]->setType('datetime-local');
         }
 
+        $context = $form->getRenderContext();
         if ($property['defaultValue'] instanceof \DateTime) {
             $form[$field]->setDefaultValue(
-                $property['defaultValue']->format('Y-m-d H:i:s')
+                $property['defaultValue']->format($context->datetimeFormat)
             );
         }
     }
@@ -224,9 +225,10 @@ class ControlsFactory
             $form[$field]->setType('date');
         }
 
+        $context = $form->getRenderContext();
         if ($property['defaultValue'] instanceof \DateTime) {
             $form[$field]->setDefaultValue(
-                $property['defaultValue']->format('Y-m-d')
+                $property['defaultValue']->format($context->dateFormat)
             );
         }
     }
@@ -249,9 +251,10 @@ class ControlsFactory
             );
         }
 
+        $context = $form->getRenderContext();
         if ($property['defaultValue'] instanceof \DateTime) {
             $form[$field]->setDefaultValue(
-                $property['defaultValue']->format('H:i:s')
+                $property['defaultValue']->format($context->timeFormat)
             );
         }
     }

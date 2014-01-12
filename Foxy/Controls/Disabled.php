@@ -54,12 +54,14 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
     {
         if ($this->replaced === FALSE)
         {
+            $context = $this->form->getRenderContext();
             $value = $this->infoValue;
-            if (in_array($this->property['widget'], array('upload', 'image'))) {
+
+            if (in_array($this->property['type'], array('upload', 'image'))) {
                 $this->control = \Nette\Utils\Html::el('a')
                     ->setText($value)
-                    ->setHref($this->parent->mediaControler->getUrl($value));
-            } elseif($this->property['widget'] == 'email') {
+                    ->setHref($context->mediaControler->getUrl($value));
+            } elseif($this->property['type'] == 'email') {
                 $this->control = \Nette\Utils\Html::el('a')
                     ->setText($value)
                     ->setHref('mailto:'.$value);
