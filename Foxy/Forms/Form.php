@@ -834,6 +834,11 @@ abstract class Form extends \Nette\Application\UI\Form
 
         foreach($values as $name => $val) {
 
+			# If not custom value
+			if (! isset($this->properties[$name])) {
+				continue;
+			}
+
             # Prevent rewriting password of NULL value
             if ($this->properties[$name]['type'] == 'password'
                 && strlen($val) == 0) {
