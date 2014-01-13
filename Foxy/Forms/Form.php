@@ -476,12 +476,12 @@ abstract class Form extends \Nette\Application\UI\Form
         # Field
         $key = array_search($field, $fields);
         if ($key !== FALSE) {
-            $properties[$field] = $metadata->getFieldMapping($field);
+            $properties[$field] += $metadata->getFieldMapping($field);
             unset($fields[$key]);
 
         # Relation
         } elseif (array_key_exists($field, $assocMappings)) {
-            $properties[$field] = $assocMappings[$field];
+            $properties[$field] += $assocMappings[$field];
             $properties[$field]['nullable'] = TRUE;
             $properties[$field]['unique'] = FALSE;
 
@@ -538,6 +538,8 @@ abstract class Form extends \Nette\Application\UI\Form
                 $activeGroup = NULL;
 
                 foreach($groupFields as $field) {
+					$properties[$field] = array();
+
                     # Detect new group
                     if ($activeGroup != $group) {
                         $activeGroup = $group;
@@ -550,6 +552,7 @@ abstract class Form extends \Nette\Application\UI\Form
         # Fields
         } else {
             foreach($this->getFields() as $field) {
+				$properties[$field] = array();
                 $this->customizeMetadata($field, $properties);
             }
         }

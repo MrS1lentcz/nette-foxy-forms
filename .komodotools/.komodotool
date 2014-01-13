@@ -1,0 +1,11 @@
+{
+  "set_selection": "true", 
+  "version": "1.0.12", 
+  "name": "", 
+  "indent_relative": "false", 
+  "type": "snippet", 
+  "value": [
+    "!@#_anchor!@#_currentPos"
+  ], 
+  "auto_abbreviation": "false"
+}

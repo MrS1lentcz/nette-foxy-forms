@@ -24,6 +24,13 @@ class Controler {
 	 */
 	protected $storage;
 
+	protected $flagMapping = array(
+		\Nette\Image::FIT 			=> 'a',
+		\Nette\Image::SHRINK_ONLY 	=> 'b',
+		\Nette\Image::STRETCH 		=> 'c',
+		\Nette\Image::FILL 			=> 'd',
+		\Nette\Image::EXACT 		=> 'e'
+	);
 
 	/**
 	 * Construct Controler
@@ -83,6 +90,17 @@ class Controler {
 				$data['crop'] = ($data['crop']) ? \Nette\Image::EXACT : \Nette\Image::FIT;
 			}
 
+			# TODO - Calculate second dimension
+
+			/*
+			$image = \Nette\Image::fromFile(
+				$this->storage->getMediaDir() . $filepath
+			);
+			if (is_null($data['width']) && ! is_null($data['height'])) {
+
+			}
+			*/
+
 			$newFilepath = preg_replace_callback(
 				'|(.+)\/(.+)\.(.+)$|',
 				function($matches) use($data) {
@@ -98,6 +116,10 @@ class Controler {
 				},
 				$filepath
 			);
+
+			# IMG_0001_50x30-8.PNG
+			# IMG_0001a50x30.PNG
+			# IMG_0001_50x30a.PNG
 
 			if (! $this->fileExists($newFilepath)) {
 				$image = \Nette\Image::fromFile(
