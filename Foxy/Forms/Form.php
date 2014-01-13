@@ -282,7 +282,7 @@ abstract class Form extends \Nette\Application\UI\Form
                 'nette-foxy-forms'
             );
 
-            $this->properties = $this->cache->load($this->model.'_properties');
+            $this->properties = $this->cache->load(get_class($this).'_properties');
             if ($this->properties === NULL) {
                 $this->properties = $this->getCompletedProperties();
             }
@@ -292,7 +292,7 @@ abstract class Form extends \Nette\Application\UI\Form
             }
 
             if ($this->enableCaching) {
-                $this->cache->save($this->model.'_properties', $this->properties);
+                $this->cache->save(get_class($this).'_properties', $this->properties);
             }
 
             if ($this->submitButton) {
