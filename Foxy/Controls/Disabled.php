@@ -54,6 +54,7 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
     {
         if ($this->replaced === FALSE)
         {
+            parent::getControl();
             $context = $this->form->getRenderContext();
             $value = $this->infoValue;
 
