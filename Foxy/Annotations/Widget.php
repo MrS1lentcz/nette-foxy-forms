@@ -37,4 +37,10 @@ class Widget implements \Doctrine\ORM\Mapping\Annotation
 	 * @var int
 	 */
 	public $length;
+
+	# ------------------------
+	# Custom
+	# ------------------------
+
+	public $customUpload = FALSE;
 }

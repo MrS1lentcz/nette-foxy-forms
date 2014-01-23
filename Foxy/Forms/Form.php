@@ -40,6 +40,21 @@ abstract class Form extends \Nette\Application\UI\Form
     private $renderContext;
 
     /**
+     * @var array
+     */
+    private $properties = array();
+
+    /**
+     * @var bool
+     */
+    private static $isInited = FALSE;
+
+    /**
+     * @var Doctrine\Common\Annotations\SimpleAnnotationReader
+     */
+    private static $simpleReader = NULL;
+
+    /**
      * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
@@ -150,21 +165,6 @@ abstract class Form extends \Nette\Application\UI\Form
     protected static $annotationNamespace = TRUE;
 
     /**
-     * @var array
-     */
-    private $properties = array();
-
-    /**
-     * @var bool
-     */
-    private static $isInited = FALSE;
-
-    /**
-     * @var Doctrine\Common\Annotations\SimpleAnnotationReader
-     */
-    private static $simpleReader = NULL;
-
-    /**
      * @var bool
      */
     protected $enableCaching = TRUE;
@@ -245,11 +245,7 @@ abstract class Form extends \Nette\Application\UI\Form
             self::$isInited = TRUE;
         }
 
-        if (is_object($this->model)) {
-            $this->instance = $this->model;
-        } else {
-            $this->instance = new $this->model;
-        }
+        $this->instance = new $this->model;
 
         if (is_array($this->excludeValidations)) {
             foreach($this->excludeValidations as $ex) {
@@ -301,15 +297,18 @@ abstract class Form extends \Nette\Application\UI\Form
         }
     }
 
+
     /**
      * Returns entity's identifier name
      *
      * @param string $entity
+     * @param int $idNum
      * @return string
      */
-    protected function getIdentifier($entity)
+    protected function getIdentifier($entity, $idNum = 0)
     {
-        return $this->em->getClassMetadata($entity)->getIdentifier()[0];
+		$identfiers = $this->em->getClassMetadata($entity)->getIdentifier();
+        return $identfiers[$idNum];
     }
 
 
@@ -499,25 +498,17 @@ abstract class Form extends \Nette\Application\UI\Form
             return;
         }
 
+		$properties[$field]['defaultValue'] = $rp->getValue($this->instance);
+
         # Checks for custom widget
         foreach(self::$simpleReader->getPropertyAnnotations($rp) as $a) {
             if ($a instanceof \Foxy\Annotations\Widget) {
-				if (! is_null($a->type)) {
-					$properties[$field]['type'] = $a->type;
-				}
-				if (! is_null($a->nullable)) {
-					$properties[$field]['nullable'] = $a->nullable;
-				}
-				if (! is_null($a->unique)) {
-					$properties[$field]['unique'] = $a->unique;
-				}
-				if (! is_null($a->length)) {
-					$properties[$field]['length'] = $a->length;
-				}
+				$properties[$field] = array_merge(
+					$properties[$field],
+					(array) $a
+ 				);
             }
         }
-
-        $properties[$field]['defaultValue'] = $rp->getValue($this->instance);
     }
 
 
@@ -741,6 +732,8 @@ abstract class Form extends \Nette\Application\UI\Form
             $this[$property['fieldName']]->setDefaultValue(
                 $this->getFormValue($property, $asLabel)
             );
+
+			# TODO validace pro upload components
         }
         return $this;
     }
@@ -855,7 +848,12 @@ abstract class Form extends \Nette\Application\UI\Form
                 if (method_exists($this, 'getUploadTo')) {
                     $dest = $this->getUploadTo($name);
                 }
-                if ($dest === FALSE) {
+                if ($dest === FALSE
+					|| (
+						isset($this->properties[$name]['customUpload'])
+						&& $this->properties[$name]['customUpload'] == TRUE
+					)
+				) {
                     continue; # no upload automatically
                 }
                 if (is_null($dest)) {

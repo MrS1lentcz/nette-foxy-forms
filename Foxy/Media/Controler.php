@@ -46,6 +46,49 @@ class Controler {
 
 
 	/**
+	 * Get valid params for resizer
+	 *
+	 * @param array
+	 * @return array
+	 */
+	protected function getValidParams($params)
+	{
+		$data = array(
+			'width' => NULL,
+			'height' => NULL,
+			'crop' => \Nette\Image::FIT
+		);
+
+		# assoc array
+		if (array_keys($params) !== range(0, count($params) - 1)) {
+			if (isset($params['height'])) {
+				$data['height'] = $params['height'];
+			}
+			if (isset($params['width'])) {
+				$data['width'] = $params['width'];
+			}
+			if (isset($params['crop'])) {
+				$data['crop'] = $params['crop'];
+			}
+		# non assoc array
+		} else {
+			foreach(array_keys($data) as $i => $key) {
+				$data[$key] = isset($params[$i]) ? $params[$i] : NULL;
+			}
+		}
+
+		if (is_null($data['crop'])) {
+			$data['crop'] = (bool) $data['crop'];
+		}
+		if (is_bool($data['crop'])) {
+			$data['crop'] = ($data['crop']) ? \Nette\Image::EXACT : \Nette\Image::FIT;
+		}
+
+		return $data;
+	}
+
+
+	/**
 	 * Returns completed url
 	 *
 	 * @param string $filepath
@@ -54,77 +97,46 @@ class Controler {
 	public function getUrl($filepath, $params = NULL)
 	{
 		if ($params) {
+			$data = $this->getValidParams($params);
 
-			$data = array(
-				'width' => NULL,
-				'height' => NULL,
-				'crop' => \Nette\Image::FIT
-			);
-
-			# assoc array
-			if (array_keys($params) !== range(0, count($params) - 1)) {
-				if (isset($params['height'])) {
-					$data['height'] = $params['height'];
-				}
-				if (isset($params['width'])) {
-					$data['width'] = $params['width'];
-				}
-				if (isset($params['crop'])) {
-					$data['crop'] = $params['crop'];
-				}
-			# non assoc array
-			} else {
-				foreach(array_keys($data) as $i => $key) {
-					$data[$key] = isset($params[$i]) ? $params[$i] : NULL;
-				}
-			}
 			# Return if width and height are not specified
 			if (is_null($data['width']) && is_null($data['height'])) {
 				return $this->mediaUrl . '/' . $filepath;
 			}
 
-			if (is_null($data['crop'])) {
-				$data['crop'] = (bool) $data['crop'];
-			}
-			if (is_bool($data['crop'])) {
-				$data['crop'] = ($data['crop']) ? \Nette\Image::EXACT : \Nette\Image::FIT;
-			}
-
-			# TODO - Calculate second dimension
-
-			/*
 			$image = \Nette\Image::fromFile(
 				$this->storage->getMediaDir() . $filepath
 			);
-			if (is_null($data['width']) && ! is_null($data['height'])) {
 
+			# calculate target height
+			if (! is_null($data['width']) && is_null($data['height'])) {
+				$data['height'] = $image->height * ($data['width'] / $image->width);
+				$data['height'] = (int) $data['height'];
 			}
-			*/
+
+			# calculate target width
+			if (is_null($data['width']) && ! is_null($data['height'])) {
+				$data['width'] = $image->width * ($data['height'] / $image->height);
+				$data['width'] = (int) $data['width'];
+			}
+
+			$data['resizeType'] = $this->flagMapping[$data['crop']];
 
 			$newFilepath = preg_replace_callback(
 				'|(.+)\/(.+)\.(.+)$|',
 				function($matches) use($data) {
 					$dir = $matches[1] . '/';
-					$name = $matches[2] . '_';
+					$name = $matches[2] . '_'
+							. $data['height'] . 'x'
+							. $data['width']
+							. $data['resizeType'] . '.';
 
-					$height = ($data['height']) ? $data['height'] : 'x';
-					$width = ($data['width']) ? $data['width'] : 'x';
-					$crop = (int) $data['crop'];
-					$name .= $height . '_' . $width . '_' . $crop . '.';
-
-					return $dir . $name . strtoupper($matches[3]);
+					return $dir . $name . $matches[3];
 				},
 				$filepath
 			);
 
-			# IMG_0001_50x30-8.PNG
-			# IMG_0001a50x30.PNG
-			# IMG_0001_50x30a.PNG
-
 			if (! $this->fileExists($newFilepath)) {
-				$image = \Nette\Image::fromFile(
-					$this->storage->getMediaDir() . $filepath
-				);
 				$image->resize($data['width'], $data['height'], $data['crop']);
 				$image->save($this->storage->getMediaDir() . $newFilepath);
 			}
