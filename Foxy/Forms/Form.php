@@ -169,6 +169,11 @@ abstract class Form extends \Nette\Application\UI\Form
      */
     protected $enableCaching = TRUE;
 
+    /**
+     * @var bool
+     */
+    protected $enableTranslator = TRUE;
+
 	/**
 	 * @var string
 	 */
@@ -272,6 +277,10 @@ abstract class Form extends \Nette\Application\UI\Form
 			$this->em = $context->getByType('Doctrine\ORM\EntityManager');
 			$this->mediaControler = $context->getByType('Foxy\Media\Controler');
 			$this->cachingStorage = $context->getByType('Nette\Caching\IStorage');
+
+			if ($this->enableTranslator) {
+				$this->setTranslator($context->getByType('Nette\Localization\ITranslator'));
+			}
 
             $this->cache = new \Nette\Caching\Cache(
                 $this->cachingStorage,

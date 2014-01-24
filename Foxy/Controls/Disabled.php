@@ -56,7 +56,7 @@ class Disabled extends \Nette\Forms\Controls\BaseControl
         {
             parent::getControl();
             $context = $this->form->getRenderContext();
-            $value = $this->infoValue;
+            $value = (string) $this->infoValue;
 
             if (in_array($this->property['type'], array('upload', 'image'))) {
                 $this->control = \Nette\Utils\Html::el('a')
