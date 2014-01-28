@@ -167,12 +167,12 @@ abstract class Form extends \Nette\Application\UI\Form
     /**
      * @var bool
      */
-    protected $enableCaching = TRUE;
+    protected $enableCaching = FALSE;
 
     /**
      * @var bool
      */
-    protected $enableTranslator = TRUE;
+    protected $enableTranslator = FALSE;
 
 	/**
 	 * @var string
@@ -700,7 +700,7 @@ abstract class Form extends \Nette\Application\UI\Form
                     $entity->$inverseGetter()->add($this->instance);
                     $this->em->persist($entity);
                 } else {
-                    $rpr = $meta->getReflectionClass()->getProperty($inverseProp);
+					$rpr = new \ReflectionProperty(get_class($entity), $inverseProp);
                     $rpr->setAccessible(TRUE);
                     $rpr->getValue($entity)->add($this->instance);
                     $this->em->persist($entity);
