@@ -512,9 +512,16 @@ abstract class Form extends \Nette\Application\UI\Form
         # Checks for custom widget
         foreach(self::$simpleReader->getPropertyAnnotations($rp) as $a) {
             if ($a instanceof \Foxy\Annotations\Widget) {
+				$widgetArray = (array) $a;
+				foreach($widgetArray as $key => $val) {
+					if (is_null($val)) {
+						unset($widgetArray[$key]);
+					}
+				}
+
 				$properties[$field] = array_merge(
 					$properties[$field],
-					(array) $a
+					$widgetArray
  				);
             }
         }
