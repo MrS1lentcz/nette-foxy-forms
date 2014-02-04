@@ -24,14 +24,19 @@ class ControlsFactory
     {
         $field = $property['fieldName'];
         $form->addText($field, $field);
+        $isRequired = ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']);
 
-        if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
+        if ($isRequired) {
             $form[$field]->setRequired(
                 $form->getValidationMessage($field, FOXY_NULLABLE)
             );
         }
 
         if ($form->canValidate(FOXY_IS_INT)) {
+            if (! $isRequired) {
+                $form[$field]->addCondition($form::FILLED);
+            }
+
             $form[$field]->addRule(
                 $form::INTEGER,
                 $form->getValidationMessage($field, FOXY_IS_INT)
@@ -138,14 +143,19 @@ class ControlsFactory
     {
         $field = $property['fieldName'];
         $form->addText($field, $field);
+        $isRequired = ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']);
 
-        if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
+        if ($isRequired) {
             $form[$field]->setRequired(
                 $form->getValidationMessage($field, FOXY_NULLABLE)
             );
         }
 
         if ($form->canValidate(FOXY_IS_FLOAT)) {
+            if (! $isRequired) {
+                $form[$field]->addCondition($form::FILLED);
+            }
+
             $form[$field]->addRule(
                 $form::FLOAT,
                 $form->getValidationMessage($field, FOXY_IS_FLOAT)
