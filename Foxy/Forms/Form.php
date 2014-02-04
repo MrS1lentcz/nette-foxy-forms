@@ -683,7 +683,7 @@ abstract class Form extends \Nette\Application\UI\Form
             $value = $this->em->find($property['targetEntity'], $value);
         }
 
-        if ($property['type'] == FOXY_MANY_TO_MANY) {
+        elseif ($property['type'] == FOXY_MANY_TO_MANY) {
             $arrayCol = NULL;
             if (method_exists($this->instance, $getter)) {
                 $arrayCol = $this->instance->$getter();
@@ -718,7 +718,14 @@ abstract class Form extends \Nette\Application\UI\Form
             $value = $arrayCol;
         }
 
-        if (in_array($property['type'], array('datetime','date','time'))) {
+		# Prevent exception: Invalid text representation: 7 ERROR: invalid input syntax for type double precision: ""
+		elseif (in_array($property['type'], array('float','decimal'))
+				&& is_string($value)
+				&& strlen($value) == 0) {
+			$value = NULL;
+		}
+
+        elseif (in_array($property['type'], array('datetime','date','time'))) {
             $value = new \Datetime($value);
         }
 

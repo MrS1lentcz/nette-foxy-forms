@@ -104,9 +104,14 @@ class Controler {
 				return $this->mediaUrl . '/' . $filepath;
 			}
 
-			$image = \Nette\Image::fromFile(
-				$this->storage->getMediaDir() . $filepath
-			);
+			# If file does not exist or is not readable
+			try {
+				$image = \Nette\Image::fromFile(
+					$this->storage->getMediaDir() . $filepath
+				);
+			} catch(\Nette\UnknownImageFileException $e) {
+				return $this->mediaUrl  . '/' . $filepath;
+			}
 
 			# calculate target height
 			if (! is_null($data['width']) && is_null($data['height'])) {
