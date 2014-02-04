@@ -34,13 +34,17 @@ class ControlsFactory
 
         if ($form->canValidate(FOXY_IS_INT)) {
             if (! $isRequired) {
-                $form[$field]->addCondition($form::FILLED);
+                $form[$field]->addCondition($form::FILLED)
+                    ->addRule(
+                        $form::INTEGER,
+                        $form->getValidationMessage($field, FOXY_IS_INT)
+                    );
+            } else {
+                $form[$field]->addRule(
+                    $form::INTEGER,
+                    $form->getValidationMessage($field, FOXY_IS_INT)
+                );
             }
-
-            $form[$field]->addRule(
-                $form::INTEGER,
-                $form->getValidationMessage($field, FOXY_IS_INT)
-            );
         }
 
         if ($form->canValidate(FOXY_HTML5_SUPPORT)) {
@@ -153,13 +157,17 @@ class ControlsFactory
 
         if ($form->canValidate(FOXY_IS_FLOAT)) {
             if (! $isRequired) {
-                $form[$field]->addCondition($form::FILLED);
+                $form[$field]->addCondition($form::FILLED)
+                    ->addRule(
+                        $form::FLOAT,
+                        $form->getValidationMessage($field, FOXY_IS_FLOAT)
+                    );
+            } else {
+                $form[$field]->addRule(
+                    $form::FLOAT,
+                    $form->getValidationMessage($field, FOXY_IS_FLOAT)
+                );
             }
-
-            $form[$field]->addRule(
-                $form::FLOAT,
-                $form->getValidationMessage($field, FOXY_IS_FLOAT)
-            );
         }
 
         if ($form->canValidate(FOXY_HTML5_SUPPORT)) {
