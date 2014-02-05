@@ -104,24 +104,18 @@ class Controler {
 				return $this->mediaUrl . '/' . $filepath;
 			}
 
-			# If file does not exist or is not readable
-			try {
-				$image = \Nette\Image::fromFile(
-					$this->storage->getMediaDir() . $filepath
-				);
-			} catch(\Nette\UnknownImageFileException $e) {
-				return $this->mediaUrl  . '/' . $filepath;
-			}
+			# Get image dimensions
+			list($width, $height) = getimagesize($this->storage->getMediaDir() . $filepath);
 
 			# calculate target height
 			if (! is_null($data['width']) && is_null($data['height'])) {
-				$data['height'] = $image->height * ($data['width'] / $image->width);
+				$data['height'] = $height * ($data['width'] / $width);
 				$data['height'] = (int) $data['height'];
 			}
 
 			# calculate target width
 			if (is_null($data['width']) && ! is_null($data['height'])) {
-				$data['width'] = $image->width * ($data['height'] / $image->height);
+				$data['width'] = $width * ($data['height'] / $height);
 				$data['width'] = (int) $data['width'];
 			}
 
@@ -142,8 +136,15 @@ class Controler {
 			);
 
 			if (! $this->fileExists($newFilepath)) {
-				$image->resize($data['width'], $data['height'], $data['crop']);
-				$image->save($this->storage->getMediaDir() . $newFilepath);
+				try {
+					$image = \Nette\Image::fromFile(
+						$this->storage->getMediaDir() . $filepath
+					);
+					$image->resize($data['width'], $data['height'], $data['crop']);
+					$image->save($this->storage->getMediaDir() . $newFilepath);
+				} catch(\Nette\UnknownImageFileException $e) {
+					return $this->mediaUrl  . '/' . $filepath;
+				}
 			}
 
 			return $this->mediaUrl . '/' . $newFilepath;
