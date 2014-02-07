@@ -816,7 +816,7 @@ abstract class Form extends \Nette\Application\UI\Form
     {
         $msg = NULL;
         if (method_exists($this,'getErrorMessage')) {
-            $msg = $this->getMessage($field, $level);
+            $msg = $this->getErrorMessage($field, $level);
         }
 
         if (is_null($msg)) {

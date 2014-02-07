@@ -47,13 +47,16 @@ common:
                         1002: 'SET NAMES utf8'
                 config: @doctrineConfiguration
 
-        mediaStorage: Foxy\Media\Storage('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/www/media/')
-        mediaControler: Foxy\Media\Controler('/media', @mediaStorage)
+        #mediaStorage: Foxy\Media\Storage('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/www/media/')
+        #mediaControler: Foxy\Media\Controler('/media', @mediaStorage)
+#
+        #nette.latte:
+        #    class: Nette\Latte\Engine
+        #    setup:
+        #        - 'Foxy\Macros\Media::install(?->getCompiler())'(@self)
 
-        nette.latte:
-            class: Nette\Latte\Engine
-            setup:
-                - 'Foxy\Macros\Media::install(?->getCompiler())'(@self)
+    extensions:
+        foxyFormsExtension: Foxy\DI\Extension
 
 production < common:
 
