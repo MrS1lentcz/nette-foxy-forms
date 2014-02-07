@@ -1,0 +1,1571 @@
+<!DOCTYPE html><!-- "' --></script></style></pre></xmp></table>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex">
+	<meta name="generator" content="Nette Framework">
+
+	<title>Nette\Utils\NeonException</title><!-- Either tabs or spaces may be used as indenting chars, but not both. on line 50, column 2. -->
+
+	<style type="text/css" class="nette-debug">
+
+		html {
+			overflow-y: scroll;
+		}
+
+		body {
+			margin: 0 0 2em;
+			padding: 0;
+		}
+
+		#netteBluescreen {
+			font: 9pt/1.5 Verdana, sans-serif;
+			background: white;
+			color: #333;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			text-align: left;
+		}
+
+		#netteBluescreen * {
+			font: inherit;
+			color: inherit;
+			background: transparent;
+			border: none;
+			margin: 0;
+			padding: 0;
+			text-align: inherit;
+			text-indent: 0;
+		}
+
+		#netteBluescreen b {
+			font-weight: bold;
+		}
+
+		#netteBluescreen i {
+			font-style: italic;
+		}
+
+		#netteBluescreen a {
+			text-decoration: none;
+			color: #328ADC;
+			padding: 2px 4px;
+			margin: -2px -4px;
+		}
+
+		#netteBluescreen a:hover, #netteBluescreen a:active, #netteBluescreen a:focus {
+			color: #085AA3;
+		}
+
+		#netteBluescreen a abbr {
+			font-family: sans-serif;
+			color: #BBB;
+		}
+
+		#netteBluescreenIcon {
+			position: absolute;
+			right: .5em;
+			top: .5em;
+			z-index: 20000;
+			text-decoration: none;
+			background: #CD1818;
+			padding: 3px;
+		}
+
+		#netteBluescreenError {
+			background: #CD1818;
+			color: white;
+			font: 13pt/1.5 Verdana, sans-serif !important;
+			display: block;
+		}
+
+		#netteBluescreenError #netteBsSearch {
+			color: #CD1818;
+			font-size: .7em;
+		}
+
+		#netteBluescreenError:hover #netteBsSearch {
+			color: #ED8383;
+		}
+
+		#netteBluescreen h1 {
+			font-size: 18pt;
+			font-weight: normal;
+			text-shadow: 1px 1px 0 rgba(0, 0, 0, .4);
+			margin: .7em 0;
+		}
+
+		#netteBluescreen h2 {
+			font: 14pt/1.5 sans-serif !important;
+			color: #888;
+			margin: .6em 0;
+		}
+
+		#netteBluescreen h3 {
+			font: bold 10pt/1.5 Verdana, sans-serif !important;
+			margin: 1em 0;
+			padding: 0;
+		}
+
+		#netteBluescreen p, #netteBluescreen pre {
+			margin: .8em 0
+		}
+
+		#netteBluescreen pre, #netteBluescreen code, #netteBluescreen table {
+			font: 9pt/1.5 Consolas, monospace !important;
+		}
+
+		#netteBluescreen pre, #netteBluescreen table {
+			background: #FDF5CE;
+			padding: .4em .7em;
+			border: 1px dotted silver;
+			overflow: auto;
+		}
+
+		#netteBluescreen pre div {
+			min-width: 100%;
+			float: left;
+			_float: none;
+			white-space: pre;
+		}
+
+		#netteBluescreen table pre {
+			padding: 0;
+			margin: 0;
+			border: none;
+		}
+
+		#netteBluescreen pre .php-array, #netteBluescreen pre .php-object {
+			color: #C22;
+		}
+
+		#netteBluescreen pre .php-string {
+			color: #080;
+		}
+
+		#netteBluescreen pre .php-int, #netteBluescreen pre .php-float, #netteBluescreen pre .php-null, #netteBluescreen pre .php-bool {
+			color: #328ADC;
+		}
+
+		#netteBluescreen pre .php-visibility {
+			font-size: 85%;
+			color: #998;
+		}
+
+		#netteBluescreen pre.nette-dump a {
+			color: #333;
+		}
+
+		#netteBluescreen div.panel {
+			padding: 1px 25px;
+		}
+
+		#netteBluescreen div.inner {
+			background: #F4F3F1;
+			padding: .1em 1em 1em;
+			border-radius: 8px;
+			-moz-border-radius: 8px;
+			-webkit-border-radius: 8px;
+		}
+
+		#netteBluescreen table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		#netteBluescreen .outer {
+			overflow: auto;
+		}
+
+		#netteBluescreen td, #netteBluescreen th {
+			vertical-align: top;
+			text-align: left;
+			padding: 2px 6px;
+			border: 1px solid #e6dfbf;
+		}
+
+		#netteBluescreen th {
+			font-weight: bold;
+		}
+
+		#netteBluescreen tr > :first-child {
+			width: 20%;
+		}
+
+		#netteBluescreen tr:nth-child(2n), #netteBluescreen tr:nth-child(2n) pre {
+			background-color: #F7F0CB;
+		}
+
+		#netteBluescreen ol {
+			margin: 1em 0;
+			padding-left: 2.5em;
+		}
+
+		#netteBluescreen ul {
+			font: 7pt/1.5 Verdana, sans-serif !important;
+			padding: 2em 4em;
+			margin: 1em 0 0;
+			color: #777;
+			background: #F6F5F3 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAjCAMAAADbuxbOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRF/fz24d7Y7Onj5uLd9vPu3drUzMvG09LN39zW8e7o2NbQ3NnT29jS0M7J1tXQAAAApvmsFgAAABB0Uk5T////////////////////AOAjXRkAAAKlSURBVHja7FbbsqQgDAwENEgc//9vN+SCWDtbtXPmZR/Wc6o02mlC58LA9ckFAOszvMV8xNgyUjyXhojfMVKvRL0ZHavxXYy5JrmchMdzou8YlTClxajtK8ZGGpWRoBr1+gFjKfHkJPbizabLgzE3pH7Iu4K980xgFvlrVzMZoVBWhtvouCDdcTDmTgMCJdVxJ9MKO6XxnliM7hxi5lbj2ZVM4l8DqYyKoNLYcfqBB1/LpHYxEcfVG6ZpMDgyFUVWY/Q1sSYPpIdSAKWqLWL0XqWiMWc4hpH0OQOMOAgdycY4N9Sb7wWANQs3rsDSdLAYiuxi5siVfOhBWIrtH0G3kNaF/8Q4kCPE1kMucG/ZMUBUCOgiKJkPuWWTLGVgLGpwns1DraUayCtoBqERyaYtVsm85NActRooezvSLO/sKZP/nq8n4+xcyjNsRu8zW6KWpdb7wjiQd4WrtFZYFiKHENSmWp6xshh96c2RQ+c7Lt+qbijyEjHWUJ/pZsy8MGIUuzNiPySK2Gqoh6ZTRF6ko6q3nVTkaA//itIrDpW6l3SLo8juOmqMXkYknu5FdQxWbhCfKHEGDhxxyTVaXJF3ZjSl3jMksjSOOKmne9pI+mcG5QvaUJhI9HpkmRo2NpCrDJvsktRhRE2MM6F2n7dt4OaMUq8bCctk0+PoMRzL+1l5PZ2eyM/Owr86gf8z/tOM53lom5+nVcFuB+eJVzlXwAYy9TZ9s537tfqcsJWbEU4nBngZo6FfO9T9CdhfBtmk2dLiAy8uS4zwOpMx2HqYbTC+amNeAYTpsP4SIgvWfUBWXxn3CMHW3ffd7k3+YIkx7w0t/CVGvcPejoeOlzOWzeGbawOHqXQGUTMZRcfj4XPCgW9y/fuvVn8zD9P1QHzv80uAAQA0i3Jer7Jr7gAAAABJRU5ErkJggg==') 99% 10px no-repeat;
+			border-top: 1px solid #DDD;
+		}
+
+		#netteBluescreen .highlight {
+			background: #CD1818;
+			color: white;
+			font-weight: bold;
+			font-style: normal;
+			display: block;
+			padding: 0 .4em;
+			margin: 0 -.4em;
+		}
+
+		#netteBluescreen .line {
+			color: #9F9C7F;
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		#netteBluescreen a[href^=editor\:] {
+			color: inherit;
+			border-bottom: 1px dotted #C1D2E1;
+		}
+		#netteBluescreen .caused {
+			float: right;
+			padding: .3em .6em;
+			background: #df8075;
+			border-radius: 0 0 0 8px;
+			white-space: nowrap;
+		}
+
+		#netteBluescreen .caused a {
+			color: white;
+		}
+
+	</style>
+</head>
+
+
+
+<body>
+<script>document.body.className+=' js'</script>
+<div id="netteBluescreen">
+	<a id="netteBluescreenIcon" href="#" rel="next"><abbr>&#x25bc;</abbr></a
+
+	><div>
+		<div id="netteBluescreenError" class="panel">
+			<h1>Nette\Utils\NeonException</h1>
+
+			<p>Either tabs or spaces may be used as indenting chars, but not both. on line 50, column 2. <a href="http://www.google.cz/search?sourceid=nette&amp;q=Nette%5CUtils%5CNeonException+Either+tabs+or+spaces+may+be+used+as+indenting+chars%2C+but+not+both.+on+line+50%2C+column+2." id="netteBsSearch">search&#x25ba;</a></p>
+		</div>
+
+		
+
+				
+			
+
+
+												<div class="panel">
+				<h2><a href="#" rel="netteBsPnl1">NEON <abbr>&#x25bc;</abbr></a></h2>
+
+				<div id="netteBsPnl1" class="inner">
+				<p><b>File:</b> <a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Fapp%2Fconfig%2Fconfig.neon&amp;line=50" title="/home/s1lent/Desktop/www-projects/foxy-tests/app/config/config.neon:50">/home/s1lent/Desktop/www-projects/foxy-tests/app/config/<b>config.neon</b></a>&nbsp; <b>Line:</b> 50</p><pre><div><code><span style="color: #06B"><span class='line'>40:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#driverClass:&nbsp;PDODblibModule\Doctrine\DBAL\Driver\PDODblib\Driver
+<span class='line'>41:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dbname:&nbsp;%database.dbname%
+<span class='line'>42:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;%database.user%
+<span class='line'>43:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password:&nbsp;%database.password%
+<span class='line'>44:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host:&nbsp;%database.host%
+<span class='line'>45:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver:&nbsp;%database.driver%
+<span class='line'>46:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driverOptions:
+<span class='line'>47:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1002:&nbsp;'SET&nbsp;NAMES&nbsp;utf8'
+<span class='line'>48:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config:&nbsp;@doctrineConfiguration
+<span class='line'>49:</span>    
+<span class='highlight'>50:    &nbsp;&nbsp;&nbsp;&nbsp;parameters:
+</span><span class='line'>51:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database:
+<span class='line'>52:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver:&nbsp;pdo_pgsql
+<span class='line'>53:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dbname:&nbsp;foxy_forms
+<span class='line'>54:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user:&nbsp;root
+</span></code></div></pre>			</div></div>
+			
+
+
+						
+			<div class="panel">
+			<h2><a href="#" rel="netteBsPnl2">Source file <abbr>&#x25ba;</abbr></a></h2>
+
+			<div id="netteBsPnl2" class="nette-collapsed inner">
+				<p><b>File:</b> <a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=359" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:359">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a> &nbsp; <b>Line:</b> 359</p>
+				<pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>349:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>350:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>351:</span>    
+<span class='line'>352:</span>    
+<span class='line'>353:</span>    &nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;function&nbsp;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$message&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #080">"Unexpected&nbsp;'%s'"</span><span style="color: #D24; font-weight: bold">)
+<span class='line'>354:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>355:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list(,&nbsp;</span><span style="color: #000">$line</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$col</span><span style="color: #D24; font-weight: bold">)&nbsp;=&nbsp;</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">getOffset</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">n</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>356:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$token&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;isset(</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">n</span><span style="color: #D24; font-weight: bold">])
+<span class='line'>357:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?&nbsp;</span><span style="color: #000">str_replace</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"\n"</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #080">'&lt;new&nbsp;line&gt;'</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">Strings</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">truncate</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">n</span><span style="color: #D24; font-weight: bold">],&nbsp;</span><span style="color: #000">40</span><span style="color: #D24; font-weight: bold">))
+<span class='line'>358:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</span><span style="color: #080">'end'</span><span style="color: #D24; font-weight: bold">;
+<span class='highlight'>359:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;NeonException(str_replace('%s',&nbsp;$token,&nbsp;$message)&nbsp;.&nbsp;"&nbsp;on&nbsp;line&nbsp;$line,&nbsp;column&nbsp;$col.");
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #000"></span><span style="color: #080"></span><span style="color: #000"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"><span class='line'>360:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>361:</span>    
+<span class='line'>362:</span>    }
+<span class='line'>363:</span>    
+</span></span></code></div></pre>			</div></div>
+
+
+
+									<div class="panel">
+				<h2><a href="#" rel="netteBsPnl3">Call stack <abbr>&#x25bc;</abbr></a></h2>
+
+				<div id="netteBsPnl3" class="inner">
+				<ol>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=249" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:249">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a>:249					
+					<a href="#" rel="netteBsSrc1-0">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon-&gt;					error
+					(<a href="#" rel="netteBsArgs1-0">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-0">
+						<table>
+						<tr><th>$message</th><td><pre class="nette-dump"><span class="php-string">"Either tabs or spaces may be used as indenting chars, but not both."</span> (67)
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-0"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>239:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">strlen</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;-&nbsp;</span><span style="color: #000">1</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>240:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$indent&nbsp;</span><span style="color: #D24; font-weight: bold">===&nbsp;</span><span style="color: #000">NULL</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;first&nbsp;iteration
+<span class='line'>241:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$indent&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$newIndent</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>242:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>243:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$newIndent</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>244:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">indentTabs&nbsp;</span><span style="color: #D24; font-weight: bold">===&nbsp;</span><span style="color: #000">NULL</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>245:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">indentTabs&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #000">1</span><span style="color: #D24; font-weight: bold">]&nbsp;===&nbsp;</span><span style="color: #080">"\t"</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>246:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>247:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">strpos</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">],&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">indentTabs&nbsp;</span><span style="color: #D24; font-weight: bold">?&nbsp;</span><span style="color: #080">'&nbsp;'&nbsp;</span><span style="color: #D24; font-weight: bold">:&nbsp;</span><span style="color: #080">"\t"</span><span style="color: #D24; font-weight: bold">))&nbsp;{
+<span class='line'>248:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='highlight'>249:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;error('Either&nbsp;tabs&nbsp;or&nbsp;spaces&nbsp;may&nbsp;be&nbsp;used&nbsp;as&nbsp;indenting&nbsp;chars,&nbsp;but&nbsp;not&nbsp;both.');
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"><span class='line'>250:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>251:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>252:</span>    
+<span class='line'>253:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">&gt;&nbsp;</span><span style="color: #000">$indent</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;open&nbsp;new&nbsp;block-array&nbsp;or&nbsp;hash
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=258" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:258">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a>:258					
+					<a href="#" rel="netteBsSrc1-1">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon-&gt;					parse
+					(<a href="#" rel="netteBsArgs1-1">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-1">
+						<table>
+						<tr><th>$indent</th><td><pre class="nette-dump"><span class="php-int">16</span>
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-1"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>248:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>249:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Either&nbsp;tabs&nbsp;or&nbsp;spaces&nbsp;may&nbsp;be&nbsp;used&nbsp;as&nbsp;indenting&nbsp;chars,&nbsp;but&nbsp;not&nbsp;both.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>250:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>251:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>252:</span>    
+<span class='line'>253:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">&gt;&nbsp;</span><span style="color: #000">$indent</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;open&nbsp;new&nbsp;block-array&nbsp;or&nbsp;hash
+<span class='line'>254:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">if&nbsp;(</span><span style="color: #000">$hasValue&nbsp;</span><span style="color: #D24; font-weight: bold">||&nbsp;!</span><span style="color: #000">$hasKey</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>255:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>256:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Unexpected&nbsp;indentation.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>257:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+<span class='highlight'>258:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;addValue($result,&nbsp;$key&nbsp;!==&nbsp;NULL,&nbsp;$key,&nbsp;$this-&gt;parse($newIndent));
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>259:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>260:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;isset(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;?&nbsp;</span><span style="color: #000">strlen</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;-&nbsp;</span><span style="color: #000">1&nbsp;</span><span style="color: #D24; font-weight: bold">:&nbsp;</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>261:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$hasKey&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">FALSE</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>262:</span>    
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=258" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:258">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a>:258					
+					<a href="#" rel="netteBsSrc1-2">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon-&gt;					parse
+					(<a href="#" rel="netteBsArgs1-2">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-2">
+						<table>
+						<tr><th>$indent</th><td><pre class="nette-dump"><span class="php-int">12</span>
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-2"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>248:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>249:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Either&nbsp;tabs&nbsp;or&nbsp;spaces&nbsp;may&nbsp;be&nbsp;used&nbsp;as&nbsp;indenting&nbsp;chars,&nbsp;but&nbsp;not&nbsp;both.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>250:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>251:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>252:</span>    
+<span class='line'>253:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">&gt;&nbsp;</span><span style="color: #000">$indent</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;open&nbsp;new&nbsp;block-array&nbsp;or&nbsp;hash
+<span class='line'>254:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">if&nbsp;(</span><span style="color: #000">$hasValue&nbsp;</span><span style="color: #D24; font-weight: bold">||&nbsp;!</span><span style="color: #000">$hasKey</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>255:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>256:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Unexpected&nbsp;indentation.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>257:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+<span class='highlight'>258:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;addValue($result,&nbsp;$key&nbsp;!==&nbsp;NULL,&nbsp;$key,&nbsp;$this-&gt;parse($newIndent));
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>259:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>260:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;isset(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;?&nbsp;</span><span style="color: #000">strlen</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;-&nbsp;</span><span style="color: #000">1&nbsp;</span><span style="color: #D24; font-weight: bold">:&nbsp;</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>261:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$hasKey&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">FALSE</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>262:</span>    
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=258" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:258">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a>:258					
+					<a href="#" rel="netteBsSrc1-3">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon-&gt;					parse
+					(<a href="#" rel="netteBsArgs1-3">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-3">
+						<table>
+						<tr><th>$indent</th><td><pre class="nette-dump"><span class="php-int">8</span>
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-3"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>248:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>249:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Either&nbsp;tabs&nbsp;or&nbsp;spaces&nbsp;may&nbsp;be&nbsp;used&nbsp;as&nbsp;indenting&nbsp;chars,&nbsp;but&nbsp;not&nbsp;both.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>250:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>251:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>252:</span>    
+<span class='line'>253:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">&gt;&nbsp;</span><span style="color: #000">$indent</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;open&nbsp;new&nbsp;block-array&nbsp;or&nbsp;hash
+<span class='line'>254:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">if&nbsp;(</span><span style="color: #000">$hasValue&nbsp;</span><span style="color: #D24; font-weight: bold">||&nbsp;!</span><span style="color: #000">$hasKey</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>255:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>256:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Unexpected&nbsp;indentation.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>257:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+<span class='highlight'>258:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;addValue($result,&nbsp;$key&nbsp;!==&nbsp;NULL,&nbsp;$key,&nbsp;$this-&gt;parse($newIndent));
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>259:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>260:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;isset(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;?&nbsp;</span><span style="color: #000">strlen</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;-&nbsp;</span><span style="color: #000">1&nbsp;</span><span style="color: #D24; font-weight: bold">:&nbsp;</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>261:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$hasKey&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">FALSE</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>262:</span>    
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=258" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:258">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a>:258					
+					<a href="#" rel="netteBsSrc1-4">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon-&gt;					parse
+					(<a href="#" rel="netteBsArgs1-4">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-4">
+						<table>
+						<tr><th>$indent</th><td><pre class="nette-dump"><span class="php-int">4</span>
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-4"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>248:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>249:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Either&nbsp;tabs&nbsp;or&nbsp;spaces&nbsp;may&nbsp;be&nbsp;used&nbsp;as&nbsp;indenting&nbsp;chars,&nbsp;but&nbsp;not&nbsp;both.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>250:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>251:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>252:</span>    
+<span class='line'>253:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">&gt;&nbsp;</span><span style="color: #000">$indent</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;open&nbsp;new&nbsp;block-array&nbsp;or&nbsp;hash
+<span class='line'>254:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">if&nbsp;(</span><span style="color: #000">$hasValue&nbsp;</span><span style="color: #D24; font-weight: bold">||&nbsp;!</span><span style="color: #000">$hasKey</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>255:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">++;
+<span class='line'>256:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">error</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Unexpected&nbsp;indentation.'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>257:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+<span class='highlight'>258:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;addValue($result,&nbsp;$key&nbsp;!==&nbsp;NULL,&nbsp;$key,&nbsp;$this-&gt;parse($newIndent));
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>259:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>260:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$newIndent&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;isset(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;?&nbsp;</span><span style="color: #000">strlen</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$n</span><span style="color: #D24; font-weight: bold">])&nbsp;-&nbsp;</span><span style="color: #000">1&nbsp;</span><span style="color: #D24; font-weight: bold">:&nbsp;</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>261:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$hasKey&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">FALSE</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>262:</span>    
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FUtils%2FNeon.php&amp;line=146" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php:146">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/<b>Neon.php</b></a>:146					
+					<a href="#" rel="netteBsSrc1-5">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon-&gt;					parse
+					(<a href="#" rel="netteBsArgs1-5">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-5">
+						<table>
+						<tr><th>$indent</th><td><pre class="nette-dump"><span class="php-int">0</span>
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-5"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>136:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;new&nbsp;</span><span style="color: #000">Tokenizer</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$patterns</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #080">'mix'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>137:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>138:</span>    
+<span class='line'>139:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">substr</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$input</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">3</span><span style="color: #D24; font-weight: bold">)&nbsp;===&nbsp;</span><span style="color: #080">"\xEF\xBB\xBF"</span><span style="color: #D24; font-weight: bold">)&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;BOM
+<span class='line'>140:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$input&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">substr</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$input</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">3</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>141:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>142:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$input&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">str_replace</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"\r"</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #080">''</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$input</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>143:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">tokenize</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$input</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>144:</span>    
+<span class='line'>145:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$parser&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;new&nbsp;static;
+<span class='highlight'>146:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$res&nbsp;=&nbsp;$parser-&gt;parse(0);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>147:</span>    
+<span class='line'>148:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(isset(</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$parser</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">n</span><span style="color: #D24; font-weight: bold">]))&nbsp;{
+<span class='line'>149:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">$tokenizer</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">tokens</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">$parser</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">n</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">]&nbsp;===&nbsp;</span><span style="color: #080">"\n"</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>150:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$parser</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">n</span><span style="color: #D24; font-weight: bold">++;
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FConfig%2FAdapters%2FNeonAdapter.php&amp;line=37" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Adapters/NeonAdapter.php:37">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Adapters/<b>NeonAdapter.php</b></a>:37					
+					<a href="#" rel="netteBsSrc1-6">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Utils\Neon::					decode
+					(<a href="#" rel="netteBsArgs1-6">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-6">
+						<table>
+						<tr><th>$input</th><td><pre class="nette-dump"><span class="php-string">"#
+# SECURITY WARNING: it is CRITICAL that this file &amp; directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory ... "</span> (1825)
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-6"><pre><div><code><span style="color: #06B"><span style="color: #998; font-style: italic"><span class='line'>27:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">const&nbsp;</span><span style="color: #000">INHERITING_SEPARATOR&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #080">'&lt;'</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;child&nbsp;&lt;&nbsp;parent
+<span class='line'>28:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">PREVENT_MERGING&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #080">'!'</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>29:</span>    
+<span class='line'>30:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #998; font-style: italic">/**
+<span class='line'>31:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Reads&nbsp;configuration&nbsp;from&nbsp;NEON&nbsp;file.
+<span class='line'>32:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;string&nbsp;&nbsp;file&nbsp;name
+<span class='line'>33:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array
+<span class='line'>34:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<span class='line'>35:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">public&nbsp;function&nbsp;</span><span style="color: #000">load</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$file</span><span style="color: #D24; font-weight: bold">)
+<span class='line'>36:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='highlight'>37:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$this-&gt;process((array)&nbsp;Neon::decode(file_get_contents($file)));
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>38:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>39:</span>    
+<span class='line'>40:</span>    
+<span class='line'>41:</span>    &nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;function&nbsp;</span><span style="color: #000">process</span><span style="color: #D24; font-weight: bold">(array&nbsp;</span><span style="color: #000">$arr</span><span style="color: #D24; font-weight: bold">)
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FConfig%2FLoader.php&amp;line=51" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Loader.php:51">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/<b>Loader.php</b></a>:51					
+					<a href="#" rel="netteBsSrc1-7">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Config\Adapters\NeonAdapter-&gt;					load
+					(<a href="#" rel="netteBsArgs1-7">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-7">
+						<table>
+						<tr><th>$file</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests/app/config/config.neon"</span> (67)
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-7"><pre><div><code><span style="color: #06B"><span style="color: #998; font-style: italic"><span class='line'>41:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;string&nbsp;&nbsp;file&nbsp;name
+<span class='line'>42:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;&nbsp;string&nbsp;&nbsp;optional&nbsp;section&nbsp;to&nbsp;load
+<span class='line'>43:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;array
+<span class='line'>44:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<span class='line'>45:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">public&nbsp;function&nbsp;</span><span style="color: #000">load</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$file</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$section&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">NULL</span><span style="color: #D24; font-weight: bold">)
+<span class='line'>46:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>47:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!</span><span style="color: #000">is_file</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$file</span><span style="color: #D24; font-weight: bold">)&nbsp;||&nbsp;!</span><span style="color: #000">is_readable</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$file</span><span style="color: #D24; font-weight: bold">))&nbsp;{
+<span class='line'>48:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">FileNotFoundException</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"File&nbsp;'</span><span style="color: #000">$file</span><span style="color: #080">'&nbsp;is&nbsp;missing&nbsp;or&nbsp;is&nbsp;not&nbsp;readable."</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>49:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>50:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">dependencies</span><span style="color: #D24; font-weight: bold">[]&nbsp;=&nbsp;</span><span style="color: #000">$file&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">realpath</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$file</span><span style="color: #D24; font-weight: bold">);
+<span class='highlight'>51:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$data&nbsp;=&nbsp;$this-&gt;getAdapter($file)-&gt;load($file);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>52:</span>    
+<span class='line'>53:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$section</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>54:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(isset(</span><span style="color: #000">$data</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">self</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">INCLUDES_KEY</span><span style="color: #D24; font-weight: bold">]))&nbsp;{
+<span class='line'>55:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">InvalidStateException</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"Section&nbsp;'includes'&nbsp;must&nbsp;be&nbsp;placed&nbsp;under&nbsp;some&nbsp;top&nbsp;section&nbsp;in&nbsp;file&nbsp;'</span><span style="color: #000">$file</span><span style="color: #080">'."</span><span style="color: #D24; font-weight: bold">);
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FConfig%2FConfigurator.php&amp;line=211" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Configurator.php:211">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/<b>Configurator.php</b></a>:211					
+					<a href="#" rel="netteBsSrc1-8">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Config\Loader-&gt;					load
+					(<a href="#" rel="netteBsArgs1-8">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-8">
+						<table>
+						<tr><th>$file</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests/app/config/config.neon"</span> (67)
+</pre></td></tr>
+<tr><th>$section</th><td><pre class="nette-dump"><span class="php-string">"production"</span> (10)
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-8"><pre><div><code><span style="color: #06B"><span style="color: #998; font-style: italic"><span class='line'>201:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Build&nbsp;system&nbsp;container&nbsp;class.
+<span class='line'>202:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;string
+<span class='line'>203:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<span class='line'>204:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">protected&nbsp;function&nbsp;</span><span style="color: #000">buildContainer</span><span style="color: #D24; font-weight: bold">(&amp;&nbsp;</span><span style="color: #000">$dependencies&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">NULL</span><span style="color: #D24; font-weight: bold">)
+<span class='line'>205:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>206:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$loader&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">createLoader</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>207:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$config&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;array();
+<span class='line'>208:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$code&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #080">"&lt;?php\n"</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>209:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach&nbsp;(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">files&nbsp;</span><span style="color: #D24; font-weight: bold">as&nbsp;</span><span style="color: #000">$tmp</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>210:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list(</span><span style="color: #000">$file</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$section</span><span style="color: #D24; font-weight: bold">)&nbsp;=&nbsp;</span><span style="color: #000">$tmp</span><span style="color: #D24; font-weight: bold">;
+<span class='highlight'>211:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$config&nbsp;=&nbsp;Helpers::merge($loader-&gt;load($file,&nbsp;$section),&nbsp;$config);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>212:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$code&nbsp;</span><span style="color: #D24; font-weight: bold">.=&nbsp;</span><span style="color: #080">"//&nbsp;source:&nbsp;</span><span style="color: #000">$file</span><span style="color: #080">&nbsp;</span><span style="color: #000">$section</span><span style="color: #080">\n"</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>213:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>214:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$code&nbsp;</span><span style="color: #D24; font-weight: bold">.=&nbsp;</span><span style="color: #080">"\n"</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>215:</span>    
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Flibs%2Fnette%2Fnette%2FNette%2FConfig%2FConfigurator.php&amp;line=178" title="/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Configurator.php:178">/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/<b>Configurator.php</b></a>:178					
+					<a href="#" rel="netteBsSrc1-9">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Config\Configurator-&gt;					buildContainer
+					(<a href="#" rel="netteBsArgs1-9">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-9">
+						<table>
+						<tr><th>$dependencies</th><td><pre class="nette-dump"><span class="php-null">NULL</span>
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-9"><pre><div><code><span style="color: #06B"><span style="color: #998; font-style: italic"><span class='line'>168:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Returns&nbsp;system&nbsp;DI&nbsp;container.
+<span class='line'>169:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;\SystemContainer
+<span class='line'>170:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<span class='line'>171:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">public&nbsp;function&nbsp;</span><span style="color: #000">createContainer</span><span style="color: #D24; font-weight: bold">()
+<span class='line'>172:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>173:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #000">$cacheDir&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">getCacheDirectory</span><span style="color: #D24; font-weight: bold">())&nbsp;{
+<span class='line'>174:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cache&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;new&nbsp;</span><span style="color: #000">Cache</span><span style="color: #D24; font-weight: bold">(new&nbsp;</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Caching</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Storages</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">PhpFileStorage</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheDir</span><span style="color: #D24; font-weight: bold">),&nbsp;</span><span style="color: #080">'Nette.Configurator'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>175:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cacheKey&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;array(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">parameters</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">files</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>176:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cached&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">load</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheKey</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>177:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!</span><span style="color: #000">$cached</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='highlight'>178:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$code&nbsp;=&nbsp;$this-&gt;buildContainer($dependencies);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>179:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">save</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheKey</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$code</span><span style="color: #D24; font-weight: bold">,&nbsp;array(
+<span class='line'>180:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">Cache</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">FILES&nbsp;</span><span style="color: #D24; font-weight: bold">=&gt;&nbsp;</span><span style="color: #000">$dependencies</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>181:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;));
+<span class='line'>182:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cached&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">load</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheKey</span><span style="color: #D24; font-weight: bold">);
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Fapp%2Fbootstrap.php&amp;line=50" title="/home/s1lent/Desktop/www-projects/foxy-tests/app/bootstrap.php:50">/home/s1lent/Desktop/www-projects/foxy-tests/app/<b>bootstrap.php</b></a>:50					
+					<a href="#" rel="netteBsSrc1-10">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+					Nette\Config\Configurator-&gt;					createContainer
+					()
+					</p>
+
+					
+
+											<div  id="netteBsSrc1-10"><pre><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>40:</span>    </span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addConfig</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">__DIR__&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">'/config/config.local.neon'</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">NONE</span><span style="color: #D24; font-weight: bold">);&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;none&nbsp;section
+<span class='line'>41:</span>    
+<span class='line'>42:</span>    #&nbsp;define&nbsp;pathment
+<span class='line'>43:</span>    </span><span style="color: #000">$params&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;array(
+<span class='line'>44:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #080">'logDir'&nbsp;</span><span style="color: #D24; font-weight: bold">=&gt;&nbsp;</span><span style="color: #000">ROOT&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">'/log'</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>45:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #080">'tempDir'&nbsp;</span><span style="color: #D24; font-weight: bold">=&gt;&nbsp;</span><span style="color: #000">ROOT&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">'/temp'</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>46:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #080">'templatesDir'&nbsp;</span><span style="color: #D24; font-weight: bold">=&gt;&nbsp;</span><span style="color: #000">ROOT&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">'/app/templates'</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>47:</span>    );
+<span class='line'>48:</span>    </span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addParameters</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$params</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>49:</span>    
+<span class='highlight'>50:    $container&nbsp;=&nbsp;$configurator-&gt;createContainer();
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>51:</span>    
+<span class='line'>52:</span>    </span><span style="color: #000">$container</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">application</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">catchExceptions&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;!</span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">isDebugMode</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>53:</span>    
+<span class='line'>54:</span>    return&nbsp;</span><span style="color: #000">$container</span><span style="color: #D24; font-weight: bold">;
+</span></span></code></div></pre></div>
+					
+					</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Ffoxy-tests%2Fapp%2Fconsole&amp;line=10" title="/home/s1lent/Desktop/www-projects/foxy-tests/app/console:10">/home/s1lent/Desktop/www-projects/foxy-tests/app/<b>console</b></a>:10					
+					<a href="#" rel="netteBsSrc1-11">source <abbr>&#x25ba;</abbr></a>&nbsp; 
+										require
+					(<a href="#" rel="netteBsArgs1-11">arguments <abbr>&#x25ba;</abbr></a>)
+					</p>
+
+											<div class="nette-collapsed outer" id="netteBsArgs1-11">
+						<table>
+						<tr><th>#0</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests/app/bootstrap.php"</span> (62)
+</pre></td></tr>
+						</table>
+						</div>
+					
+
+											<div class="nette-collapsed" id="netteBsSrc1-11"><pre><div><code><span style="color: #06B"><span class='line'> 1:</span>    #!/usr/bin/env&nbsp;php
+<span class='line'> 2:</span>    <span style="color: #000">&lt;?php
+<span class='line'> 3:</span>    
+<span class='line'> 4:</span>    </span><span style="color: #D24; font-weight: bold">require&nbsp;</span><span style="color: #000">__DIR__&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">'/../env.php'</span><span style="color: #D24; font-weight: bold">;
+<span class='line'> 5:</span>    
+<span class='line'> 6:</span>    use&nbsp;</span><span style="color: #000">Doctrine</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">ORM</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Tools</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Setup</span><span style="color: #D24; font-weight: bold">;
+<span class='line'> 7:</span>    use&nbsp;</span><span style="color: #000">Doctrine</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">ORM</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">EntityManager</span><span style="color: #D24; font-weight: bold">;
+<span class='line'> 8:</span>    
+<span class='line'> 9:</span>    </span><span style="color: #000">$helperSet&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">null</span><span style="color: #D24; font-weight: bold">;
+<span class='highlight'>10:    $container&nbsp;=&nbsp;require&nbsp;__DIR__&nbsp;.&nbsp;'/bootstrap.php';
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"><span class='line'>11:</span>    
+<span class='line'>12:</span>    
+<span class='line'>13:</span>    
+<span class='line'>14:</span>    </span><span style="color: #998; font-style: italic">//&nbsp;Create&nbsp;a&nbsp;simple&nbsp;"default"&nbsp;Doctrine&nbsp;ORM&nbsp;configuration&nbsp;for&nbsp;Annotations
+<span class='line'>15:</span>    </span><span style="color: #000">$isDevMode&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">true</span><span style="color: #D24; font-weight: bold">;
+</span></span></code></div></pre></div>
+					
+					</li>
+									</ol>
+			</div></div>
+			
+
+
+			
+				
+
+
+						
+
+
+		<div class="panel">
+		<h2><a href="#" rel="netteBsPnl4">Environment <abbr>&#x25ba;</abbr></a></h2>
+
+		<div id="netteBsPnl4" class="nette-collapsed inner">
+			<h3><a href="#" rel="netteBsPnl5">$_SERVER <abbr>&#x25bc;</abbr></a></h3>
+			<div id="netteBsPnl5" class="outer">
+			<table>
+			<tr><th>LC_PAPER</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>MATE_DESKTOP_SESSION_ID</th><td><pre class="nette-dump"><span class="php-string">"this-is-deprecated"</span> (18)
+</pre></td></tr>
+<tr><th>LC_ADDRESS</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>SSH_AGENT_PID</th><td><pre class="nette-dump"><span class="php-string">"2024"</span> (4)
+</pre></td></tr>
+<tr><th>LC_MONETARY</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>DBUS_STARTER_ADDRESS</th><td><pre class="nette-dump"><span class="php-string">"unix:abstract=/tmp/dbus-SQuoCbW5cX,guid=20599f5b7f440d685c46478b52c83349"</span> (72)
+</pre></td></tr>
+<tr><th>GPG_AGENT_INFO</th><td><pre class="nette-dump"><span class="php-string">"/tmp/keyring-zxS5g6/gpg:0:1"</span> (27)
+</pre></td></tr>
+<tr><th>TERM</th><td><pre class="nette-dump"><span class="php-string">"xterm"</span> (5)
+</pre></td></tr>
+<tr><th>SHELL</th><td><pre class="nette-dump"><span class="php-string">"/bin/bash"</span> (9)
+</pre></td></tr>
+<tr><th>XDG_SESSION_COOKIE</th><td><pre class="nette-dump"><span class="php-string">"4464da00797efbf61ba9be4b517969c3-1388852040.792056-1016832626"</span> (61)
+</pre></td></tr>
+<tr><th>WINDOWID</th><td><pre class="nette-dump"><span class="php-string">"65012184"</span> (8)
+</pre></td></tr>
+<tr><th>LC_NUMERIC</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>MATE_KEYRING_CONTROL</th><td><pre class="nette-dump"><span class="php-string">"/tmp/keyring-zxS5g6"</span> (19)
+</pre></td></tr>
+<tr><th>OLDPWD</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests"</span> (44)
+</pre></td></tr>
+<tr><th>USER</th><td><pre class="nette-dump"><span class="php-string">"s1lent"</span> (6)
+</pre></td></tr>
+<tr><th>LC_TELEPHONE</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>SSH_AUTH_SOCK</th><td><pre class="nette-dump"><span class="php-string">"/tmp/keyring-zxS5g6/ssh"</span> (23)
+</pre></td></tr>
+<tr><th>SESSION_MANAGER</th><td><pre class="nette-dump"><span class="php-string">"local/s1lent-XPS-M1330:@/tmp/.ICE-unix/1946,unix/s1lent-XPS-M1330:/tmp/.ICE-unix/1946"</span> (85)
+</pre></td></tr>
+<tr><th>USERNAME</th><td><pre class="nette-dump"><span class="php-string">"s1lent"</span> (6)
+</pre></td></tr>
+<tr><th>DEFAULTS_PATH</th><td><pre class="nette-dump"><span class="php-string">"/usr/share/gconf/default.default.path"</span> (37)
+</pre></td></tr>
+<tr><th>XDG_CONFIG_DIRS</th><td><pre class="nette-dump"><span class="php-string">"/etc/xdg/xdg-default:/etc/xdg"</span> (29)
+</pre></td></tr>
+<tr><th>PATH</th><td><pre class="nette-dump"><span class="php-string">"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"</span> (88)
+</pre></td></tr>
+<tr><th>DESKTOP_SESSION</th><td><pre class="nette-dump"><span class="php-string">"default"</span> (7)
+</pre></td></tr>
+<tr><th>LC_IDENTIFICATION</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>PWD</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests/app"</span> (48)
+</pre></td></tr>
+<tr><th>LANG</th><td><pre class="nette-dump"><span class="php-string">"en_US.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>MANDATORY_PATH</th><td><pre class="nette-dump"><span class="php-string">"/usr/share/gconf/default.mandatory.path"</span> (39)
+</pre></td></tr>
+<tr><th>LC_MEASUREMENT</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>IM_CONFIG_PHASE</th><td><pre class="nette-dump"><span class="php-string">"1"</span>
+</pre></td></tr>
+<tr><th>MDM_XSERVER_LOCATION</th><td><pre class="nette-dump"><span class="php-string">"local"</span> (5)
+</pre></td></tr>
+<tr><th>DBUS_STARTER_BUS_TYPE</th><td><pre class="nette-dump"><span class="php-string">"session"</span> (7)
+</pre></td></tr>
+<tr><th>SHLVL</th><td><pre class="nette-dump"><span class="php-string">"1"</span>
+</pre></td></tr>
+<tr><th>HOME</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent"</span> (12)
+</pre></td></tr>
+<tr><th>LOGNAME</th><td><pre class="nette-dump"><span class="php-string">"s1lent"</span> (6)
+</pre></td></tr>
+<tr><th>XDG_DATA_DIRS</th><td><pre class="nette-dump"><span class="php-string">"/usr/share/default:/usr/local/share/:/usr/share/:/usr/share/mdm/"</span> (64)
+</pre></td></tr>
+<tr><th>DBUS_SESSION_BUS_ADDRESS</th><td><pre class="nette-dump"><span class="php-string">"unix:abstract=/tmp/dbus-SQuoCbW5cX,guid=20599f5b7f440d685c46478b52c83349"</span> (72)
+</pre></td></tr>
+<tr><th>MDMSESSION</th><td><pre class="nette-dump"><span class="php-string">"default"</span> (7)
+</pre></td></tr>
+<tr><th>TEXTDOMAIN</th><td><pre class="nette-dump"><span class="php-string">"im-config"</span> (9)
+</pre></td></tr>
+<tr><th>WINDOWPATH</th><td><pre class="nette-dump"><span class="php-string">"8"</span>
+</pre></td></tr>
+<tr><th>XDG_RUNTIME_DIR</th><td><pre class="nette-dump"><span class="php-string">"/run/user/s1lent"</span> (16)
+</pre></td></tr>
+<tr><th>DISPLAY</th><td><pre class="nette-dump"><span class="php-string">":0"</span> (2)
+</pre></td></tr>
+<tr><th>MDM_LANG</th><td><pre class="nette-dump"><span class="php-string">"en_US.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>LC_TIME</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>TEXTDOMAINDIR</th><td><pre class="nette-dump"><span class="php-string">"/usr/share/locale/"</span> (18)
+</pre></td></tr>
+<tr><th>COLORTERM</th><td><pre class="nette-dump"><span class="php-string">"mate-terminal"</span> (13)
+</pre></td></tr>
+<tr><th>XAUTHORITY</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/.Xauthority"</span> (24)
+</pre></td></tr>
+<tr><th>LC_NAME</th><td><pre class="nette-dump"><span class="php-string">"cs_CZ.UTF-8"</span> (11)
+</pre></td></tr>
+<tr><th>_</th><td><pre class="nette-dump"><span class="php-string">"/usr/bin/php"</span> (12)
+</pre></td></tr>
+<tr><th>PHP_SELF</th><td><pre class="nette-dump"><span class="php-string">"console"</span> (7)
+</pre></td></tr>
+<tr><th>SCRIPT_NAME</th><td><pre class="nette-dump"><span class="php-string">"console"</span> (7)
+</pre></td></tr>
+<tr><th>SCRIPT_FILENAME</th><td><pre class="nette-dump"><span class="php-string">"console"</span> (7)
+</pre></td></tr>
+<tr><th>PATH_TRANSLATED</th><td><pre class="nette-dump"><span class="php-string">"console"</span> (7)
+</pre></td></tr>
+<tr><th>DOCUMENT_ROOT</th><td><pre class="nette-dump"><span class="php-string">""</span>
+</pre></td></tr>
+<tr><th>REQUEST_TIME_FLOAT</th><td><pre class="nette-dump"><span class="php-float">1388866054.6827</span>
+</pre></td></tr>
+<tr><th>REQUEST_TIME</th><td><pre class="nette-dump"><span class="php-int">1388866054</span>
+</pre></td></tr>
+<tr><th>argv</th><td><pre class="nette-dump"><a href='#' rel='next'><span class="php-array">array</span>(3) <abbr>&#x25bc;</abbr> </a><code>[
+   <span class="php-key">0</span> => <span class="php-string">"console"</span> (7)
+   <span class="php-key">1</span> => <span class="php-string">"orm:schema-tool:update"</span> (22)
+   <span class="php-key">2</span> => <span class="php-string">"--force"</span> (7)
+]</code>
+</pre></td></tr>
+<tr><th>argc</th><td><pre class="nette-dump"><span class="php-int">3</span>
+</pre></td></tr>
+			</table>
+			</div>
+
+
+			<h3><a href="#" rel="netteBsPnl6">$_SESSION <abbr>&#x25bc;</abbr></a></h3>
+			<div id="netteBsPnl6" class="outer">
+						<p><i>empty</i></p>
+						</div>
+
+
+			
+
+						<h3><a href="#" rel="netteBsPnl7">Constants <abbr>&#x25ba;</abbr></a></h3>
+			<div id="netteBsPnl7" class="outer nette-collapsed">
+			<table>
+			<tr><th>ROOT</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests"</span> (44)
+</pre></td></tr>
+<tr><th>NETTE</th><td><pre class="nette-dump"><span class="php-bool">TRUE</span>
+</pre></td></tr>
+<tr><th>NETTE_DIR</th><td><pre class="nette-dump"><span class="php-string">"/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette"</span> (67)
+</pre></td></tr>
+<tr><th>NETTE_VERSION_ID</th><td><pre class="nette-dump"><span class="php-int">20013</span>
+</pre></td></tr>
+<tr><th>NETTE_PACKAGE</th><td><pre class="nette-dump"><span class="php-string">"5.3"</span> (3)
+</pre></td></tr>
+			</table>
+			</div>
+			
+
+			<h3><a href="#" rel="netteBsPnl8">Included files <abbr>&#x25ba;</abbr></a> (42)</h3>
+			<div id="netteBsPnl8" class="outer nette-collapsed">
+			<table>
+			<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/app/console</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/env.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/app/bootstrap.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/autoload.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/composer/autoload_real.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/composer/ClassLoader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/composer/autoload_namespaces.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/composer/autoload_classmap.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/composer/autoload_files.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/loader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/common/exceptions.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/common/Object.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/LimitedScope.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Loaders/AutoLoader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Loaders/NetteLoader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/Helpers.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/shortcuts.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Html.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/Debugger.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/Logger.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/FireLogger.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/BlueScreen.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/Bar.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/DefaultBarPanel.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/IBarPanel.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/SafeStream.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Configurator.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Loaders/RobotLoader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Caching/Storages/FileStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Caching/IStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Caching/Cache.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/common/Callback.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/common/Framework.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Helpers.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Caching/Storages/PhpFileStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Loader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/Adapters/NeonAdapter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Config/IAdapter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Neon.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Tokenizer.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Utils/Strings.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/foxy-tests/libs/nette/nette/Nette/Diagnostics/templates/bluescreen.phtml</td></tr>
+			</table>
+			</div>
+
+
+			<h3><a href="#" rel="netteBsPnl9">Configuration options <abbr>&#x25ba;</abbr></a></h3>
+			<div id="netteBsPnl9" class="outer nette-collapsed">
+			phpinfo()
+
+
+ _______________________________________________________________________
+
+
+Configuration
+
+bcmath
+
+BCMath support => enabled
+
+Directive => Local Value => Master Value
+bcmath.scale => 0 => 0
+
+bz2
+
+BZip2 Support => Enabled
+Stream Wrapper support => compress.bzip2://
+Stream Filter support => bzip2.decompress, bzip2.compress
+BZip2 Version => 1.0.6, 6-Sept-2010
+
+calendar
+
+Calendar support => enabled
+
+Core
+
+PHP Version => 5.4.9-4ubuntu2.3
+
+Directive => Local Value => Master Value
+allow_url_fopen => On => On
+allow_url_include => Off => Off
+always_populate_raw_post_data => Off => Off
+arg_separator.input => & => &
+arg_separator.output => & => &
+asp_tags => Off => Off
+auto_append_file => no value => no value
+auto_globals_jit => On => On
+auto_prepend_file => no value => no value
+browscap => no value => no value
+default_charset => no value => no value
+default_mimetype => text/html => text/html
+disable_classes => no value => no value
+disable_functions => no value => no value
+display_errors => Off => Off
+display_startup_errors => Off => Off
+doc_root => no value => no value
+docref_ext => no value => no value
+docref_root => no value => no value
+enable_dl => Off => Off
+enable_post_data_reading => On => On
+error_append_string => no value => no value
+error_log => /home/s1lent/Desktop/www-projects/foxy-tests/log/php_error.log => no value
+error_prepend_string => no value => no value
+error_reporting => 0 => 22527
+exit_on_timeout => Off => Off
+expose_php => On => On
+extension_dir => /usr/lib/php5/20100525 => /usr/lib/php5/20100525
+file_uploads => On => On
+highlight.comment => <font style="color: #998; font-style: italic">#998; font-style: italic</font> => <font style="color: #FF8000">#FF8000</font>
+highlight.default => <font style="color: #000">#000</font> => <font style="color: #0000BB">#0000BB</font>
+highlight.html => <font style="color: #06B">#06B</font> => <font style="color: #000000">#000000</font>
+highlight.keyword => <font style="color: #D24; font-weight: bold">#D24; font-weight: bold</font> => <font style="color: #007700">#007700</font>
+highlight.string => <font style="color: #080">#080</font> => <font style="color: #DD0000">#DD0000</font>
+html_errors => Off => Off
+ignore_repeated_errors => Off => Off
+ignore_repeated_source => Off => Off
+ignore_user_abort => Off => Off
+implicit_flush => On => On
+include_path => .:/usr/share/php:/usr/share/pear => .:/usr/share/php:/usr/share/pear
+log_errors => Off => On
+log_errors_max_len => 1024 => 1024
+mail.add_x_header => On => On
+mail.force_extra_parameters => no value => no value
+mail.log => no value => no value
+max_execution_time => 0 => 0
+max_file_uploads => 20 => 20
+max_input_nesting_level => 64 => 64
+max_input_time => -1 => -1
+max_input_vars => 1000 => 1000
+memory_limit => -1 => -1
+open_basedir => no value => no value
+output_buffering => 0 => 0
+output_handler => no value => no value
+post_max_size => 8M => 8M
+precision => 14 => 14
+realpath_cache_size => 16K => 16K
+realpath_cache_ttl => 120 => 120
+register_argc_argv => On => On
+report_memleaks => On => On
+report_zend_debug => Off => Off
+request_order => GP => GP
+sendmail_from => no value => no value
+sendmail_path => /usr/sbin/sendmail -t -i  => /usr/sbin/sendmail -t -i 
+serialize_precision => 17 => 17
+short_open_tag => On => On
+SMTP => localhost => localhost
+smtp_port => 25 => 25
+sql.safe_mode => Off => Off
+track_errors => Off => Off
+unserialize_callback_func => no value => no value
+upload_max_filesize => 2M => 2M
+upload_tmp_dir => no value => no value
+user_dir => no value => no value
+user_ini.cache_ttl => 300 => 300
+user_ini.filename => .user.ini => .user.ini
+variables_order => GPCS => GPCS
+xmlrpc_error_number => 0 => 0
+xmlrpc_errors => Off => Off
+zend.detect_unicode => On => On
+zend.enable_gc => On => On
+zend.multibyte => Off => Off
+zend.script_encoding => no value => no value
+
+ctype
+
+ctype functions => enabled
+
+curl
+
+cURL support => enabled
+cURL Information => 7.29.0
+Age => 3
+Features
+AsynchDNS => No
+Debug => No
+GSS-Negotiate => Yes
+IDN => Yes
+IPv6 => Yes
+Largefile => Yes
+NTLM => Yes
+SPNEGO => No
+SSL => Yes
+SSPI => No
+krb4 => No
+libz => Yes
+CharConv => No
+Protocols => dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, pop3, pop3s, rtmp, rtsp, smtp, smtps, telnet, tftp
+Host => x86_64-pc-linux-gnu
+SSL Version => OpenSSL/1.0.1c
+ZLib Version => 1.2.7
+
+date
+
+date/time support => enabled
+"Olson" Timezone Database Version => 0.system
+Timezone Database => internal
+Default timezone => Europe/Berlin
+
+Directive => Local Value => Master Value
+date.default_latitude => 31.7667 => 31.7667
+date.default_longitude => 35.2333 => 35.2333
+date.sunrise_zenith => 90.583333 => 90.583333
+date.sunset_zenith => 90.583333 => 90.583333
+date.timezone => no value => no value
+
+dba
+
+DBA support => enabled
+Supported handlers => cdb cdb_make db4 inifile flatfile 
+
+Directive => Local Value => Master Value
+dba.default_handler => flatfile => flatfile
+
+dom
+
+DOM/XML => enabled
+DOM/XML API Version => 20031129
+libxml Version => 2.9.0
+HTML Support => enabled
+XPath Support => enabled
+XPointer Support => enabled
+Schema Support => enabled
+RelaxNG Support => enabled
+
+ereg
+
+Regex Library => Bundled library enabled
+
+exif
+
+EXIF Support => enabled
+EXIF Version => 1.4 $Id$
+Supported EXIF Version => 0220
+Supported filetypes => JPEG,TIFF
+
+Directive => Local Value => Master Value
+exif.decode_jis_intel => JIS => JIS
+exif.decode_jis_motorola => JIS => JIS
+exif.decode_unicode_intel => UCS-2LE => UCS-2LE
+exif.decode_unicode_motorola => UCS-2BE => UCS-2BE
+exif.encode_jis => no value => no value
+exif.encode_unicode => ISO-8859-15 => ISO-8859-15
+
+fileinfo
+
+fileinfo support => enabled
+version => 1.0.5
+
+filter
+
+Input Validation and Filtering => enabled
+Revision => $Id: e523cdc8829892d1b4f9cb7c3c57b2ba1c36b9ea $
+
+Directive => Local Value => Master Value
+filter.default => unsafe_raw => unsafe_raw
+filter.default_flags => no value => no value
+
+ftp
+
+FTP support => enabled
+
+gettext
+
+GetText Support => enabled
+
+hash
+
+hash support => enabled
+Hashing Engines => md2 md4 md5 sha1 sha224 sha256 sha384 sha512 ripemd128 ripemd160 ripemd256 ripemd320 whirlpool tiger128,3 tiger160,3 tiger192,3 tiger128,4 tiger160,4 tiger192,4 snefru snefru256 gost adler32 crc32 crc32b fnv132 fnv164 joaat haval128,3 haval160,3 haval192,3 haval224,3 haval256,3 haval128,4 haval160,4 haval192,4 haval224,4 haval256,4 haval128,5 haval160,5 haval192,5 haval224,5 haval256,5 
+
+iconv
+
+iconv support => enabled
+iconv implementation => glibc
+iconv library version => 2.17
+
+Directive => Local Value => Master Value
+iconv.input_encoding => ISO-8859-1 => ISO-8859-1
+iconv.internal_encoding => UTF-8 => ISO-8859-1
+iconv.output_encoding => ISO-8859-1 => ISO-8859-1
+
+json
+
+json support => enabled
+json version => 1.2.1
+
+libxml
+
+libXML support => active
+libXML Compiled Version => 2.9.0
+libXML Loaded Version => 20900
+libXML streams => enabled
+
+mbstring
+
+Multibyte Support => enabled
+Multibyte string engine => libmbfl
+HTTP input encoding translation => disabled
+libmbfl version => 1.3.2
+
+mbstring extension makes use of "streamable kanji code filter and converter", which is distributed under the GNU Lesser General Public License version 2.1.
+
+Multibyte (japanese) regex support => enabled
+Multibyte regex (oniguruma) backtrack check => On
+Multibyte regex (oniguruma) version => 4.7.1
+
+Directive => Local Value => Master Value
+mbstring.detect_order => no value => no value
+mbstring.encoding_translation => Off => Off
+mbstring.func_overload => 0 => 0
+mbstring.http_input => pass => pass
+mbstring.http_output => pass => pass
+mbstring.http_output_conv_mimetypes => ^(text/|application/xhtml\+xml) => ^(text/|application/xhtml\+xml)
+mbstring.internal_encoding => no value => no value
+mbstring.language => neutral => neutral
+mbstring.strict_detection => Off => Off
+mbstring.substitute_character => no value => no value
+
+mhash
+
+MHASH support => Enabled
+MHASH API Version => Emulated Support
+
+mssql
+
+MSSQL Support => enabled
+Active Persistent Links => 0
+Active Links => 0
+Library version => FreeTDS
+
+Directive => Local Value => Master Value
+mssql.allow_persistent => On => On
+mssql.batchsize => 0 => 0
+mssql.charset => no value => no value
+mssql.compatability_mode => Off => Off
+mssql.connect_timeout => 5 => 5
+mssql.datetimeconvert => On => On
+mssql.max_links => Unlimited => Unlimited
+mssql.max_persistent => Unlimited => Unlimited
+mssql.max_procs => Unlimited => Unlimited
+mssql.min_error_severity => 10 => 10
+mssql.min_message_severity => 10 => 10
+mssql.secure_connection => Off => Off
+mssql.textlimit => Server default => Server default
+mssql.textsize => Server default => Server default
+mssql.timeout => 60 => 60
+
+openssl
+
+OpenSSL support => enabled
+OpenSSL Library Version => OpenSSL 1.0.1c 10 May 2012
+OpenSSL Header Version => OpenSSL 1.0.1c 10 May 2012
+
+pcntl
+
+pcntl support => enabled
+
+pcre
+
+PCRE (Perl Compatible Regular Expressions) Support => enabled
+PCRE Library Version => 8.31 2012-07-06
+
+Directive => Local Value => Master Value
+pcre.backtrack_limit => 1000000 => 1000000
+pcre.recursion_limit => 100000 => 100000
+
+PDO
+
+PDO support => enabled
+PDO drivers => dblib, pgsql
+
+pdo_dblib
+
+PDO Driver for FreeTDS/Sybase DB-lib => enabled
+Flavour => freetds
+
+pdo_pgsql
+
+PDO Driver for PostgreSQL => enabled
+PostgreSQL(libpq) Version => 9.1.9
+Module version => 1.0.2
+Revision =>  $Id$ 
+
+pgsql
+
+PostgreSQL Support => enabled
+PostgreSQL(libpq) Version => 9.1.9
+PostgreSQL(libpq)  => PostgreSQL 9.1.9 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.7.2-22ubuntu5) 4.7.2, 64-bit
+Multibyte character support => enabled
+SSL support => enabled
+Active Persistent Links => 0
+Active Links => 0
+
+Directive => Local Value => Master Value
+pgsql.allow_persistent => On => On
+pgsql.auto_reset_persistent => Off => Off
+pgsql.ignore_notice => Off => Off
+pgsql.log_notice => Off => Off
+pgsql.max_links => Unlimited => Unlimited
+pgsql.max_persistent => Unlimited => Unlimited
+
+Phar
+
+Phar: PHP Archive support => enabled
+Phar EXT version => 2.0.1
+Phar API version => 1.1.1
+SVN revision => $Id: cc7eac717db60fe3deade794d4ae082fe97279ed $
+Phar-based phar archives => enabled
+Tar-based phar archives => enabled
+ZIP-based phar archives => enabled
+gzip compression => enabled
+bzip2 compression => enabled
+Native OpenSSL support => enabled
+
+
+Phar based on pear/PHP_Archive, original concept by Davey Shafik.
+Phar fully realized by Gregory Beaver and Marcus Boerger.
+Portions of tar implementation Copyright (c) 2003-2009 Tim Kientzle.
+Directive => Local Value => Master Value
+phar.cache_list => no value => no value
+phar.readonly => On => On
+phar.require_hash => On => On
+
+posix
+
+Revision => $Id: 967584c6fadb3467f31abe8e13caa8764df85867 $
+
+readline
+
+Readline Support => enabled
+Readline library => EditLine wrapper
+
+Directive => Local Value => Master Value
+cli.pager => no value => no value
+cli.prompt => \b \>  => \b \> 
+
+Reflection
+
+Reflection => enabled
+Version => $Id: 53b2389d638795fa66862d453ff1abfd89e0aa13 $
+
+session
+
+Session Support => enabled
+Registered save handlers => files user 
+Registered serializer handlers => php php_binary wddx 
+
+Directive => Local Value => Master Value
+session.auto_start => Off => Off
+session.cache_expire => 180 => 180
+session.cache_limiter => nocache => nocache
+session.cookie_domain => no value => no value
+session.cookie_httponly => Off => Off
+session.cookie_lifetime => 0 => 0
+session.cookie_path => / => /
+session.cookie_secure => Off => Off
+session.entropy_file => /dev/urandom => /dev/urandom
+session.entropy_length => 32 => 32
+session.gc_divisor => 1000 => 1000
+session.gc_maxlifetime => 1440 => 1440
+session.gc_probability => 0 => 0
+session.hash_bits_per_character => 5 => 5
+session.hash_function => 0 => 0
+session.name => PHPSESSID => PHPSESSID
+session.referer_check => no value => no value
+session.save_handler => files => files
+session.save_path => /var/lib/php5 => /var/lib/php5
+session.serialize_handler => php => php
+session.upload_progress.cleanup => On => On
+session.upload_progress.enabled => On => On
+session.upload_progress.freq => 1% => 1%
+session.upload_progress.min_freq => 1 => 1
+session.upload_progress.name => PHP_SESSION_UPLOAD_PROGRESS => PHP_SESSION_UPLOAD_PROGRESS
+session.upload_progress.prefix => upload_progress_ => upload_progress_
+session.use_cookies => On => On
+session.use_only_cookies => On => On
+session.use_trans_sid => 0 => 0
+
+shmop
+
+shmop support => enabled
+
+SimpleXML
+
+Simplexml support => enabled
+Revision => $Id: 5514f0fc897197ca9a199fb93b8b5d9135ad711a $
+Schema support => enabled
+
+soap
+
+Soap Client => enabled
+Soap Server => enabled
+
+Directive => Local Value => Master Value
+soap.wsdl_cache => 1 => 1
+soap.wsdl_cache_dir => /tmp => /tmp
+soap.wsdl_cache_enabled => 1 => 1
+soap.wsdl_cache_limit => 5 => 5
+soap.wsdl_cache_ttl => 86400 => 86400
+
+sockets
+
+Sockets Support => enabled
+
+SPL
+
+SPL support => enabled
+Interfaces => Countable, OuterIterator, RecursiveIterator, SeekableIterator, SplObserver, SplSubject
+Classes => AppendIterator, ArrayIterator, ArrayObject, BadFunctionCallException, BadMethodCallException, CachingIterator, CallbackFilterIterator, DirectoryIterator, DomainException, EmptyIterator, FilesystemIterator, FilterIterator, GlobIterator, InfiniteIterator, InvalidArgumentException, IteratorIterator, LengthException, LimitIterator, LogicException, MultipleIterator, NoRewindIterator, OutOfBoundsException, OutOfRangeException, OverflowException, ParentIterator, RangeException, RecursiveArrayIterator, RecursiveCachingIterator, RecursiveCallbackFilterIterator, RecursiveDirectoryIterator, RecursiveFilterIterator, RecursiveIteratorIterator, RecursiveRegexIterator, RecursiveTreeIterator, RegexIterator, RuntimeException, SplDoublyLinkedList, SplFileInfo, SplFileObject, SplFixedArray, SplHeap, SplMinHeap, SplMaxHeap, SplObjectStorage, SplPriorityQueue, SplQueue, SplStack, SplTempFileObject, UnderflowException, UnexpectedValueException
+
+standard
+
+Dynamic Library Support => enabled
+Path to sendmail => /usr/sbin/sendmail -t -i 
+
+Directive => Local Value => Master Value
+assert.active => 1 => 1
+assert.bail => 0 => 0
+assert.callback => no value => no value
+assert.quiet_eval => 0 => 0
+assert.warning => 1 => 1
+auto_detect_line_endings => 0 => 0
+default_socket_timeout => 60 => 60
+from => no value => no value
+url_rewriter.tags => a=href,area=href,frame=src,input=src,form=fakeentry => a=href,area=href,frame=src,input=src,form=fakeentry
+user_agent => no value => no value
+
+sysvmsg
+
+sysvmsg support => enabled
+Revision => $Id: 6360183f0075ec66a3dfa01633b2ed808dd482af $
+
+tokenizer
+
+Tokenizer Support => enabled
+
+wddx
+
+WDDX Support => enabled
+WDDX Session Serializer => enabled
+
+xml
+
+XML Support => active
+XML Namespace Support => active
+libxml2 Version => 2.9.0
+
+xmlreader
+
+XMLReader => enabled
+
+xmlwriter
+
+XMLWriter => enabled
+
+zip
+
+Zip => enabled
+Extension Version => $Id: 74f868b5c3320a31af332207df35d4ff525cba1e $
+Zip version => 1.11.0
+Libzip version => 0.10.1
+
+zlib
+
+ZLib Support => enabled
+Stream Wrapper => compress.zlib://
+Stream Filter => zlib.inflate, zlib.deflate
+Compiled Version => 1.2.1.1
+Linked Version => 1.2.7
+
+Directive => Local Value => Master Value
+zlib.output_compression => Off => Off
+zlib.output_compression_level => -1 => -1
+zlib.output_handler => no value => no value
+
+Additional Modules
+
+Module Name
+sysvsem
+sysvshm
+			</div>
+		</div></div>
+
+
+
+		<div class="panel">
+		<h2><a href="#" rel="netteBsPnl10">HTTP request <abbr>&#x25ba;</abbr></a></h2>
+
+		<div id="netteBsPnl10" class="nette-collapsed inner">
+			
+
+						<h3>$_GET</h3>
+						<p><i>empty</i></p>
+									<h3>$_POST</h3>
+						<p><i>empty</i></p>
+									<h3>$_COOKIE</h3>
+						<p><i>empty</i></p>
+								</div></div>
+
+
+
+		<div class="panel">
+		<h2><a href="#" rel="netteBsPnl11">HTTP response <abbr>&#x25ba;</abbr></a></h2>
+
+		<div id="netteBsPnl11" class="nette-collapsed inner">
+			<h3>Headers</h3>
+						<p><i>no headers</i></p>
+					</div></div>
+
+
+
+		
+
+
+		<ul>
+			<li>Report generated at 2014/01/04 21:07:34</li>
+							<li>cli: console orm:schema-tool:update --force</li>
+						<li>PHP 5.4.9-4ubuntu2.3</li>
+						<li>Nette Framework 2.0.13 <i>(revision $WCREV$ released on $WCDATE$)</i></li>		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var bs = document.getElementById('netteBluescreen');
+	document.body.appendChild(bs);
+	document.onkeyup = function(e) {
+		e = e || window.event;
+		if (e.keyCode == 27 && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+			bs.onclick({target: document.getElementById('netteBluescreenIcon')});
+		}
+	};
+
+	for (var i = 0, styles = document.styleSheets; i < styles.length; i++) {
+		if ((styles[i].owningElement || styles[i].ownerNode).className !== 'nette-debug') {
+			styles[i].oldDisabled = styles[i].disabled;
+			styles[i].disabled = true;
+
+		} else if (styles[i].addRule) {
+			styles[i].addRule('.nette-collapsed', 'display: none');
+		} else {
+			styles[i].insertRule('.nette-collapsed { display: none }', 0);
+		}
+	}
+
+	bs.onclick = function(e) {
+		e = e || window.event;
+		var link = e.target || e.srcElement;
+		while (link && link.tagName && link.tagName.toLowerCase() !== 'a') {
+			link = link.parentNode;
+		}
+		if (!link || !link.rel) {
+			return true;
+		}
+		var arrow = link.getElementsByTagName('abbr')[0];
+		var panel = link.rel === 'next' ? link.nextSibling : document.getElementById(link.rel);
+		while (panel.nodeType !== 1) panel = panel.nextSibling;
+		var collapsed = panel.currentStyle ? panel.currentStyle.display == 'none' : getComputedStyle(panel, null).display == 'none';
+
+		try { arrow.innerHTML = String.fromCharCode(collapsed ? 0x25bc : 0x25ba); } catch(e){} // ie6
+		panel.style.display = collapsed ? (panel.tagName.toLowerCase() === 'code' ? 'inline' : 'block') : 'none';
+
+		if (link.id === 'netteBluescreenIcon') {
+			for (var i = 0, styles = document.styleSheets; i < styles.length; i++) {
+				if ((styles[i].owningElement || styles[i].ownerNode).className !== 'nette-debug') {
+					styles[i].disabled = collapsed ? true : styles[i].oldDisabled;
+				}
+			}
+		}
+		return false;
+	};
+</script>
+</body>
+</html>

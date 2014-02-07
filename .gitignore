@@ -1,6 +1,12 @@
 tests/log/*
 tests/temp/*
 tests/libs/*
+tests/composer.lock
+examples/log/*
+examples/temp/*
+examples/libs/*
+examples/composer.lock
+
 .idea
 *.swp
 composer.lock

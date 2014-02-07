@@ -1,0 +1,1955 @@
+<!DOCTYPE html><!-- "' --></script></style></pre></xmp></table>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex">
+	<meta name="generator" content="Nette Framework">
+
+	<title>Nette\InvalidStateException</title><!-- Unable to write to directory '/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp/cache'. Make this directory writable. -->
+
+	<style type="text/css" class="nette-debug">
+	/**
+ * Debugger Bluescreen
+ *
+ * This file is part of the Nette Framework (http://nette.org)
+ * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ */
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	margin: 0 0 2em;
+	padding: 0;
+}
+
+#netteBluescreen {
+	font: 9pt/1.5 Verdana, sans-serif;
+	background: white;
+	color: #333;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	text-align: left;
+}
+
+#netteBluescreen * {
+	font: inherit;
+	color: inherit;
+	background: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+	text-indent: 0;
+}
+
+#netteBluescreen b {
+	font-weight: bold;
+}
+
+#netteBluescreen i {
+	font-style: italic;
+}
+
+#netteBluescreen a {
+	text-decoration: none;
+	color: #328ADC;
+	padding: 2px 4px;
+	margin: -2px -4px;
+}
+
+#netteBluescreen a:hover, #netteBluescreen a:active, #netteBluescreen a:focus {
+	color: #085AA3;
+}
+
+#netteBluescreenIcon {
+	position: absolute;
+	right: .5em;
+	top: .5em;
+	z-index: 20000;
+	text-decoration: none;
+	background: #CD1818;
+	color: white !important;
+	padding: 3px;
+}
+
+#netteBluescreenError {
+	background: #CD1818;
+	color: white;
+	font: 13pt/1.5 Verdana, sans-serif !important;
+	display: block;
+}
+
+#netteBluescreenError #netteBsSearch {
+	color: #CD1818;
+	font-size: .7em;
+}
+
+#netteBluescreenError:hover #netteBsSearch {
+	color: #ED8383;
+}
+
+#netteBluescreen h1 {
+	font-size: 18pt;
+	font-weight: normal;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, .4);
+	margin: .7em 0;
+}
+
+#netteBluescreen h2 {
+	font: 14pt/1.5 sans-serif !important;
+	color: #888;
+	margin: .6em 0;
+}
+
+#netteBluescreen h3 {
+	font: bold 10pt/1.5 Verdana, sans-serif !important;
+	margin: 1em 0;
+	padding: 0;
+}
+
+#netteBluescreen p, #netteBluescreen pre {
+	margin: .8em 0
+}
+
+#netteBluescreen pre, #netteBluescreen code, #netteBluescreen table {
+	font: 9pt/1.5 Consolas, monospace !important;
+}
+
+#netteBluescreen pre, #netteBluescreen table {
+	background: #FDF5CE;
+	padding: .4em .7em;
+	border: 1px dotted silver;
+	overflow: auto;
+}
+
+#netteBluescreen table pre {
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+#netteBluescreen table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#netteBluescreen td, #netteBluescreen th {
+	vertical-align: top;
+	text-align: left;
+	padding: 2px 6px;
+	border: 1px solid #e6dfbf;
+}
+
+#netteBluescreen th {
+	font-weight: bold;
+}
+
+#netteBluescreen tr > :first-child {
+	width: 20%;
+}
+
+#netteBluescreen tr:nth-child(2n), #netteBluescreen tr:nth-child(2n) pre {
+	background-color: #F7F0CB;
+}
+
+#netteBluescreen ol {
+	margin: 1em 0;
+	padding-left: 2.5em;
+}
+
+#netteBluescreen ul {
+	font: 7pt/1.5 Verdana, sans-serif !important;
+	padding: 2em 4em;
+	margin: 1em 0 0;
+	color: #777;
+	background: #F6F5F3 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAjCAMAAADbuxbOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRF/fz24d7Y7Onj5uLd9vPu3drUzMvG09LN39zW8e7o2NbQ3NnT29jS0M7J1tXQAAAApvmsFgAAABB0Uk5T////////////////////AOAjXRkAAAKlSURBVHja7FbbsqQgDAwENEgc//9vN+SCWDtbtXPmZR/Wc6o02mlC58LA9ckFAOszvMV8xNgyUjyXhojfMVKvRL0ZHavxXYy5JrmchMdzou8YlTClxajtK8ZGGpWRoBr1+gFjKfHkJPbizabLgzE3pH7Iu4K980xgFvlrVzMZoVBWhtvouCDdcTDmTgMCJdVxJ9MKO6XxnliM7hxi5lbj2ZVM4l8DqYyKoNLYcfqBB1/LpHYxEcfVG6ZpMDgyFUVWY/Q1sSYPpIdSAKWqLWL0XqWiMWc4hpH0OQOMOAgdycY4N9Sb7wWANQs3rsDSdLAYiuxi5siVfOhBWIrtH0G3kNaF/8Q4kCPE1kMucG/ZMUBUCOgiKJkPuWWTLGVgLGpwns1DraUayCtoBqERyaYtVsm85NActRooezvSLO/sKZP/nq8n4+xcyjNsRu8zW6KWpdb7wjiQd4WrtFZYFiKHENSmWp6xshh96c2RQ+c7Lt+qbijyEjHWUJ/pZsy8MGIUuzNiPySK2Gqoh6ZTRF6ko6q3nVTkaA//itIrDpW6l3SLo8juOmqMXkYknu5FdQxWbhCfKHEGDhxxyTVaXJF3ZjSl3jMksjSOOKmne9pI+mcG5QvaUJhI9HpkmRo2NpCrDJvsktRhRE2MM6F2n7dt4OaMUq8bCctk0+PoMRzL+1l5PZ2eyM/Owr86gf8z/tOM53lom5+nVcFuB+eJVzlXwAYy9TZ9s537tfqcsJWbEU4nBngZo6FfO9T9CdhfBtmk2dLiAy8uS4zwOpMx2HqYbTC+amNeAYTpsP4SIgvWfUBWXxn3CMHW3ffd7k3+YIkx7w0t/CVGvcPejoeOlzOWzeGbawOHqXQGUTMZRcfj4XPCgW9y/fuvVn8zD9P1QHzv80uAAQA0i3Jer7Jr7gAAAABJRU5ErkJggg==') 99% 10px no-repeat;
+	border-top: 1px solid #DDD;
+}
+
+#netteBluescreen div.panel {
+	padding: 1px 25px;
+}
+
+#netteBluescreen div.inner {
+	background: #F4F3F1;
+	padding: .1em 1em 1em;
+	border-radius: 8px;
+}
+
+#netteBluescreen .outer {
+	overflow: auto;
+}
+
+
+/* source code */
+#netteBluescreen pre.php div {
+	min-width: 100%;
+	float: left;
+	white-space: pre;
+}
+
+#netteBluescreen .highlight {
+	background: #CD1818;
+	color: white;
+	font-weight: bold;
+	font-style: normal;
+	display: block;
+	padding: 0 .4em;
+	margin: 0 -.4em;
+}
+
+#netteBluescreen .line {
+	color: #9F9C7F;
+	font-weight: normal;
+	font-style: normal;
+}
+
+#netteBluescreen a[href^=editor\:] {
+	color: inherit;
+	border-bottom: 1px dotted rgba(0, 0, 0, .2);
+}
+
+#netteBluescreen span[data-nette-href] {
+	border-bottom: 1px dotted rgba(0, 0, 0, .2);
+}
+
+
+/* toggle */
+html.js #netteBluescreen .nette-collapsed {
+	display: none;
+}
+
+#netteBluescreen .nette-toggle, #netteBluescreen .nette-toggle-collapsed {
+	cursor: pointer;
+}
+
+#netteBluescreen .nette-toggle:after {
+	content: " ▼";
+	opacity: .4;
+}
+
+#netteBluescreen .nette-toggle-collapsed:after {
+	content: " ►";
+	opacity: .4;
+}
+
+
+/* dump */
+#netteBluescreen .nette-dump-array, #netteBluescreen .nette-dump-object {
+	color: #C22;
+}
+
+#netteBluescreen .nette-dump-string {
+	color: #35D;
+}
+
+#netteBluescreen .nette-dump-number {
+	color: #090;
+}
+
+#netteBluescreen .nette-dump-null, #netteBluescreen .nette-dump-bool {
+	color: #850;
+}
+
+#netteBluescreen .nette-dump-visibility, #netteBluescreen .nette-dump-hash {
+	font-size: 85%;
+	color: #998;
+}
+
+#netteBluescreen .nette-dump-indent {
+	display: none;
+}
+
+#netteBluescreen pre.nette-dump div {
+	padding-left: 3ex;
+}
+
+#netteBluescreen pre.nette-dump div div {
+	border-left: 1px solid rgba(0, 0, 0, .1);
+	margin-left: .5ex;
+}
+
+#netteBluescreen .caused {
+	float: right;
+	padding: .3em .6em;
+	background: #df8075;
+	border-radius: 0 0 0 8px;
+	white-space: nowrap;
+}
+
+#netteBluescreen .caused a {
+	color: white;
+}
+	</style>
+</head>
+
+
+<body>
+<script>document.body.className+=' js'</script>
+<div id="netteBluescreen">
+	<a id="netteBluescreenIcon" href="#" class="nette-toggle"></a>
+	<div>
+		<div id="netteBluescreenError" class="panel">
+			<h1>Nette\InvalidStateException</h1>
+
+			<p>Unable to write to directory '/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp/cache'. Make this directory writable. <a href="http://www.google.cz/search?sourceid=nette&amp;q=Nette%5CInvalidStateException+Unable+to+write+to+directory+.+Make+this+directory+writable." id="netteBsSearch">search&#x25ba;</a></p>
+		</div>
+
+		
+
+				
+			
+
+						
+
+						
+			<div class="panel">
+			<h2><a href="#netteBsPnl1" class="nette-toggle-collapsed">Source file</a></h2>
+
+			<div id="netteBsPnl1" class="nette-collapsed inner">
+				<p><b>File:</b> <a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FExtensions%2FNetteExtension.php&amp;line=474" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/NetteExtension.php:474">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/<b>NetteExtension.php</b>:474</a></p>
+				<pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FExtensions%2FNetteExtension.php&amp;line=474" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>464:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$initialize</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addBody</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"@header('Content-Type:&nbsp;text/html;&nbsp;charset=utf-8');"</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>465:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$initialize</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addBody</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Nette\Utils\SafeStream::register();'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>466:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>467:</span>    
+<span class='line'>468:</span>    
+<span class='line'>469:</span>    &nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;function&nbsp;</span><span style="color: #000">checkTempDir</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$dir</span><span style="color: #D24; font-weight: bold">)
+<span class='line'>470:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>471:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;checks&nbsp;whether&nbsp;directory&nbsp;is&nbsp;writable
+<span class='line'>472:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$uniq&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">uniqid</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'_'</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">TRUE</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>473:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!@</span><span style="color: #000">mkdir</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"</span><span style="color: #000">$dir</span><span style="color: #080">/</span><span style="color: #000">$uniq</span><span style="color: #080">"</span><span style="color: #D24; font-weight: bold">))&nbsp;{&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;@&nbsp;-&nbsp;is&nbsp;escalated&nbsp;to&nbsp;exception
+<span class='highlight'>474:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;Nette\InvalidStateException("Unable&nbsp;to&nbsp;write&nbsp;to&nbsp;directory&nbsp;'$dir'.&nbsp;Make&nbsp;this&nbsp;directory&nbsp;writable.");
+</span></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #000"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"><span class='line'>475:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>476:</span>    
+<span class='line'>477:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;checks&nbsp;whether&nbsp;subdirectory&nbsp;is&nbsp;writable
+<span class='line'>478:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$isWritable&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;@</span><span style="color: #000">file_put_contents</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"</span><span style="color: #000">$dir</span><span style="color: #080">/</span><span style="color: #000">$uniq</span><span style="color: #080">/_"</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #080">''</span><span style="color: #D24; font-weight: bold">)&nbsp;!==&nbsp;</span><span style="color: #000">FALSE</span><span style="color: #D24; font-weight: bold">;&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;@&nbsp;-&nbsp;error&nbsp;is&nbsp;expected
+</span></span></code></div></pre>			</div></div>
+
+
+									<div class="panel">
+				<h2><a href="#netteBsPnl2" class="nette-toggle">Call stack</a></h2>
+
+				<div id="netteBsPnl2" class="inner">
+				<ol>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FExtensions%2FNetteExtension.php&amp;line=419" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/NetteExtension.php:419">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/<b>NetteExtension.php</b>:419</a>					
+					<a href="#netteBsSrc1-0" class="nette-toggle-collapsed">source</a>&nbsp; 
+										Nette\DI\Extensions\NetteExtension-&gt;										checkTempDir
+					(<a href="#netteBsArgs1-0" class="nette-toggle-collapsed">arguments</a>)
+					</p>
+
+											<div class="nette-collapsed" id="netteBsSrc1-0"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FExtensions%2FNetteExtension.php&amp;line=419" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>409:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>410:</span>    
+<span class='line'>411:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach&nbsp;((array)&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'debugger'</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #080">'blueScreen'</span><span style="color: #D24; font-weight: bold">]&nbsp;as&nbsp;</span><span style="color: #000">$item</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>412:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$initialize</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addBody</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$container</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">formatPhp</span><span style="color: #D24; font-weight: bold">(
+<span class='line'>413:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #080">'Nette\Diagnostics\Debugger::getBlueScreen()-&gt;addPanel(?);'</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>414:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">DI</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Compiler</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">filterArguments</span><span style="color: #D24; font-weight: bold">(array(</span><span style="color: #000">$item</span><span style="color: #D24; font-weight: bold">))
+<span class='line'>415:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;));
+<span class='line'>416:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>417:</span>    
+<span class='line'>418:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!empty(</span><span style="color: #000">$container</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">parameters</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'tempDir'</span><span style="color: #D24; font-weight: bold">]))&nbsp;{
+<span class='highlight'>419:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$initialize-&gt;addBody('Nette\Caching\Storages\FileStorage::$useDirectories&nbsp;=&nbsp;?;',&nbsp;array($this-&gt;checkTempDir($container-&gt;expand('%tempDir%/cache'))));
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"><span class='line'>420:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>421:</span>    
+<span class='line'>422:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach&nbsp;((array)&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'forms'</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #080">'messages'</span><span style="color: #D24; font-weight: bold">]&nbsp;as&nbsp;</span><span style="color: #000">$name&nbsp;</span><span style="color: #D24; font-weight: bold">=&gt;&nbsp;</span><span style="color: #000">$text</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>423:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$initialize</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addBody</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'Nette\Forms\Rules::$defaultMessages[Nette\Forms\Form::?]&nbsp;=&nbsp;?;'</span><span style="color: #D24; font-weight: bold">,&nbsp;array(</span><span style="color: #000">$name</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$text</span><span style="color: #D24; font-weight: bold">));
+</span></span></code></div></pre></div>
+					
+					
+											<div class="nette-collapsed outer" id="netteBsArgs1-0">
+						<table>
+						<tr><th>$dir</th><td><pre class="nette-dump"><span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp/cache"</span> (74)
+</pre>
+</td></tr>
+						</table>
+						</div>
+										</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FCompiler.php&amp;line=144" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Compiler.php:144">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/<b>Compiler.php</b>:144</a>					
+					<a href="#netteBsSrc1-1" class="nette-toggle-collapsed">source</a>&nbsp; 
+										Nette\DI\Extensions\NetteExtension-&gt;										afterCompile
+					(<a href="#netteBsArgs1-1" class="nette-toggle-collapsed">arguments</a>)
+					</p>
+
+											<div class="nette-collapsed" id="netteBsSrc1-1"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FCompiler.php&amp;line=144" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>134:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>135:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach&nbsp;(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">extensions&nbsp;</span><span style="color: #D24; font-weight: bold">as&nbsp;</span><span style="color: #000">$extension</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='line'>136:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$extension</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">beforeCompile</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>137:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">builder</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addDependency</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Reflection</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">ClassType</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">from</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$extension</span><span style="color: #D24; font-weight: bold">)-&gt;</span><span style="color: #000">getFileName</span><span style="color: #D24; font-weight: bold">());
+<span class='line'>138:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>139:</span>    
+<span class='line'>140:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$classes&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">builder</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">generateClasses</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$className</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$parentName</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>141:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$classes</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #000">0</span><span style="color: #D24; font-weight: bold">]-&gt;</span><span style="color: #000">addMethod</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">'initialize'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>142:</span>    
+<span class='line'>143:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach&nbsp;(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">extensions&nbsp;</span><span style="color: #D24; font-weight: bold">as&nbsp;</span><span style="color: #000">$extension</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='highlight'>144:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$extension-&gt;afterCompile($classes[0]);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>145:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>146:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #000">implode</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #080">"\n\n\n"</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$classes</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>147:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>148:</span>    
+</span></span></code></div></pre></div>
+					
+					
+											<div class="nette-collapsed outer" id="netteBsArgs1-1">
+						<table>
+						<tr><th>$class</th><td><pre class="nette-dump"><span class="nette-toggle"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FClassType.php&amp;line=46">Nette\PhpGenerator\ClassType</span> <span class="nette-dump-hash">#bf94</span></span>
+<div><span class="nette-dump-indent">   </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"SystemContainer"</span> (15)
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">type</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"class"</span> (5)
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">extends</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"Nette\DI\Container"</span> (18)
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">implements</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">traits</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">consts</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">properties</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">meta</span> => <span class="nette-toggle"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FProperty.php&amp;line=30">Nette\PhpGenerator\Property</span> <span class="nette-dump-hash">#8354</span></span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"meta"</span> (4)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">value</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">types</span> => <span class="nette-dump-array">array</span> (30) [ ... ]
+</div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"protected"</span> (9)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+</div></div><span class="nette-dump-indent">   </span><span class="nette-dump-key">methods</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-array">array</span> (27)</span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">__construct</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#4adb</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"__construct"</span> (11)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"parent::__construct(array(
+	'appDir' =&gt; '/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app',
+	'wwwDir' =&gt; '/home/s1lent/Desktop/www-project ... "</span> (647)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+</div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceApplication</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#f0c8</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceApplication"</span> (24)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Application\Application($this-&gt;getService('nette.presenterFactory'), $this-&gt;getService('router'), $this-&gt;getService('httpRequest' ... "</span> (346)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Application\Application"</span> (37)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceCacheStorage</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#0b52</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceCacheStorage"</span> (25)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Caching\Storages\FileStorage('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp/cache', $this-&gt;getService('net ... "</span> (186)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Caching\Storages\FileStorage"</span> (42)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceContainer</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#2d95</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceContainer"</span> (22)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"return $this;"</span> (13)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\DI\Container"</span> (26)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceDoctrine</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#5dc1</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceDoctrine"</span> (21)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = \Doctrine\ORM\EntityManager::create(array(
+	'dbname' =&gt; 'foxy_forms',
+	'user' =&gt; 'root',
+	'password' =&gt; 'root',
+	'host' =&gt; 'localhost',
+	'd ... "</span> (500)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Doctrine\ORM\EntityManager"</span> (34)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceDoctrineConfiguration</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#92df</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceDoctrineConfiguration"</span> (34)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(array(
+	'/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/mode ... "</span> (498)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Doctrine\ORM\Configuration"</span> (34)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceHttpRequest</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#6fc7</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceHttpRequest"</span> (24)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = $this-&gt;getService('nette.httpRequestFactory')-&gt;createHttpRequest();
+if (!$service instanceof Nette\Http\Request) {
+	throw new Nette\Unexpec ... "</span> (292)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Http\Request"</span> (26)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceHttpResponse</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#d22f</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceHttpResponse"</span> (25)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Http\Response;
+return $service;"</span> (52)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Http\Response"</span> (27)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceMediaStorage</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#62e9</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceMediaStorage"</span> (25)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Foxy\MediaStorage('\\media', '/home/s1lent/Desktop/www-projects/foxy-tests/www/media/');
+return $service;"</span> (120)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Foxy\MediaStorage"</span> (25)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#22c2</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette"</span> (18)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\DI\Extensions\NetteAccessor($this);
+return $service;"</span> (73)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\DI\Extensions\NetteAccessor"</span> (41)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__basicForm</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#cfef</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__basicForm"</span> (29)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Forms\Form;
+trigger_error('Service nette.basicForm is deprecated.', 16384);
+return $service;"</span> (113)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Forms\Form"</span> (24)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__cache</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#3e3a</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__cache"</span> (25)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FParameter.php&amp;line=29">Nette\PhpGenerator\Parameter</span> <span class="nette-dump-hash">#c1f1</span> { ... }
+</div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Caching\Cache($this-&gt;getService('cacheStorage'), $namespace);
+trigger_error('Service cache is deprecated.', 16384);
+return $servi ... "</span> (153)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Caching\Cache"</span> (27)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__cacheJournal</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#331f</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__cacheJournal"</span> (32)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Caching\Storages\FileJournal('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp');
+return $service;"</span> (139)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Caching\Storages\FileJournal"</span> (42)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__httpContext</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#d7f3</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__httpContext"</span> (31)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Http\Context($this-&gt;getService('httpRequest'), $this-&gt;getService('httpResponse'));
+return $service;"</span> (120)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Http\Context"</span> (26)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__httpRequestFactory</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#f4e2</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__httpRequestFactory"</span> (38)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Http\RequestFactory;
+$service-&gt;setProxy(array());
+return $service;"</span> (87)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Http\RequestFactory"</span> (33)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__latte</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#3d9f</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__latte"</span> (25)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Latte\Engine;
+return $service;"</span> (51)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Latte\Engine"</span> (26)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__mail</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#3687</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__mail"</span> (24)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Mail\Message;
+trigger_error('Service nette.mail is deprecated.', 16384);
+$service-&gt;setMailer($this-&gt;getService('nette.mailer'));
+ ... "</span> (166)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Mail\Message"</span> (26)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__mailer</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#a18e</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__mailer"</span> (26)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Mail\SendmailMailer;
+return $service;"</span> (58)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Mail\SendmailMailer"</span> (33)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__presenterFactory</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#642f</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__presenterFactory"</span> (36)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Application\PresenterFactory('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app', $this);
+return $service;"</span> (138)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Application\PresenterFactory"</span> (42)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__template</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#1b49</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__template"</span> (28)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Templating\FileTemplate;
+$service-&gt;registerFilter($this-&gt;getService('nette.latte'));
+$service-&gt;registerHelperLoader('Nette\\Templ ... "</span> (192)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Templating\FileTemplate"</span> (37)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__templateCacheStorage</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#76f7</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__templateCacheStorage"</span> (40)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Caching\Storages\PhpFileStorage('/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp/cache', $this-&gt;getService(' ... "</span> (189)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Caching\Storages\PhpFileStorage"</span> (45)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceNette__userStorage</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#025c</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceNette__userStorage"</span> (31)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Http\UserStorage($this-&gt;getService('session'));
+return $service;"</span> (85)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Http\UserStorage"</span> (30)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceRouter</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#b0c6</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceRouter"</span> (19)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = $this-&gt;getService('routerFactory')-&gt;createRouter();
+if (!$service instanceof Nette\Application\IRouter) {
+	throw new Nette\UnexpectedValueE ... "</span> (285)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Application\IRouter"</span> (33)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceRouterFactory</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#580b</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceRouterFactory"</span> (26)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new RouterFactory;
+return $service;"</span> (46)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return RouterFactory"</span> (21)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceSession</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#cae7</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceSession"</span> (20)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Http\Session($this-&gt;getService('httpRequest'), $this-&gt;getService('httpResponse'));
+$service-&gt;setExpiration('14 days');
+return $se ... "</span> (156)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Http\Session"</span> (26)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">createServiceUser</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#573a</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"createServiceUser"</span> (17)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"$service = new Nette\Security\User($this-&gt;getService('nette.userStorage'));
+return $service;"</span> (92)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"@return Nette\Security\User"</span> (27)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">initialize</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-object" data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FPhpGenerator%2FMethod.php&amp;line=39">Nette\PhpGenerator\Method</span> <span class="nette-dump-hash">#15eb</span></span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">name</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"initialize"</span> (10)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parameters</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">uses</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">body</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"date_default_timezone_set('Europe/Prague');
+"</span> (44)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">static</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">visibility</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-string">"public"</span> (6)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">final</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">abstract</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">returnReference</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-null">NULL</span>
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">documents</span> <span class="nette-dump-visibility">private</span> => <span class="nette-dump-array">array</span> ()
+</div></div></div></pre>
+</td></tr>
+						</table>
+						</div>
+										</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FCompiler.php&amp;line=92" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Compiler.php:92">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/<b>Compiler.php</b>:92</a>					
+					<a href="#netteBsSrc1-2" class="nette-toggle-collapsed">source</a>&nbsp; 
+										Nette\DI\Compiler-&gt;										generateCode
+					(<a href="#netteBsArgs1-2" class="nette-toggle-collapsed">arguments</a>)
+					</p>
+
+											<div class="nette-collapsed" id="netteBsSrc1-2"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2FDI%2FCompiler.php&amp;line=92" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>82:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #998; font-style: italic">/**
+<span class='line'>83:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;string
+<span class='line'>84:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<span class='line'>85:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">public&nbsp;function&nbsp;</span><span style="color: #000">compile</span><span style="color: #D24; font-weight: bold">(array&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$className</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$parentName</span><span style="color: #D24; font-weight: bold">)
+<span class='line'>86:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>87:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">config&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>88:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">builder&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;new&nbsp;</span><span style="color: #000">ContainerBuilder</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>89:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">processParameters</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>90:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">processExtensions</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>91:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">processServices</span><span style="color: #D24; font-weight: bold">();
+<span class='highlight'>92:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$this-&gt;generateCode($className,&nbsp;$parentName);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>93:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>94:</span>    
+<span class='line'>95:</span>    
+<span class='line'>96:</span>    &nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #000">processParameters</span><span style="color: #D24; font-weight: bold">()
+</span></span></code></div></pre></div>
+					
+					
+											<div class="nette-collapsed outer" id="netteBsArgs1-2">
+						<table>
+						<tr><th>$className</th><td><pre class="nette-dump"><span class="nette-dump-string">"SystemContainer"</span> (15)
+</pre>
+</td></tr>
+<tr><th>$parentName</th><td><pre class="nette-dump"><span class="nette-dump-string">"Nette\DI\Container"</span> (18)
+</pre>
+</td></tr>
+						</table>
+						</div>
+										</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2Fcommon%2FConfigurator.php&amp;line=217" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/Configurator.php:217">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/<b>Configurator.php</b>:217</a>					
+					<a href="#netteBsSrc1-3" class="nette-toggle-collapsed">source</a>&nbsp; 
+										Nette\DI\Compiler-&gt;										compile
+					(<a href="#netteBsArgs1-3" class="nette-toggle-collapsed">arguments</a>)
+					</p>
+
+											<div class="nette-collapsed" id="netteBsSrc1-3"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2Fcommon%2FConfigurator.php&amp;line=217" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>207:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>208:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'parameters'</span><span style="color: #D24; font-weight: bold">]&nbsp;=&nbsp;</span><span style="color: #000">DI</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Config</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Helpers</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">merge</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'parameters'</span><span style="color: #D24; font-weight: bold">],&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">parameters</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>209:</span>    
+<span class='line'>210:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$compiler&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">createCompiler</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>211:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">onCompile</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$compiler</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>212:</span>    
+<span class='line'>213:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$code&nbsp;</span><span style="color: #D24; font-weight: bold">.=&nbsp;</span><span style="color: #000">$compiler</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">compile</span><span style="color: #D24; font-weight: bold">(
+<span class='line'>214:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>215:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">parameters</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'container'</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #080">'class'</span><span style="color: #D24; font-weight: bold">],
+<span class='line'>216:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$config</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'parameters'</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #080">'container'</span><span style="color: #D24; font-weight: bold">][</span><span style="color: #080">'parent'</span><span style="color: #D24; font-weight: bold">]
+<span class='highlight'>217:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);
+</span><span class='line'>218:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$dependencies&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">array_merge</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$loader</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">getDependencies</span><span style="color: #D24; font-weight: bold">(),&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">parameters</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'debugMode'</span><span style="color: #D24; font-weight: bold">]&nbsp;?&nbsp;</span><span style="color: #000">$compiler</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">getContainerBuilder</span><span style="color: #D24; font-weight: bold">()-&gt;</span><span style="color: #000">getDependencies</span><span style="color: #D24; font-weight: bold">()&nbsp;:&nbsp;array());
+<span class='line'>219:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #000">$code</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>220:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>221:</span>    
+</span></span></code></div></pre></div>
+					
+					
+											<div class="nette-collapsed outer" id="netteBsArgs1-3">
+						<table>
+						<tr><th>$config</th><td><pre class="nette-dump"><span class="nette-toggle"><span class="nette-dump-array">array</span> (4)</span>
+<div><span class="nette-dump-indent">   </span><span class="nette-dump-key">php</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">"date.timezone"</span> => <span class="nette-dump-string">"Europe/Prague"</span> (13)
+</div><span class="nette-dump-indent">   </span><span class="nette-dump-key">nette</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (3)</span>
+<div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">application</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">errorPresenter</span> => <span class="nette-dump-string">"Error"</span> (5)
+</div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">session</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">expiration</span> => <span class="nette-dump-string">"14 days"</span> (7)
+</div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">forms</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">messages</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">FILLED</span> => <span class="nette-dump-string">"Vyplňte tuto povinou položku."</span> (31)
+</div></div></div><span class="nette-dump-indent">   </span><span class="nette-dump-key">services</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (5)</span>
+<div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">routerFactory</span> => <span class="nette-dump-string">"RouterFactory"</span> (13)
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">router</span> => <span class="nette-dump-string">"@routerFactory::createRouter"</span> (28)
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">doctrineConfiguration</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (4)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">class</span> => <span class="nette-dump-string">"Doctrine\ORM\Configuration"</span> (26)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">factory</span> => <span class="nette-dump-string">"\Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration"</span> (64)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">arguments</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (2)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">paths</span> => <span class="nette-dump-array">array</span> (1) [ ... ]
+<span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">isDevMode</span> => <span class="nette-dump-bool">TRUE</span>
+</div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">setup</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (1)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-object">stdClass</span> <span class="nette-dump-hash">#dabc</span> { ... }
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">doctrine</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (3)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">class</span> => <span class="nette-dump-string">"\Doctrine\ORM\EntityManager"</span> (27)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">factory</span> => <span class="nette-dump-string">"\Doctrine\ORM\EntityManager::create"</span> (35)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">arguments</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (2)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">conn</span> => <span class="nette-dump-array">array</span> (6) [ ... ]
+<span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">config</span> => <span class="nette-dump-string">"@doctrineConfiguration"</span> (22)
+</div></div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">mediaStorage</span> => <span class="nette-toggle"><span class="nette-dump-object">stdClass</span> <span class="nette-dump-hash">#9a78</span></span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">value</span> => <span class="nette-dump-string">"Foxy\MediaStorage"</span> (17)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">attributes</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (2)</span>
+<div><span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"\media"</span> (6)
+<span class="nette-dump-indent">   |  |  |  </span><span class="nette-dump-key">1</span> => <span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/foxy-tests/www/media/"</span> (55)
+</div></div></div><span class="nette-dump-indent">   </span><span class="nette-dump-key">parameters</span> => <span class="nette-toggle-collapsed"><span class="nette-dump-array">array</span> (9)</span>
+<div class="nette-collapsed"><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">appDir</span> => <span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app"</span> (60)
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">wwwDir</span> => <span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app"</span> (60)
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">debugMode</span> => <span class="nette-dump-bool">FALSE</span>
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">productionMode</span> => <span class="nette-dump-bool">TRUE</span>
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">environment</span> => <span class="nette-dump-string">"production"</span> (10)
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">consoleMode</span> => <span class="nette-dump-bool">TRUE</span>
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">container</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (2)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">class</span> => <span class="nette-dump-string">"SystemContainer"</span> (15)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">parent</span> => <span class="nette-dump-string">"Nette\DI\Container"</span> (18)
+</div><span class="nette-dump-indent">   |  </span><span class="nette-dump-key">tempDir</span> => <span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/../temp"</span> (68)
+<span class="nette-dump-indent">   |  </span><span class="nette-dump-key">database</span> => <span class="nette-toggle"><span class="nette-dump-array">array</span> (5)</span>
+<div><span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">driver</span> => <span class="nette-dump-string">"pdo_pgsql"</span> (9)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">dbname</span> => <span class="nette-dump-string">"foxy_forms"</span> (10)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">user</span> => <span class="nette-dump-string">"root"</span> (4)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">password</span> => <span class="nette-dump-string">"root"</span> (4)
+<span class="nette-dump-indent">   |  |  </span><span class="nette-dump-key">host</span> => <span class="nette-dump-string">"localhost"</span> (9)
+</div></div></div></pre>
+</td></tr>
+<tr><th>$className</th><td><pre class="nette-dump"><span class="nette-dump-string">"SystemContainer"</span> (15)
+</pre>
+</td></tr>
+<tr><th>$parentName</th><td><pre class="nette-dump"><span class="nette-dump-string">"Nette\DI\Container"</span> (18)
+</pre>
+</td></tr>
+						</table>
+						</div>
+										</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2Fcommon%2FConfigurator.php&amp;line=167" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/Configurator.php:167">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/<b>Configurator.php</b>:167</a>					
+					<a href="#netteBsSrc1-4" class="nette-toggle-collapsed">source</a>&nbsp; 
+										Nette\Configurator-&gt;										buildContainer
+					(<a href="#netteBsArgs1-4" class="nette-toggle-collapsed">arguments</a>)
+					</p>
+
+											<div class="nette-collapsed" id="netteBsSrc1-4"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Flibs%2Fnette%2Fnette%2FNette%2Fcommon%2FConfigurator.php&amp;line=167" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>157:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #998; font-style: italic">/**
+<span class='line'>158:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Returns&nbsp;system&nbsp;DI&nbsp;container.
+<span class='line'>159:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;\SystemContainer
+<span class='line'>160:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+<span class='line'>161:</span>    &nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">public&nbsp;function&nbsp;</span><span style="color: #000">createContainer</span><span style="color: #D24; font-weight: bold">()
+<span class='line'>162:</span>    &nbsp;&nbsp;&nbsp;&nbsp;{
+<span class='line'>163:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cache&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;new&nbsp;</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Caching</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Cache</span><span style="color: #D24; font-weight: bold">(new&nbsp;</span><span style="color: #000">Nette</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Caching</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Storages</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">PhpFileStorage</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">getCacheDirectory</span><span style="color: #D24; font-weight: bold">()),&nbsp;</span><span style="color: #080">'Nette.Configurator'</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>164:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cacheKey&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;array(</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">parameters</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$this</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">files</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>165:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cached&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">load</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheKey</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>166:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!</span><span style="color: #000">$cached</span><span style="color: #D24; font-weight: bold">)&nbsp;{
+<span class='highlight'>167:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$code&nbsp;=&nbsp;$this-&gt;buildContainer($dependencies);
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>168:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">save</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheKey</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$code</span><span style="color: #D24; font-weight: bold">,&nbsp;array(</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">FILES&nbsp;</span><span style="color: #D24; font-weight: bold">=&gt;&nbsp;</span><span style="color: #000">$dependencies</span><span style="color: #D24; font-weight: bold">));
+<span class='line'>169:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">$cached&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">$cache</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">load</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">$cacheKey</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>170:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>171:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;require_once&nbsp;</span><span style="color: #000">$cached</span><span style="color: #D24; font-weight: bold">[</span><span style="color: #080">'file'</span><span style="color: #D24; font-weight: bold">];
+</span></span></code></div></pre></div>
+					
+					
+											<div class="nette-collapsed outer" id="netteBsArgs1-4">
+						<table>
+						<tr><th>$dependencies</th><td><pre class="nette-dump"><span class="nette-dump-null">NULL</span>
+</pre>
+</td></tr>
+						</table>
+						</div>
+										</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Fapp%2Fbootstrap.php&amp;line=41" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/bootstrap.php:41">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/<b>bootstrap.php</b>:41</a>					
+					<a href="#netteBsSrc1-5" class="nette-toggle-collapsed">source</a>&nbsp; 
+										Nette\Configurator-&gt;										createContainer
+					()
+					</p>
+
+											<div  id="netteBsSrc1-5"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Fapp%2Fbootstrap.php&amp;line=41" class='php'><div><code><span style="color: #06B"><span style="color: #D24; font-weight: bold"><span class='line'>31:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(</span><span style="color: #000">1</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>32:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+<span class='line'>33:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">trigger_error</span><span style="color: #D24; font-weight: bold">(
+<span class='line'>34:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #080">"Configuration&nbsp;file&nbsp;["&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #000">$localConfigurationFile&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">"]&nbsp;does&nbsp;not&nbsp;exist&nbsp;or&nbsp;isn't&nbsp;readable!"</span><span style="color: #D24; font-weight: bold">,
+<span class='line'>35:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000">E_ERROR
+<span class='line'>36:</span>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>37:</span>    &nbsp;&nbsp;&nbsp;&nbsp;}
+<span class='line'>38:</span>    }
+<span class='line'>39:</span>    
+<span class='line'>40:</span>    </span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">addConfig</span><span style="color: #D24; font-weight: bold">(</span><span style="color: #000">__DIR__&nbsp;</span><span style="color: #D24; font-weight: bold">.&nbsp;</span><span style="color: #080">'/config/config.local.neon'</span><span style="color: #D24; font-weight: bold">,&nbsp;</span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">NONE</span><span style="color: #D24; font-weight: bold">);&nbsp;</span><span style="color: #998; font-style: italic">//&nbsp;none&nbsp;section
+<span class='highlight'>41:    $container&nbsp;=&nbsp;$configurator-&gt;createContainer();
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"><span class='line'>42:</span>    
+<span class='line'>43:</span>    </span><span style="color: #000">$container</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">application</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">catchExceptions&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;!</span><span style="color: #000">$configurator</span><span style="color: #D24; font-weight: bold">-&gt;</span><span style="color: #000">isDebugMode</span><span style="color: #D24; font-weight: bold">();
+<span class='line'>44:</span>    
+<span class='line'>45:</span>    return&nbsp;</span><span style="color: #000">$container</span><span style="color: #D24; font-weight: bold">;
+</span></span></code></div></pre></div>
+					
+					
+										</li>
+										<li><p>
+
+											<a href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Fapp%2Fconsole&amp;line=8" title="/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/console:8">/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/<b>console</b>:8</a>					
+					<a href="#netteBsSrc1-6" class="nette-toggle-collapsed">source</a>&nbsp; 
+																				require
+					(<a href="#netteBsArgs1-6" class="nette-toggle-collapsed">arguments</a>)
+					</p>
+
+											<div class="nette-collapsed" id="netteBsSrc1-6"><pre data-nette-href="editor://open/?file=%2Fhome%2Fs1lent%2FDesktop%2Fwww-projects%2Fnette-foxy-forms%2Ftests%2Fapp%2Fconsole&amp;line=8" class='php'><div><code><span style="color: #06B"><span class='line'> 1:</span>    #!/usr/bin/env&nbsp;php
+<span class='line'> 2:</span>    <span style="color: #000">&lt;?php
+<span class='line'> 3:</span>    
+<span class='line'> 4:</span>    </span><span style="color: #D24; font-weight: bold">use&nbsp;</span><span style="color: #000">Doctrine</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">ORM</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Tools</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">Setup</span><span style="color: #D24; font-weight: bold">;
+<span class='line'> 5:</span>    use&nbsp;</span><span style="color: #000">Doctrine</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">ORM</span><span style="color: #D24; font-weight: bold">\</span><span style="color: #000">EntityManager</span><span style="color: #D24; font-weight: bold">;
+<span class='line'> 6:</span>    
+<span class='line'> 7:</span>    </span><span style="color: #000">$helperSet&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">null</span><span style="color: #D24; font-weight: bold">;
+<span class='highlight'> 8:    $container&nbsp;=&nbsp;require&nbsp;__DIR__&nbsp;.&nbsp;'/bootstrap.php';
+</span></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #000"></span><span style="color: #D24; font-weight: bold"></span><span style="color: #080"></span><span style="color: #D24; font-weight: bold"><span class='line'> 9:</span>    
+<span class='line'>10:</span>    
+<span class='line'>11:</span>    
+<span class='line'>12:</span>    </span><span style="color: #998; font-style: italic">//&nbsp;Create&nbsp;a&nbsp;simple&nbsp;"default"&nbsp;Doctrine&nbsp;ORM&nbsp;configuration&nbsp;for&nbsp;Annotations
+<span class='line'>13:</span>    </span><span style="color: #000">$isDevMode&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">true</span><span style="color: #D24; font-weight: bold">;
+<span class='line'>14:</span>    </span><span style="color: #000">$config&nbsp;</span><span style="color: #D24; font-weight: bold">=&nbsp;</span><span style="color: #000">Setup</span><span style="color: #D24; font-weight: bold">::</span><span style="color: #000">createAnnotationMetadataConfiguration</span><span style="color: #D24; font-weight: bold">(array(</span><span style="color: #000">__DIR__</span><span style="color: #D24; font-weight: bold">.</span><span style="color: #080">"/model"</span><span style="color: #D24; font-weight: bold">),&nbsp;</span><span style="color: #000">$isDevMode</span><span style="color: #D24; font-weight: bold">);
+<span class='line'>15:</span>    
+</span></span></code></div></pre></div>
+					
+					
+											<div class="nette-collapsed outer" id="netteBsArgs1-6">
+						<table>
+						<tr><th>#0</th><td><pre class="nette-dump"><span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/bootstrap.php"</span> (74)
+</pre>
+</td></tr>
+						</table>
+						</div>
+										</li>
+									</ol>
+			</div></div>
+			
+
+			
+				
+
+						
+
+		<div class="panel">
+		<h2><a href="#netteBsPnl3" class="nette-toggle-collapsed">Environment</a></h2>
+
+		<div id="netteBsPnl3" class="nette-collapsed inner">
+			<h3><a href="#netteBsPnl4" class="nette-toggle">$_SERVER</a></h3>
+			<div id="netteBsPnl4" class="outer">
+			<table>
+			<tr><th>LC_PAPER</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>MATE_DESKTOP_SESSION_ID</th><td><pre class="nette-dump"><span class="nette-dump-string">"this-is-deprecated"</span> (18)
+</pre>
+</td></tr>
+<tr><th>LC_ADDRESS</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>SSH_AGENT_PID</th><td><pre class="nette-dump"><span class="nette-dump-string">"2227"</span> (4)
+</pre>
+</td></tr>
+<tr><th>LC_MONETARY</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>DBUS_STARTER_ADDRESS</th><td><pre class="nette-dump"><span class="nette-dump-string">"unix:abstract=/tmp/dbus-t6v4fUcOV3,guid=db8e3cdb6322a638452ab58e52c932dc"</span> (72)
+</pre>
+</td></tr>
+<tr><th>GPG_AGENT_INFO</th><td><pre class="nette-dump"><span class="nette-dump-string">"/tmp/keyring-v2sVwY/gpg:0:1"</span> (27)
+</pre>
+</td></tr>
+<tr><th>TERM</th><td><pre class="nette-dump"><span class="nette-dump-string">"xterm"</span> (5)
+</pre>
+</td></tr>
+<tr><th>SHELL</th><td><pre class="nette-dump"><span class="nette-dump-string">"/bin/bash"</span> (9)
+</pre>
+</td></tr>
+<tr><th>XDG_SESSION_COOKIE</th><td><pre class="nette-dump"><span class="nette-dump-string">"4464da00797efbf61ba9be4b517969c3-1388917467.784538-1699163424"</span> (61)
+</pre>
+</td></tr>
+<tr><th>WINDOWID</th><td><pre class="nette-dump"><span class="nette-dump-string">"65012312"</span> (8)
+</pre>
+</td></tr>
+<tr><th>LC_NUMERIC</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>MATE_KEYRING_CONTROL</th><td><pre class="nette-dump"><span class="nette-dump-string">"/tmp/keyring-v2sVwY"</span> (19)
+</pre>
+</td></tr>
+<tr><th>USER</th><td><pre class="nette-dump"><span class="nette-dump-string">"s1lent"</span> (6)
+</pre>
+</td></tr>
+<tr><th>LC_TELEPHONE</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>SSH_AUTH_SOCK</th><td><pre class="nette-dump"><span class="nette-dump-string">"/tmp/keyring-v2sVwY/ssh"</span> (23)
+</pre>
+</td></tr>
+<tr><th>SESSION_MANAGER</th><td><pre class="nette-dump"><span class="nette-dump-string">"local/s1lent-XPS-M1330:@/tmp/.ICE-unix/2149,unix/s1lent-XPS-M1330:/tmp/.ICE-unix/2149"</span> (85)
+</pre>
+</td></tr>
+<tr><th>USERNAME</th><td><pre class="nette-dump"><span class="nette-dump-string">"s1lent"</span> (6)
+</pre>
+</td></tr>
+<tr><th>DEFAULTS_PATH</th><td><pre class="nette-dump"><span class="nette-dump-string">"/usr/share/gconf/default.default.path"</span> (37)
+</pre>
+</td></tr>
+<tr><th>XDG_CONFIG_DIRS</th><td><pre class="nette-dump"><span class="nette-dump-string">"/etc/xdg/xdg-default:/etc/xdg"</span> (29)
+</pre>
+</td></tr>
+<tr><th>PATH</th><td><pre class="nette-dump"><span class="nette-dump-string">"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"</span> (88)
+</pre>
+</td></tr>
+<tr><th>DESKTOP_SESSION</th><td><pre class="nette-dump"><span class="nette-dump-string">"default"</span> (7)
+</pre>
+</td></tr>
+<tr><th>LC_IDENTIFICATION</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>PWD</th><td><pre class="nette-dump"><span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app"</span> (60)
+</pre>
+</td></tr>
+<tr><th>LANG</th><td><pre class="nette-dump"><span class="nette-dump-string">"en_US.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>MANDATORY_PATH</th><td><pre class="nette-dump"><span class="nette-dump-string">"/usr/share/gconf/default.mandatory.path"</span> (39)
+</pre>
+</td></tr>
+<tr><th>LC_MEASUREMENT</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>IM_CONFIG_PHASE</th><td><pre class="nette-dump"><span class="nette-dump-string">"1"</span>
+</pre>
+</td></tr>
+<tr><th>MDM_XSERVER_LOCATION</th><td><pre class="nette-dump"><span class="nette-dump-string">"local"</span> (5)
+</pre>
+</td></tr>
+<tr><th>DBUS_STARTER_BUS_TYPE</th><td><pre class="nette-dump"><span class="nette-dump-string">"session"</span> (7)
+</pre>
+</td></tr>
+<tr><th>SHLVL</th><td><pre class="nette-dump"><span class="nette-dump-string">"1"</span>
+</pre>
+</td></tr>
+<tr><th>HOME</th><td><pre class="nette-dump"><span class="nette-dump-string">"/home/s1lent"</span> (12)
+</pre>
+</td></tr>
+<tr><th>LOGNAME</th><td><pre class="nette-dump"><span class="nette-dump-string">"s1lent"</span> (6)
+</pre>
+</td></tr>
+<tr><th>XDG_DATA_DIRS</th><td><pre class="nette-dump"><span class="nette-dump-string">"/usr/share/default:/usr/local/share/:/usr/share/:/usr/share/mdm/"</span> (64)
+</pre>
+</td></tr>
+<tr><th>DBUS_SESSION_BUS_ADDRESS</th><td><pre class="nette-dump"><span class="nette-dump-string">"unix:abstract=/tmp/dbus-t6v4fUcOV3,guid=db8e3cdb6322a638452ab58e52c932dc"</span> (72)
+</pre>
+</td></tr>
+<tr><th>MDMSESSION</th><td><pre class="nette-dump"><span class="nette-dump-string">"default"</span> (7)
+</pre>
+</td></tr>
+<tr><th>TEXTDOMAIN</th><td><pre class="nette-dump"><span class="nette-dump-string">"im-config"</span> (9)
+</pre>
+</td></tr>
+<tr><th>WINDOWPATH</th><td><pre class="nette-dump"><span class="nette-dump-string">"8"</span>
+</pre>
+</td></tr>
+<tr><th>XDG_RUNTIME_DIR</th><td><pre class="nette-dump"><span class="nette-dump-string">"/run/user/s1lent"</span> (16)
+</pre>
+</td></tr>
+<tr><th>DISPLAY</th><td><pre class="nette-dump"><span class="nette-dump-string">":0"</span> (2)
+</pre>
+</td></tr>
+<tr><th>MDM_LANG</th><td><pre class="nette-dump"><span class="nette-dump-string">"en_US.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>LC_TIME</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>TEXTDOMAINDIR</th><td><pre class="nette-dump"><span class="nette-dump-string">"/usr/share/locale/"</span> (18)
+</pre>
+</td></tr>
+<tr><th>COLORTERM</th><td><pre class="nette-dump"><span class="nette-dump-string">"mate-terminal"</span> (13)
+</pre>
+</td></tr>
+<tr><th>XAUTHORITY</th><td><pre class="nette-dump"><span class="nette-dump-string">"/home/s1lent/.Xauthority"</span> (24)
+</pre>
+</td></tr>
+<tr><th>LC_NAME</th><td><pre class="nette-dump"><span class="nette-dump-string">"cs_CZ.UTF-8"</span> (11)
+</pre>
+</td></tr>
+<tr><th>_</th><td><pre class="nette-dump"><span class="nette-dump-string">"/usr/bin/php"</span> (12)
+</pre>
+</td></tr>
+<tr><th>OLDPWD</th><td><pre class="nette-dump"><span class="nette-dump-string">"/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests"</span> (56)
+</pre>
+</td></tr>
+<tr><th>PHP_SELF</th><td><pre class="nette-dump"><span class="nette-dump-string">"console"</span> (7)
+</pre>
+</td></tr>
+<tr><th>SCRIPT_NAME</th><td><pre class="nette-dump"><span class="nette-dump-string">"console"</span> (7)
+</pre>
+</td></tr>
+<tr><th>SCRIPT_FILENAME</th><td><pre class="nette-dump"><span class="nette-dump-string">"console"</span> (7)
+</pre>
+</td></tr>
+<tr><th>PATH_TRANSLATED</th><td><pre class="nette-dump"><span class="nette-dump-string">"console"</span> (7)
+</pre>
+</td></tr>
+<tr><th>DOCUMENT_ROOT</th><td><pre class="nette-dump"><span class="nette-dump-string">""</span>
+</pre>
+</td></tr>
+<tr><th>REQUEST_TIME_FLOAT</th><td><pre class="nette-dump"><span class="nette-dump-number">1388966288.5055</span>
+</pre>
+</td></tr>
+<tr><th>REQUEST_TIME</th><td><pre class="nette-dump"><span class="nette-dump-number">1388966288</span>
+</pre>
+</td></tr>
+<tr><th>argv</th><td><pre class="nette-dump"><span class="nette-toggle"><span class="nette-dump-array">array</span> (3)</span>
+<div><span class="nette-dump-indent">   </span><span class="nette-dump-key">0</span> => <span class="nette-dump-string">"console"</span> (7)
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">1</span> => <span class="nette-dump-string">"orm:schema-tool:update"</span> (22)
+<span class="nette-dump-indent">   </span><span class="nette-dump-key">2</span> => <span class="nette-dump-string">"--force"</span> (7)
+</div></pre>
+</td></tr>
+<tr><th>argc</th><td><pre class="nette-dump"><span class="nette-dump-number">3</span>
+</pre>
+</td></tr>
+			</table>
+			</div>
+
+
+			<h3><a href="#netteBsPnl5" class="nette-toggle">$_SESSION</a></h3>
+			<div id="netteBsPnl5" class="outer">
+						<p><i>empty</i></p>
+						</div>
+
+
+			
+
+			
+
+			<h3><a href="#netteBsPnl6" class="nette-toggle-collapsed">Included files</a> (109)</h3>
+			<div id="netteBsPnl6" class="outer nette-collapsed">
+			<table>
+			<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/console</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/bootstrap.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/autoload.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/composer/autoload_real.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/composer/ClassLoader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/composer/autoload_namespaces.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/composer/autoload_classmap.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/composer/autoload_files.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/shortcuts.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/Configurator.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/Object.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/CompilerExtension.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Compiler.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/Debugger.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/Dumper.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/Bar.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/BlueScreen.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/DefaultBarPanel.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/IBarPanel.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/FireLogger.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/Helpers.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/Logger.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Html.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Strings.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Loaders/RobotLoader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Caching/Storages/FileStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Caching/IStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Caching/Cache.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Callback.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Finder.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Iterators/RecursiveFilter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Iterators/Filter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Caching/Storages/PhpFileStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Config/Loader.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Config/Helpers.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Config/Adapters/NeonAdapter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Config/IAdapter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Neon.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Tokenizer.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Validators.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/PhpExtension.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/ConstantsExtension.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/NetteExtension.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/ExtensionsExtension.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/ObjectMixin.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/ContainerBuilder.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Helpers.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Utils/Arrays.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/ServiceDefinition.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Statement.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/PhpGenerator/PhpLiteral.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette-foxy-forms/Foxy/MediaStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/app/router/RouterFactory.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Reflection/ClassType.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Extensions/NetteAccessor.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Caching/Storages/FileJournal.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Caching/Storages/IJournal.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/RequestFactory.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/Response.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/IResponse.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/Context.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/Session.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/UserStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Security/IUserStorage.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Security/User.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Application/Application.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Application/PresenterFactory.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Application/IPresenterFactory.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Mail/SendmailMailer.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Mail/IMailer.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Mail/Message.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Mail/MimePart.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Forms/Form.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Forms/Container.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/ComponentModel/Container.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/ComponentModel/Component.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/ComponentModel/IComponent.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/ComponentModel/IContainer.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Latte/Engine.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Templating/FileTemplate.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Templating/Template.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Templating/ITemplate.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Templating/IFileTemplate.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/DI/Container.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/Request.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Http/IRequest.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Reflection/Method.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Reflection/AnnotationsParser.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Application/IRouter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/orm/lib/Doctrine/ORM/EntityManager.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/orm/lib/Doctrine/ORM/EntityManagerInterface.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/common/lib/Doctrine/Common/Persistence/ObjectManager.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/orm/lib/Doctrine/ORM/Configuration.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/dbal/lib/Doctrine/DBAL/Configuration.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/PhpGenerator/ClassType.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/PhpGenerator/Method.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/PhpGenerator/Helpers.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/PhpGenerator/Property.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Reflection/Parameter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Application/Diagnostics/RoutingPanel.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/common/lib/Doctrine/Common/EventManager.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/orm/lib/Doctrine/ORM/Tools/Setup.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/doctrine/cache/lib/Doctrine/Common/Cache/Cache.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/PhpGenerator/Parameter.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Security/IAuthenticator.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Security/IAuthorizator.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/common/exceptions.php</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/templates/bluescreen.phtml</td></tr>
+<tr><td>/home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/libs/nette/nette/Nette/Diagnostics/templates/bluescreen.css</td></tr>
+			</table>
+			</div>
+
+
+			<h3><a href="#netteBsPnl7" class="nette-toggle-collapsed">Configuration options</a></h3>
+			<div id="netteBsPnl7" class="outer nette-collapsed">
+			phpinfo()
+
+
+ _______________________________________________________________________
+
+
+Configuration
+
+bcmath
+
+BCMath support => enabled
+
+Directive => Local Value => Master Value
+bcmath.scale => 0 => 0
+
+bz2
+
+BZip2 Support => Enabled
+Stream Wrapper support => compress.bzip2://
+Stream Filter support => bzip2.decompress, bzip2.compress
+BZip2 Version => 1.0.6, 6-Sept-2010
+
+calendar
+
+Calendar support => enabled
+
+Core
+
+PHP Version => 5.4.9-4ubuntu2.3
+
+Directive => Local Value => Master Value
+allow_url_fopen => On => On
+allow_url_include => Off => Off
+always_populate_raw_post_data => Off => Off
+arg_separator.input => & => &
+arg_separator.output => & => &
+asp_tags => Off => Off
+auto_append_file => no value => no value
+auto_globals_jit => On => On
+auto_prepend_file => no value => no value
+browscap => no value => no value
+default_charset => no value => no value
+default_mimetype => text/html => text/html
+disable_classes => no value => no value
+disable_functions => no value => no value
+display_errors => Off => Off
+display_startup_errors => Off => Off
+doc_root => no value => no value
+docref_ext => no value => no value
+docref_root => no value => no value
+enable_dl => Off => Off
+enable_post_data_reading => On => On
+error_append_string => no value => no value
+error_log => /home/s1lent/Desktop/www-projects/nette-foxy-forms/tests/log/php_error.log => no value
+error_prepend_string => no value => no value
+error_reporting => 0 => 22527
+exit_on_timeout => Off => Off
+expose_php => On => On
+extension_dir => /usr/lib/php5/20100525 => /usr/lib/php5/20100525
+file_uploads => On => On
+highlight.comment => <font style="color: #998; font-style: italic">#998; font-style: italic</font> => <font style="color: #FF8000">#FF8000</font>
+highlight.default => <font style="color: #000">#000</font> => <font style="color: #0000BB">#0000BB</font>
+highlight.html => <font style="color: #06B">#06B</font> => <font style="color: #000000">#000000</font>
+highlight.keyword => <font style="color: #D24; font-weight: bold">#D24; font-weight: bold</font> => <font style="color: #007700">#007700</font>
+highlight.string => <font style="color: #080">#080</font> => <font style="color: #DD0000">#DD0000</font>
+html_errors => Off => Off
+ignore_repeated_errors => Off => Off
+ignore_repeated_source => Off => Off
+ignore_user_abort => Off => Off
+implicit_flush => On => On
+include_path => .:/usr/share/php:/usr/share/pear => .:/usr/share/php:/usr/share/pear
+log_errors => Off => On
+log_errors_max_len => 1024 => 1024
+mail.add_x_header => On => On
+mail.force_extra_parameters => no value => no value
+mail.log => no value => no value
+max_execution_time => 0 => 0
+max_file_uploads => 20 => 20
+max_input_nesting_level => 64 => 64
+max_input_time => -1 => -1
+max_input_vars => 1000 => 1000
+memory_limit => -1 => -1
+open_basedir => no value => no value
+output_buffering => 0 => 0
+output_handler => no value => no value
+post_max_size => 8M => 8M
+precision => 14 => 14
+realpath_cache_size => 16K => 16K
+realpath_cache_ttl => 120 => 120
+register_argc_argv => On => On
+report_memleaks => On => On
+report_zend_debug => Off => Off
+request_order => GP => GP
+sendmail_from => no value => no value
+sendmail_path => /usr/sbin/sendmail -t -i  => /usr/sbin/sendmail -t -i 
+serialize_precision => 17 => 17
+short_open_tag => On => On
+SMTP => localhost => localhost
+smtp_port => 25 => 25
+sql.safe_mode => Off => Off
+track_errors => Off => Off
+unserialize_callback_func => no value => no value
+upload_max_filesize => 2M => 2M
+upload_tmp_dir => no value => no value
+user_dir => no value => no value
+user_ini.cache_ttl => 300 => 300
+user_ini.filename => .user.ini => .user.ini
+variables_order => GPCS => GPCS
+xmlrpc_error_number => 0 => 0
+xmlrpc_errors => Off => Off
+zend.detect_unicode => On => On
+zend.enable_gc => On => On
+zend.multibyte => Off => Off
+zend.script_encoding => no value => no value
+
+ctype
+
+ctype functions => enabled
+
+curl
+
+cURL support => enabled
+cURL Information => 7.29.0
+Age => 3
+Features
+AsynchDNS => No
+Debug => No
+GSS-Negotiate => Yes
+IDN => Yes
+IPv6 => Yes
+Largefile => Yes
+NTLM => Yes
+SPNEGO => No
+SSL => Yes
+SSPI => No
+krb4 => No
+libz => Yes
+CharConv => No
+Protocols => dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, pop3, pop3s, rtmp, rtsp, smtp, smtps, telnet, tftp
+Host => x86_64-pc-linux-gnu
+SSL Version => OpenSSL/1.0.1c
+ZLib Version => 1.2.7
+
+date
+
+date/time support => enabled
+"Olson" Timezone Database Version => 0.system
+Timezone Database => internal
+Default timezone => Europe/Berlin
+
+Directive => Local Value => Master Value
+date.default_latitude => 31.7667 => 31.7667
+date.default_longitude => 35.2333 => 35.2333
+date.sunrise_zenith => 90.583333 => 90.583333
+date.sunset_zenith => 90.583333 => 90.583333
+date.timezone => no value => no value
+
+dba
+
+DBA support => enabled
+Supported handlers => cdb cdb_make db4 inifile flatfile 
+
+Directive => Local Value => Master Value
+dba.default_handler => flatfile => flatfile
+
+dom
+
+DOM/XML => enabled
+DOM/XML API Version => 20031129
+libxml Version => 2.9.0
+HTML Support => enabled
+XPath Support => enabled
+XPointer Support => enabled
+Schema Support => enabled
+RelaxNG Support => enabled
+
+ereg
+
+Regex Library => Bundled library enabled
+
+exif
+
+EXIF Support => enabled
+EXIF Version => 1.4 $Id$
+Supported EXIF Version => 0220
+Supported filetypes => JPEG,TIFF
+
+Directive => Local Value => Master Value
+exif.decode_jis_intel => JIS => JIS
+exif.decode_jis_motorola => JIS => JIS
+exif.decode_unicode_intel => UCS-2LE => UCS-2LE
+exif.decode_unicode_motorola => UCS-2BE => UCS-2BE
+exif.encode_jis => no value => no value
+exif.encode_unicode => ISO-8859-15 => ISO-8859-15
+
+fileinfo
+
+fileinfo support => enabled
+version => 1.0.5
+
+filter
+
+Input Validation and Filtering => enabled
+Revision => $Id: e523cdc8829892d1b4f9cb7c3c57b2ba1c36b9ea $
+
+Directive => Local Value => Master Value
+filter.default => unsafe_raw => unsafe_raw
+filter.default_flags => no value => no value
+
+ftp
+
+FTP support => enabled
+
+gettext
+
+GetText Support => enabled
+
+hash
+
+hash support => enabled
+Hashing Engines => md2 md4 md5 sha1 sha224 sha256 sha384 sha512 ripemd128 ripemd160 ripemd256 ripemd320 whirlpool tiger128,3 tiger160,3 tiger192,3 tiger128,4 tiger160,4 tiger192,4 snefru snefru256 gost adler32 crc32 crc32b fnv132 fnv164 joaat haval128,3 haval160,3 haval192,3 haval224,3 haval256,3 haval128,4 haval160,4 haval192,4 haval224,4 haval256,4 haval128,5 haval160,5 haval192,5 haval224,5 haval256,5 
+
+iconv
+
+iconv support => enabled
+iconv implementation => glibc
+iconv library version => 2.17
+
+Directive => Local Value => Master Value
+iconv.input_encoding => ISO-8859-1 => ISO-8859-1
+iconv.internal_encoding => ISO-8859-1 => ISO-8859-1
+iconv.output_encoding => ISO-8859-1 => ISO-8859-1
+
+json
+
+json support => enabled
+json version => 1.2.1
+
+libxml
+
+libXML support => active
+libXML Compiled Version => 2.9.0
+libXML Loaded Version => 20900
+libXML streams => enabled
+
+mbstring
+
+Multibyte Support => enabled
+Multibyte string engine => libmbfl
+HTTP input encoding translation => disabled
+libmbfl version => 1.3.2
+
+mbstring extension makes use of "streamable kanji code filter and converter", which is distributed under the GNU Lesser General Public License version 2.1.
+
+Multibyte (japanese) regex support => enabled
+Multibyte regex (oniguruma) backtrack check => On
+Multibyte regex (oniguruma) version => 4.7.1
+
+Directive => Local Value => Master Value
+mbstring.detect_order => no value => no value
+mbstring.encoding_translation => Off => Off
+mbstring.func_overload => 0 => 0
+mbstring.http_input => pass => pass
+mbstring.http_output => pass => pass
+mbstring.http_output_conv_mimetypes => ^(text/|application/xhtml\+xml) => ^(text/|application/xhtml\+xml)
+mbstring.internal_encoding => no value => no value
+mbstring.language => neutral => neutral
+mbstring.strict_detection => Off => Off
+mbstring.substitute_character => no value => no value
+
+mhash
+
+MHASH support => Enabled
+MHASH API Version => Emulated Support
+
+mssql
+
+MSSQL Support => enabled
+Active Persistent Links => 0
+Active Links => 0
+Library version => FreeTDS
+
+Directive => Local Value => Master Value
+mssql.allow_persistent => On => On
+mssql.batchsize => 0 => 0
+mssql.charset => no value => no value
+mssql.compatability_mode => Off => Off
+mssql.connect_timeout => 5 => 5
+mssql.datetimeconvert => On => On
+mssql.max_links => Unlimited => Unlimited
+mssql.max_persistent => Unlimited => Unlimited
+mssql.max_procs => Unlimited => Unlimited
+mssql.min_error_severity => 10 => 10
+mssql.min_message_severity => 10 => 10
+mssql.secure_connection => Off => Off
+mssql.textlimit => Server default => Server default
+mssql.textsize => Server default => Server default
+mssql.timeout => 60 => 60
+
+openssl
+
+OpenSSL support => enabled
+OpenSSL Library Version => OpenSSL 1.0.1c 10 May 2012
+OpenSSL Header Version => OpenSSL 1.0.1c 10 May 2012
+
+pcntl
+
+pcntl support => enabled
+
+pcre
+
+PCRE (Perl Compatible Regular Expressions) Support => enabled
+PCRE Library Version => 8.31 2012-07-06
+
+Directive => Local Value => Master Value
+pcre.backtrack_limit => 1000000 => 1000000
+pcre.recursion_limit => 100000 => 100000
+
+PDO
+
+PDO support => enabled
+PDO drivers => dblib, pgsql
+
+pdo_dblib
+
+PDO Driver for FreeTDS/Sybase DB-lib => enabled
+Flavour => freetds
+
+pdo_pgsql
+
+PDO Driver for PostgreSQL => enabled
+PostgreSQL(libpq) Version => 9.1.9
+Module version => 1.0.2
+Revision =>  $Id$ 
+
+pgsql
+
+PostgreSQL Support => enabled
+PostgreSQL(libpq) Version => 9.1.9
+PostgreSQL(libpq)  => PostgreSQL 9.1.9 on x86_64-unknown-linux-gnu, compiled by gcc (Ubuntu/Linaro 4.7.2-22ubuntu5) 4.7.2, 64-bit
+Multibyte character support => enabled
+SSL support => enabled
+Active Persistent Links => 0
+Active Links => 0
+
+Directive => Local Value => Master Value
+pgsql.allow_persistent => On => On
+pgsql.auto_reset_persistent => Off => Off
+pgsql.ignore_notice => Off => Off
+pgsql.log_notice => Off => Off
+pgsql.max_links => Unlimited => Unlimited
+pgsql.max_persistent => Unlimited => Unlimited
+
+Phar
+
+Phar: PHP Archive support => enabled
+Phar EXT version => 2.0.1
+Phar API version => 1.1.1
+SVN revision => $Id: cc7eac717db60fe3deade794d4ae082fe97279ed $
+Phar-based phar archives => enabled
+Tar-based phar archives => enabled
+ZIP-based phar archives => enabled
+gzip compression => enabled
+bzip2 compression => enabled
+Native OpenSSL support => enabled
+
+
+Phar based on pear/PHP_Archive, original concept by Davey Shafik.
+Phar fully realized by Gregory Beaver and Marcus Boerger.
+Portions of tar implementation Copyright (c) 2003-2009 Tim Kientzle.
+Directive => Local Value => Master Value
+phar.cache_list => no value => no value
+phar.readonly => On => On
+phar.require_hash => On => On
+
+posix
+
+Revision => $Id: 967584c6fadb3467f31abe8e13caa8764df85867 $
+
+readline
+
+Readline Support => enabled
+Readline library => EditLine wrapper
+
+Directive => Local Value => Master Value
+cli.pager => no value => no value
+cli.prompt => \b \>  => \b \> 
+
+Reflection
+
+Reflection => enabled
+Version => $Id: 53b2389d638795fa66862d453ff1abfd89e0aa13 $
+
+session
+
+Session Support => enabled
+Registered save handlers => files user 
+Registered serializer handlers => php php_binary wddx 
+
+Directive => Local Value => Master Value
+session.auto_start => Off => Off
+session.cache_expire => 180 => 180
+session.cache_limiter => nocache => nocache
+session.cookie_domain => no value => no value
+session.cookie_httponly => Off => Off
+session.cookie_lifetime => 0 => 0
+session.cookie_path => / => /
+session.cookie_secure => Off => Off
+session.entropy_file => /dev/urandom => /dev/urandom
+session.entropy_length => 32 => 32
+session.gc_divisor => 1000 => 1000
+session.gc_maxlifetime => 1440 => 1440
+session.gc_probability => 0 => 0
+session.hash_bits_per_character => 5 => 5
+session.hash_function => 0 => 0
+session.name => PHPSESSID => PHPSESSID
+session.referer_check => no value => no value
+session.save_handler => files => files
+session.save_path => /var/lib/php5 => /var/lib/php5
+session.serialize_handler => php => php
+session.upload_progress.cleanup => On => On
+session.upload_progress.enabled => On => On
+session.upload_progress.freq => 1% => 1%
+session.upload_progress.min_freq => 1 => 1
+session.upload_progress.name => PHP_SESSION_UPLOAD_PROGRESS => PHP_SESSION_UPLOAD_PROGRESS
+session.upload_progress.prefix => upload_progress_ => upload_progress_
+session.use_cookies => On => On
+session.use_only_cookies => On => On
+session.use_trans_sid => 0 => 0
+
+shmop
+
+shmop support => enabled
+
+SimpleXML
+
+Simplexml support => enabled
+Revision => $Id: 5514f0fc897197ca9a199fb93b8b5d9135ad711a $
+Schema support => enabled
+
+soap
+
+Soap Client => enabled
+Soap Server => enabled
+
+Directive => Local Value => Master Value
+soap.wsdl_cache => 1 => 1
+soap.wsdl_cache_dir => /tmp => /tmp
+soap.wsdl_cache_enabled => 1 => 1
+soap.wsdl_cache_limit => 5 => 5
+soap.wsdl_cache_ttl => 86400 => 86400
+
+sockets
+
+Sockets Support => enabled
+
+SPL
+
+SPL support => enabled
+Interfaces => Countable, OuterIterator, RecursiveIterator, SeekableIterator, SplObserver, SplSubject
+Classes => AppendIterator, ArrayIterator, ArrayObject, BadFunctionCallException, BadMethodCallException, CachingIterator, CallbackFilterIterator, DirectoryIterator, DomainException, EmptyIterator, FilesystemIterator, FilterIterator, GlobIterator, InfiniteIterator, InvalidArgumentException, IteratorIterator, LengthException, LimitIterator, LogicException, MultipleIterator, NoRewindIterator, OutOfBoundsException, OutOfRangeException, OverflowException, ParentIterator, RangeException, RecursiveArrayIterator, RecursiveCachingIterator, RecursiveCallbackFilterIterator, RecursiveDirectoryIterator, RecursiveFilterIterator, RecursiveIteratorIterator, RecursiveRegexIterator, RecursiveTreeIterator, RegexIterator, RuntimeException, SplDoublyLinkedList, SplFileInfo, SplFileObject, SplFixedArray, SplHeap, SplMinHeap, SplMaxHeap, SplObjectStorage, SplPriorityQueue, SplQueue, SplStack, SplTempFileObject, UnderflowException, UnexpectedValueException
+
+standard
+
+Dynamic Library Support => enabled
+Path to sendmail => /usr/sbin/sendmail -t -i 
+
+Directive => Local Value => Master Value
+assert.active => 1 => 1
+assert.bail => 0 => 0
+assert.callback => no value => no value
+assert.quiet_eval => 0 => 0
+assert.warning => 1 => 1
+auto_detect_line_endings => 0 => 0
+default_socket_timeout => 60 => 60
+from => no value => no value
+url_rewriter.tags => a=href,area=href,frame=src,input=src,form=fakeentry => a=href,area=href,frame=src,input=src,form=fakeentry
+user_agent => no value => no value
+
+sysvmsg
+
+sysvmsg support => enabled
+Revision => $Id: 6360183f0075ec66a3dfa01633b2ed808dd482af $
+
+tokenizer
+
+Tokenizer Support => enabled
+
+wddx
+
+WDDX Support => enabled
+WDDX Session Serializer => enabled
+
+xml
+
+XML Support => active
+XML Namespace Support => active
+libxml2 Version => 2.9.0
+
+xmlreader
+
+XMLReader => enabled
+
+xmlwriter
+
+XMLWriter => enabled
+
+zip
+
+Zip => enabled
+Extension Version => $Id: 74f868b5c3320a31af332207df35d4ff525cba1e $
+Zip version => 1.11.0
+Libzip version => 0.10.1
+
+zlib
+
+ZLib Support => enabled
+Stream Wrapper => compress.zlib://
+Stream Filter => zlib.inflate, zlib.deflate
+Compiled Version => 1.2.1.1
+Linked Version => 1.2.7
+
+Directive => Local Value => Master Value
+zlib.output_compression => Off => Off
+zlib.output_compression_level => -1 => -1
+zlib.output_handler => no value => no value
+
+Additional Modules
+
+Module Name
+sysvsem
+sysvshm
+			</div>
+		</div></div>
+
+
+		<div class="panel">
+		<h2><a href="#netteBsPnl8" class="nette-toggle-collapsed">HTTP request</a></h2>
+
+		<div id="netteBsPnl8" class="nette-collapsed inner">
+			
+
+						<h3>$_GET</h3>
+						<p><i>empty</i></p>
+									<h3>$_POST</h3>
+						<p><i>empty</i></p>
+									<h3>$_COOKIE</h3>
+						<p><i>empty</i></p>
+								</div></div>
+
+
+		<div class="panel">
+		<h2><a href="#netteBsPnl9" class="nette-toggle-collapsed">HTTP response</a></h2>
+
+		<div id="netteBsPnl9" class="nette-collapsed inner">
+			<h3>Headers</h3>
+						<p><i>no headers</i></p>
+					</div></div>
+
+
+		
+
+		<ul>
+			<li>Report generated at 2014/01/06 00:58:08</li>
+							<li>CLI: console orm:schema-tool:update --force</li>
+						<li>PHP 5.4.9-4ubuntu2.3</li>
+						<li>Nette Framework 2.1.0 <i>(revision released on 2013-12-31)</i></li>		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var bs = document.getElementById('netteBluescreen');
+	document.body.appendChild(bs);
+	document.onkeyup = function(e) {
+		e = e || window.event;
+		if (e.keyCode == 27 && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+			document.getElementById('netteBluescreenIcon').click();
+		}
+	};
+
+	for (var i = 0, styles = document.styleSheets; i < styles.length; i++) {
+		if ((styles[i].owningElement || styles[i].ownerNode).className !== 'nette-debug') {
+			styles[i].oldDisabled = styles[i].disabled;
+			styles[i].disabled = true;
+
+		} else if (styles[i].addRule) {
+			styles[i].addRule('.nette-collapsed', 'display: none');
+		} else {
+			styles[i].insertRule('.nette-collapsed { display: none }', 0);
+		}
+	}
+
+	bs.onclick = function(e) {
+		e = e || window.event;
+		if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) {
+			return;
+		}
+
+		for (var link = e.target || e.srcElement; link && (!link.tagName || link.className.indexOf('nette-toggle') < 0); link = link.parentNode) {}
+		if (!link) {
+			return true;
+		}
+
+		var collapsed = link.className.indexOf('nette-toggle-collapsed') > -1,
+			ref = link.getAttribute('data-ref') || link.getAttribute('href', 2),
+			dest;
+
+		if (ref && ref !== '#') {
+			dest = document.getElementById(ref.substring(1));
+		} else {
+			for (dest = link.nextSibling; dest && dest.nodeType !== 1; dest = dest.nextSibling) {}
+		}
+
+		link.className = 'nette-toggle' + (collapsed ? '' : '-collapsed');
+		dest.style.display = collapsed ? (dest.tagName.toLowerCase() === 'div' ? 'block' : 'inline') : 'none';
+
+		if (link.id === 'netteBluescreenIcon') {
+			for (var i = 0, styles = document.styleSheets; i < styles.length; i++) {
+				if ((styles[i].owningElement || styles[i].ownerNode).className !== 'nette-debug') {
+					styles[i].disabled = collapsed ? true : styles[i].oldDisabled;
+				}
+			}
+		}
+		e.preventDefault ? e.preventDefault() : e.returnValue = false;
+		e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+	};
+</script>
+</body>
+</html>

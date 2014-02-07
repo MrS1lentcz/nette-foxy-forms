@@ -1,0 +1,5 @@
+doctrine:
+	driver: pdo_sqlite
+	memory: true
+	metadata:
+		FoxyTests\Forms: annotations(%appDir%/FoxyTests/Forms/models)

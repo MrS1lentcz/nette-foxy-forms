@@ -1,0 +1,14 @@
+parameters:
+    database:
+        driver: pdo_pgsql
+        dbname: foxy_forms
+        user: root
+        password: root
+        host: localhost
+        #client charset = UTF-8
+
+netteFoxyForms:
+    mediaDir: %wwwDir%/media/
+    mediaUrl: /media
+    mediaMacro: TRUE
+    useNamespace: TRUE
