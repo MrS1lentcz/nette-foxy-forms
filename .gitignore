@@ -1,15 +1,8 @@
-tests/log/*
-tests/temp/*
-tests/libs/*
-tests/composer.lock
-examples/log/*
-examples/temp/*
-examples/libs/*
-examples/composer.lock
+vendor
+composer.lock
 
 .idea
 *.swp
-composer.lock
 *.komodoproject
 
 .DS_Store

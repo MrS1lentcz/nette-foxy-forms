@@ -13,11 +13,14 @@ if ((!$loader = @include __DIR__ . '/../../vendor/autoload.php') && (!$loader = 
 	exit(1);
 }
 $loader->add('FoxyTests', __DIR__ . '/../');
+$loader->add('Foxy', __DIR__ . '/../../src/');
+require_once __DIR__ . '/../../src/Foxy/Forms/Form.php';
 
 // configure environment
 Tester\Helpers::setup();
 class_alias('Tester\Assert', 'Assert');
 date_default_timezone_set('Europe/Prague');
+
 
 // create temporary directory
 define('TEMP_DIR', __DIR__ . '/../tmp/' . (isset($_SERVER['argv']) ? md5(serialize($_SERVER['argv'])) : getmypid()));

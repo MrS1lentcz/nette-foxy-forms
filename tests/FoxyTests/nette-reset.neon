@@ -1,17 +1,6 @@
 php:
 	date.timezone: Europe/Prague
 
-doctrine:
-	metadataCache: array
-	queryCache: array
-	resultCache: array
-	hydrationCache: array
-
-
-console:
-	url: http://www.kdyby.org/
-
-
 nette:
 	security:
 		frames: null
@@ -23,3 +12,32 @@ nette:
 services:
 	cacheStorage:
 		class: Nette\Caching\Storages\MemoryStorage
+
+	doctrineCache: Doctrine\Common\Cache\ArrayCache()
+	doctrineConfiguration:
+		class: Doctrine\ORM\Configuration
+		factory: \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration
+		arguments:
+			paths:
+				- %appDir%FoxyTests/Forms/models/
+			isDevMode: true
+		setup:
+			- setProxyDir(%appDir%FoxyTests/Forms/models)
+			- setQueryCacheImpl(@doctrineCache)
+			- setMetadataCacheImpl(@doctrineCache)
+	em:
+		class: \Doctrine\ORM\EntityManager
+		factory: \Doctrine\ORM\EntityManager::create
+		arguments:
+			conn:
+				dbname: tests
+				driver: pdo_sqlite
+				memory: true
+			config: @doctrineConfiguration
+
+netteFoxyForms:
+	mediaDir: %appDir%tmp
+	mediaUrl: /media
+
+extensions:
+	netteFoxyForms: Foxy\DI\Extension

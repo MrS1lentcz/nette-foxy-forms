@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Test: Kdyby\Doctrine\Extension.
+ * Test: FoxyForms\Forms\Extension.
  *
- * @testCase Kdyby\Doctrine\ExtensionTest
+ * @testCase FoxyForms\Forms\ExtensionTest
  * @author Filip Procházka <filip@prochazka.su>
  * @package Kdyby\Doctrine
  */

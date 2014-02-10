@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
  */
 
-namespace FoxyForms\Forms;
+namespace FoxyTests\Forms;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Nette;
@@ -21,15 +21,13 @@ use Tester;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-abstract class ORMTestCase extends Tester\TestCase
+abstract class ATestCase extends Tester\TestCase
 {
 
 	/**
 	 * @var \Nette\DI\Container|\SystemContainer
 	 */
 	protected $serviceLocator;
-
-
 
 	/**
 	 * @return Kdyby\Doctrine\EntityManager
@@ -41,7 +39,6 @@ abstract class ORMTestCase extends Tester\TestCase
 		$config = new Nette\Configurator();
 		$container = $config->setTempDirectory(TEMP_DIR)
 			->addConfig(__DIR__ . '/../nette-reset.neon')
-			->addConfig(__DIR__ . '/config/memory.neon')
 			->addParameters(array(
 				'appDir' => $rootDir,
 				'wwwDir' => $rootDir,
@@ -50,6 +47,7 @@ abstract class ORMTestCase extends Tester\TestCase
 		/** @var Nette\DI\Container $container */
 
 		$em = $container->getByType('Doctrine\ORM\EntityManager');
+
 		/** @var Doctrine\ORM\EntityManager $em */
 
 		$schemaTool = new SchemaTool($em);
@@ -105,18 +103,13 @@ abstract class ORMTestCase extends Tester\TestCase
 	}
 
 
-
-	/**
-	 * @return UI\Form|Kdyby\DoctrineForms\EntityForm
-	 */
-	protected static function buildEntityForm()
+	protected function getInitData($entity)
 	{
-		$class = 'Foxy\Forms\Form';
-		if (class_exists($class, FALSE)) {
-			return new $class();
-		}
+		return array(
+			'model' => $entity,
+			'instance' => new $entity()
+		);
 	}
-
 }
 
 

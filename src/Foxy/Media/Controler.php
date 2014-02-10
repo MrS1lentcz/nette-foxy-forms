@@ -96,49 +96,6 @@ class Controler {
 
 
 	/**
-	 * Saves image sizes
-	 * @var string $imagepath
-	 */
-	protected function saveImageSizes($imagepath)
-	{
-		list($width, $height) = getimagesize($imagepath);
-
-		$this->imageSizes[$imagepath] = array(
-			'width' => $width,
-			'height' => $height,
-		);
-	}
-
-
-	/**
-	 * Get image height
-	 * @var string $imagepath
-	 */
-	protected function getImageHeight($imagepath)
-	{
-		if (array_key_exists($imagepath, $this->imageSizes)) {
-			return $this->imageSizes[$imagepath]['height'];
-		}
-		$this->saveImageSizes($imagepath);
-		return $this->getImageHeight($imagepath);
-	}
-
-
-	/**
-	 * Get image width
-	 * @var string $imagepath
-	 */
-	protected function getImageWidth($imagepath)
-	{
-		if (array_key_exists($imagepath, $this->imageSizes)) {
-			return $this->imageSizes[$imagepath]['width'];
-		}
-		$this->saveImageSizes($imagepath);
-		return $this->getImageWidth($imagepath);
-	}
-
-
-	/**
 	 * Returns completed url
 	 *
 	 * @param string $filepath
@@ -153,25 +110,24 @@ class Controler {
 			if (is_null($data['width']) && is_null($data['height'])) {
 				return $this->mediaUrl . '/' . $filepath;
 			}
-
 			$imagepath = $this->storage->getMediaDir() . $filepath;
-
-			if (! @is_file($imagepath)) {
-				return $this->mediaUrl . '/' . $filepath;
+			if (! array_key_exists($imagepath, $this->imageSizes)) {
+				$sizes = @getimagesize($imagepath);
+				if ($sizes === FALSE) {
+					return $this->mediaUrl . '/' . $filepath;
+				}
+				$this->imageSizes[$imagepath] = array($width, $height);
 			}
+			list($width, $height) = $this->imageSizes[$imagepath];
 
 			# calculate target height
 			if (! is_null($data['width']) && is_null($data['height'])) {
-				$height = $this->getImageHeight($imagepath);
-				$width = $this->getImageWidth($imagepath);
 				$data['height'] = $height * ($data['width'] / $width);
 				$data['height'] = (int) $data['height'];
 			}
 
 			# calculate target width
 			if (is_null($data['width']) && ! is_null($data['height'])) {
-				$height = $this->getImageHeight($imagepath);
-				$width = $this->getImageWidth($imagepath);
 				$data['width'] = $width * ($data['height'] / $height);
 				$data['width'] = (int) $data['width'];
 			}
