@@ -846,7 +846,11 @@ abstract class Form extends \Nette\Application\UI\Form
 
             $this->instance = $this->em->find($this->model, $values[$identifier]);
             $this->status = 'Update';
+        } elseif(\Doctrine\ORM\UnitOfWork::STATE_MANAGED
+                    === $this->em->getUnitOfWork()->getEntityState($this->instance)) {
+            $this->status = 'Update';
         }
+
 
         foreach($values as $name => $val) {
 
