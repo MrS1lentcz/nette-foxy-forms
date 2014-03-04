@@ -402,6 +402,11 @@ abstract class Form extends \Nette\Application\UI\Form
 
         $fieldName = $property['fieldName'];
 
+		# Set label
+		if (! isset($property['label'])) {
+			$property['label'] = $property['fieldName'];
+		}
+
         # Relation from second side is ignored
         if (($property['type'] == FOXY_ONE_TO_ONE
                 ||$property['type'] == FOXY_ONE_TO_MANY

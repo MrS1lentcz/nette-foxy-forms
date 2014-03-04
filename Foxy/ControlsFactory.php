@@ -289,7 +289,12 @@ class ControlsFactory
                                          array $data)
     {
         $field = $property['fieldName'];
-        $form->addSelect($field, $field, $data);
+        $label = $field;
+        if ($form->getTranslator()) {
+            $label = $form->getTranslator()->translate($label);
+        }
+
+        $form->addSelect($field, $label, $data);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
@@ -313,7 +318,12 @@ class ControlsFactory
                                          array $data)
     {
         $field = $property['fieldName'];
-        $form->addMultiSelect($field, $field, $data);
+        $label = $field;
+        if ($form->getTranslator()) {
+            $label = $form->getTranslator()->translate($label);
+        }
+
+        $form->addMultiSelect($field, $label, $data);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
