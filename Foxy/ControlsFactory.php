@@ -294,6 +294,10 @@ class ControlsFactory
             $label = $form->getTranslator()->translate($label);
         }
 
+        if ($property['nullable']) {
+            $data = array(null => '') + $data;
+        }
+
         $form->addSelect($field, $label, $data);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
