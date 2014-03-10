@@ -292,7 +292,11 @@ class ControlsFactory
         $label = $field;
         if ($form->getTranslator()) {
             $label = $form->getTranslator()->translate($label);
-        }
+				}
+
+				if ($property['nullable']) {
+					$data = array(null => '') + $data;
+				}
 
         $form->addSelect($field, $label, $data);
 
