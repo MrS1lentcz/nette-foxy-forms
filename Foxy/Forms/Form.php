@@ -512,18 +512,6 @@ abstract class Form extends \Nette\Application\UI\Form
             return;
         }
 
-        $defaultValue = $rp->getValue($this->instance);
-        # use just identifier of association instead of object
-        if (array_key_exists($field, $assocMappings) && $defaultValue != null){
-            $targetEntity = $assocMappings[$field]['targetEntity'];
-            $identifier = $this->getIdentifier($targetEntity);
-            $metadata = $this->em->getClassMetadata($targetEntity);
-            $rp = $metadata->getReflectionClass()->getProperty($identifier);
-            $rp->setAccessible(TRUE);
-            $defaultValue = $rp->getValue($defaultValue);
-        }
-        $properties[$field]['defaultValue'] = $defaultValue;
-
         # Checks for custom widget
         foreach(self::$simpleReader->getPropertyAnnotations($rp) as $a) {
             if ($a instanceof \Foxy\Annotations\Widget) {
@@ -540,6 +528,19 @@ abstract class Form extends \Nette\Application\UI\Form
  				);
             }
         }
+
+        $defaultValue = $rp->getValue($this->instance);
+        if (isset($assocMappings[$field]) &&
+            in_array($properties[$field]['type'], array(FOXY_MANY_TO_ONE, FOXY_ONE_TO_ONE))  &&
+            $defaultValue != null){
+            $targetEntity = $assocMappings[$field]['targetEntity'];
+            $identifier = $this->getIdentifier($targetEntity);
+            $metadata = $this->em->getClassMetadata($targetEntity);
+            $rp = $metadata->getReflectionClass()->getProperty($identifier);
+            $rp->setAccessible(TRUE);
+            $defaultValue = $rp->getValue($defaultValue);
+        }
+        $properties[$field]['defaultValue'] = $defaultValue;
     }
 
 
