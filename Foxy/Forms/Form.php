@@ -512,7 +512,17 @@ abstract class Form extends \Nette\Application\UI\Form
             return;
         }
 
-		$properties[$field]['defaultValue'] = $rp->getValue($this->instance);
+        $defaultValue = $rp->getValue($this->instance);
+        # use just identifier of association instead of object
+        if (array_key_exists($field, $assocMappings) && $defaultValue != null){
+            $targetEntity = $assocMappings[$field]['targetEntity'];
+            $identifier = $this->getIdentifier($targetEntity);
+            $metadata = $this->em->getClassMetadata($targetEntity);
+            $rp = $metadata->getReflectionClass()->getProperty($identifier);
+            $rp->setAccessible(TRUE);
+            $defaultValue = $rp->getValue($defaultValue);
+        }
+        $properties[$field]['defaultValue'] = $defaultValue;
 
         # Checks for custom widget
         foreach(self::$simpleReader->getPropertyAnnotations($rp) as $a) {
