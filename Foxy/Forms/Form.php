@@ -217,6 +217,7 @@ abstract class Form extends \Nette\Application\UI\Form
         'datetime'          => 'Foxy\ControlsFactory::createDatetime',
         'date'              => 'Foxy\ControlsFactory::createDate',
         'time'              => 'Foxy\ControlsFactory::createTime',
+        'blob'              => 'Foxy\ControlsFactory::createUpload',
         FOXY_ONE_TO_ONE     => 'Foxy\ControlsFactory::createSelectBox',
         FOXY_MANY_TO_ONE    => 'Foxy\ControlsFactory::createSelectBox',
         FOXY_ONE_TO_MANY    => 'Foxy\ControlsFactory::createMultipleSelectBox',
