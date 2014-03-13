@@ -510,6 +510,7 @@ abstract class Form extends \Nette\Application\UI\Form
                 }
             }
         } else {
+            unset($properties[$key]);
             return;
         }
 
