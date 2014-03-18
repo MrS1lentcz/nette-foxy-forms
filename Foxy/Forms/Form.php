@@ -403,6 +403,20 @@ abstract class Form extends \Nette\Application\UI\Form
 
         $fieldName = $property['fieldName'];
 
+        # Add group (make fieldset)
+        if (isset($property['newGroup']) && $property['newGroup']) {
+            $this->addGroup($property['newGroup']);
+        }
+
+        # Custom creating component for field
+        if (method_exists($this, 'setFieldComponent')) {
+            $this->setFieldComponent($fieldName);
+
+            if (isset($this[$fieldName])) {
+                return TRUE;
+            }
+        }
+
 		# Set label
 		if (! isset($property['label'])) {
 			$property['label'] = $property['fieldName'];
@@ -434,24 +448,10 @@ abstract class Form extends \Nette\Application\UI\Form
             );
         }
 
-        # Add group (make fieldset)
-        if (isset($property['newGroup']) && $property['newGroup']) {
-            $this->addGroup($property['newGroup']);
-        }
-
         # Create identifier as hidden field
         if (isset($property['identifier'])) {
             $this->addHidden($fieldName);
             return TRUE;
-        }
-
-        # Custom creating component for field
-        if (method_exists($this, 'setFieldComponent')) {
-            $this->setFieldComponent($fieldName);
-
-            if (isset($this[$fieldName])) {
-                return TRUE;
-            }
         }
 
         call_user_func_array(
