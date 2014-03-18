@@ -329,7 +329,7 @@ abstract class Form extends \Nette\Application\UI\Form
      * @param string $fieldName
      * @return array
      */
-    protected function getSelectData($entity, $fieldName)
+    public function getSelectData($entity, $fieldName)
     {
         $data = NULL;
         if (method_exists($this, 'getFkValues')) {
@@ -348,7 +348,19 @@ abstract class Form extends \Nette\Application\UI\Form
 
         $result = array();
         foreach($data as $r) {
-            $result[$rp->getValue($r)] = (string) $r;
+            $id = $rp->getValue($r);
+
+            # if is array collection of entities
+            if (is_object($id)) {
+                $valmeta = $this->em->getClassMetadata(get_class($id));
+                $valrp = $valmeta->getReflectionClass()->getProperty(
+                    $this->getIdentifier(get_class($id))
+                );
+                $valrp->setAccessible(TRUE);
+                $id = $valrp->getValue($id);
+            }
+
+            $result[$id] = (string) $r;
         }
         return $result;
     }
@@ -421,17 +433,6 @@ abstract class Form extends \Nette\Application\UI\Form
 		if (! isset($property['label'])) {
 			$property['label'] = $property['fieldName'];
 		}
-
-        # Relation from second side is ignored
-        if (($property['type'] == FOXY_ONE_TO_ONE
-                ||$property['type'] == FOXY_ONE_TO_MANY
-            )
-            && (! isset($property['joinColumns'])
-                || count($property['joinColumns']) == 0
-            )) {
-            unset($this->properties[$fieldName]);
-            return FALSE;
-        }
 
         $relations = array(
             FOXY_ONE_TO_ONE,
@@ -635,7 +636,19 @@ abstract class Form extends \Nette\Application\UI\Form
                         $this->getIdentifier(get_class($entity))
                     );
                     $rp->setAccessible(TRUE);
-                    $data[] = $rp->getValue($entity);
+
+                    $val = $rp->getValue($entity);
+
+                    if (is_object($val)) {
+                        $valmeta = $this->em->getClassMetadata(get_class($val));
+                        $valrp = $valmeta->getReflectionClass()->getProperty(
+                            $this->getIdentifier(get_class($val))
+                        );
+                        $valrp->setAccessible(TRUE);
+                        $val = $valrp->getValue($val);
+                    }
+
+                    $data[] = $val;
                 }
             }
 
@@ -736,6 +749,27 @@ abstract class Form extends \Nette\Application\UI\Form
                     $this->em->persist($entity);
                 }
                 $this->em->persist($this->instance);
+            }
+
+            $value = $arrayCol;
+        }
+
+        elseif ($property['type'] == FOXY_ONE_TO_MANY) {
+            $arrayCol = NULL;
+            if (method_exists($this->instance, $getter)) {
+                $arrayCol = $this->instance->$getter();
+            } else {
+                $arrayCol = $rp->getValue($this->instance);
+            }
+            $arrayCol->clear();
+
+            foreach ($value as $id){
+                $entity = $this->em->getRepository($property['targetEntity'])->findOneBy(
+                    array(
+                        $property['mappedBy'] => $id,
+                    )
+                );
+                $arrayCol->add($entity);
             }
 
             $value = $arrayCol;
