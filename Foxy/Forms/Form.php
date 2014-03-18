@@ -698,7 +698,9 @@ abstract class Form extends \Nette\Application\UI\Form
         if ($property['type'] == FOXY_ONE_TO_ONE
             || $property['type'] == FOXY_MANY_TO_ONE
         ) {
-            $value = $this->em->find($property['targetEntity'], $value);
+            if (! is_null($value)) {
+                $value = $this->em->find($property['targetEntity'], $value);
+            }
         }
 
         elseif ($property['type'] == FOXY_MANY_TO_MANY) {
@@ -717,6 +719,9 @@ abstract class Form extends \Nette\Application\UI\Form
 
             # Add entities to relation
             foreach($value as $id) {
+                if (is_null($id)) {
+                    continue;
+                }
                 $entity = $this->em->find($property['targetEntity'], $id);
                 $arrayCol->add($entity);
 
@@ -759,12 +764,23 @@ abstract class Form extends \Nette\Application\UI\Form
 	 * Set entity instance and load values to form
 	 *
 	 * @param object $entity
+	 * @param array|NULL $excluded
 	 * @return self
 	 */
     public function setInstance($entity)
     {
         $this->instance = $entity;
+
+        $args = func_get_args();
+        $excluded = array();
+        if (isset($args[1]) && is_array($args[1])) {
+            $excluded = $args[1];
+        }
+
         foreach($this->properties as $property) {
+            if (in_array($property['fieldName'], $excluded)) {
+                continue;
+            }
             $asLabel = FALSE;
 
             if ($this[$property['fieldName']] instanceof \Foxy\Controls\Disabled) {
@@ -862,7 +878,9 @@ abstract class Form extends \Nette\Application\UI\Form
             && isset($values[$identifier])
             && $values[$identifier]) {
 
-            $this->instance = $this->em->find($this->model, $values[$identifier]);
+            if (! is_null($values[$identifier])) {
+                $this->instance = $this->em->find($this->model, $values[$identifier]);
+            }
             $this->status = 'Update';
         } elseif(\Doctrine\ORM\UnitOfWork::STATE_MANAGED
                     === $this->em->getUnitOfWork()->getEntityState($this->instance)) {
