@@ -1,5 +1,5 @@
 {
-        "name": "nette-foxy-forms",
+        "name": "mrs1lentcz/nette-foxy-forms",
         "type": "library",
         "description": "Easy forms for Nette Framework",
         "keywords": ["nette", "form", "doctrine"],
