@@ -140,16 +140,6 @@ abstract class Form extends \Nette\Application\UI\Form
     protected $successUpdate= 'Model was edited successfully';
 
     /**
-     * @var string
-     */
-    protected $errorInsert = 'Model was not created';
-
-    /**
-     * @var string
-     */
-    protected $errorUpdate = 'Model was not updated';
-
-    /**
      * @var string | Nette\Utils\Html | NULL
      */
     protected $uploadWrapper = 'div';
@@ -950,12 +940,8 @@ abstract class Form extends \Nette\Application\UI\Form
         $this->em->persist($this->instance);
 
         if ($commit) {
-            try {
-                $this->em->flush();
-                $this->flashMessage();
-            } catch (\Exception $e) {
-                $this->flashMessage('error');
-            }
+            $this->em->flush();
+            $this->flashMessage();
 
             $urlParams = array();
             if (method_exists($this, 'getUrlParams')) {
@@ -974,10 +960,10 @@ abstract class Form extends \Nette\Application\UI\Form
 	 *
 	 * @param string $status
 	 */
-    public function flashMessage($status = 'success')
+    public function flashMessage()
     {
-        $status = $status . $this->status;
-        $this->presenter->flashMessage($this->{$status}, $status);
+        $statusProperty = 'success' . $this->status;
+        $this->presenter->flashMessage($this->{$statusProperty});
     }
 
 
