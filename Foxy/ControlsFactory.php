@@ -351,7 +351,7 @@ class ControlsFactory
         $form[$field] = new \Foxy\Controls\Upload($field);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
-            $form[$field]->setRequired(
+            $form[$field]->addCondition($form::FILLED)->setRequired(
                 $form->getValidationMessage($field, FOXY_NULLABLE)
             );
         }
