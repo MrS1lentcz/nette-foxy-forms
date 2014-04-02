@@ -941,6 +941,14 @@ abstract class Form extends \Nette\Application\UI\Form
 
         if ($commit) {
             $this->em->flush();
+
+            if (method_exists($this, 'postSaveCallback')) {
+                $terminate = $this->postSaveCallback();
+                if ($terminate == TRUE) {
+                    return;
+                }
+            }
+
             $this->flashMessage();
 
             $urlParams = array();

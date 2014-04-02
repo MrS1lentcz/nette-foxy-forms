@@ -278,6 +278,21 @@ class ProductEntity
 }
 ```
 
+- enableTranslator
+- enableCaching
+
+Property $enableTranslator zapina dle boolean hodnoty translator pro cely form (defaultne vypnuty) a $enableCaching metadata cache (defaultne zapnuty)
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+    protected
+        $enableTranslator = TRUE,
+        $enableCaching = FALSE;
+}
+```
+
+
 - annotationNamespace
 
 Muzeme pouzit i zapis bez namespace, avsak tuto volbu musime nastavit ve formulari prepinacem annotationNamespace.
@@ -416,6 +431,25 @@ class ProductForm extends Foxy\Forms\Form
         $this->presenter->redirect($this->successUrl);
 }
 ```
+
+- postSaveCallback()
+
+Metoda postSaveCallback se vola ihned po zavolani flush na entitymanageru a v pripade, ze vraci hodnotu TRUE, pak nevytvori flashMessage a ani neprobehne redirect.
+Hodi se napr. pro jednoduche zajaxovani formulare bez toho, aniz bychom museli pretezovat saveModel metodu.
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+    public function postSaveCallback()
+    {
+        if ($this->presenter->isAjax()) {
+            $this->payload->something = 'value';
+            return TRUE;
+        }
+    }
+}
+```
+
 
 Pokud jsme si zaregistrovali media macro, muzeme jej v latte pouzit ke zkompletovani absolutni url uploadovaneho dokumentu dle konfigurace.
 
