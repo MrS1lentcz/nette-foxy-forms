@@ -451,6 +451,25 @@ class ProductForm extends Foxy\Forms\Form
 ```
 
 
+- validateFields()
+
+Metoda validateFields se vola po nasetovani vsech hodnot do entity pred volanim prePersist. Ocekavany vystup je boolean.
+
+```php
+class ProductForm extends Foxy\Forms\Form
+{
+    public function validateFields()
+    {
+        $this->instance->validate();
+        if (! $this->instance->isValid()) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+}
+```
+
+
 Pokud jsme si zaregistrovali media macro, muzeme jej v latte pouzit ke zkompletovani absolutni url uploadovaneho dokumentu dle konfigurace.
 
 ```html

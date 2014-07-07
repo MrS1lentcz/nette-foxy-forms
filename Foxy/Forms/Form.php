@@ -937,6 +937,12 @@ abstract class Form extends \Nette\Application\UI\Form
             $this->setPropertyValue($name, $val);
         }
 
+        if (method_exists($this, 'validateFields')) {
+            if ($this->validateFields() == FALSE) {
+                return FALSE;
+            }
+        }
+
         $this->em->persist($this->instance);
 
         if ($commit) {
@@ -961,6 +967,7 @@ abstract class Form extends \Nette\Application\UI\Form
             }
         }
     }
+
 
 
     /**
