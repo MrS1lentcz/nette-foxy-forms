@@ -298,6 +298,7 @@ class ControlsFactory
     {
         $field = $property['fieldName'];
         $label = $property['label'];
+
         if ($form->getTranslator()) {
             $label = $form->getTranslator()->translate($label);
         }
@@ -316,6 +317,10 @@ class ControlsFactory
 
         $form[$field]->setTranslator(NULL);
         $form[$field]->setDefaultValue($property['defaultValue']);
+
+        if (isset($property['prompt'])) {
+            $form[$field]->setPrompt($property['prompt']);
+        }
     }
 
 

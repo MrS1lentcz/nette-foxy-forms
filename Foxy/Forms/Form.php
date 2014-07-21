@@ -180,9 +180,14 @@ abstract class Form extends \Nette\Application\UI\Form
 	protected $timeFormat = 'H:i:s';
 
     /**
-     * @var
+     * @var array
      */
     protected $fieldNames = array();
+
+    /**
+     * @var array
+     */
+    protected $selectBoxPrompts = array();
 
     /**
      * @var array
@@ -333,10 +338,12 @@ abstract class Form extends \Nette\Application\UI\Form
                 $this->em->getRepository($entity)
             );
         }
-        if (is_null($data)) {
-            $data = $this->em->getRepository($entity)->findAll();
+
+        if ($data) {
+            return $data;
         }
 
+        $data = $this->em->getRepository($entity)->findAll();
         $rc = $this->em->getClassMetadata($entity)->getReflectionClass();
         $rp = $rc->getProperty($this->getIdentifier($entity));
         $rp->setAccessible(TRUE);
@@ -420,6 +427,11 @@ abstract class Form extends \Nette\Application\UI\Form
 		if (! isset($property['label'])) {
 			$property['label'] = $property['fieldName'];
 		}
+
+        # Set prompt
+        if (isset($this->selectBoxPrompts[$property['fieldName']])) {
+            $property['prompt'] = $this->selectBoxPrompts[$property['fieldName']];
+        }
 
         # Relation from second side is ignored
         if (($property['type'] == FOXY_ONE_TO_ONE
