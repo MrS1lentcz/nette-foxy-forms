@@ -266,6 +266,7 @@ Pro kazdy field lze specifikovat widget, ktery pretizi nativni typ z doctrine an
     - image
     - password
     - email
+    - label
 
 ```php
 class ProductEntity
@@ -275,6 +276,19 @@ class ProductEntity
      * @Foxy\Annotations\Widget(type="image")
      */
     protected $image;
+}
+```
+
+- fieldNames
+
+Pokud z nejakeho duvodu nechcete sahat do entit kvuli nastaveni labelu, anebo je treba menit label property dle konkretniho pouziti formulare, je mozno pouzit $fieldNames property. Property $fieldNames prepisuje label z anotace na entite:
+
+```php
+
+class ProductForm extends Foxy\Forms\Form
+{
+    protected
+        $fieldNames = array('propertyName' => 'New property label');
 }
 ```
 

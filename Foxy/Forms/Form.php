@@ -180,6 +180,11 @@ abstract class Form extends \Nette\Application\UI\Form
 	protected $timeFormat = 'H:i:s';
 
     /**
+     * @var
+     */
+    protected $fieldNames = array();
+
+    /**
      * @var array
      */
     protected $validationMessages = array(
@@ -388,7 +393,7 @@ abstract class Form extends \Nette\Application\UI\Form
     {
         $params = array(
             &$this,
-            $property,
+            &$property,
         );
 
         $fieldName = $property['fieldName'];
@@ -405,6 +410,10 @@ abstract class Form extends \Nette\Application\UI\Form
             if (isset($this[$fieldName])) {
                 return TRUE;
             }
+        }
+
+        if (isset($this->fieldNames[$property['fieldName']])) {
+            $property['label'] = $this->fieldNames[$property['fieldName']];
         }
 
 		# Set label
@@ -699,17 +708,12 @@ abstract class Form extends \Nette\Application\UI\Form
             || $property['type'] == FOXY_MANY_TO_ONE
         ) {
             if (! is_null($value)) {
-                $value = $this->em->find($property['targetEntity'], $value);
+                $value = $this->em->find($property['targetEntity'], (int) $value);
             }
         }
 
         elseif ($property['type'] == FOXY_MANY_TO_MANY) {
-            $arrayCol = NULL;
-            if (method_exists($this->instance, $getter)) {
-                $arrayCol = $this->instance->$getter();
-            } else {
-                $arrayCol = $rp->getValue($this->instance);
-            }
+            $arrayCol = $rp->getValue($this->instance);
             $arrayCol->clear();
 
             $inverseProp = isset($property['inversedBy'])

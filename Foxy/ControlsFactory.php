@@ -23,7 +23,8 @@ class ControlsFactory
     public static function createInteger(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addText($field, $field);
+        $label = $property['label'];
+        $form->addText($field, $label);
         $isRequired = ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']);
 
         if ($isRequired) {
@@ -88,7 +89,8 @@ class ControlsFactory
     public static function createString(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addText($field, $field);
+        $label = $property['label'];
+        $form->addText($field, $label);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
@@ -117,7 +119,8 @@ class ControlsFactory
     public static function createText(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addTextarea($field, $field);
+        $label = $property['label'];
+        $form->addTextarea($field, $label);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
@@ -146,7 +149,8 @@ class ControlsFactory
     public static function createDecimal(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addText($field, $field);
+        $label = $property['label'];
+        $form->addText($field, $label);
         $isRequired = ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']);
 
         if ($isRequired) {
@@ -187,7 +191,8 @@ class ControlsFactory
     public static function createBoolean(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addCheckbox($field, $field);
+        $label = $property['label'];
+        $form->addCheckbox($field, $label);
         $form[$field]->setDefaultValue($property['defaultValue']);
     }
 
@@ -201,7 +206,8 @@ class ControlsFactory
     public static function createDatetime(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addText($field, $field);
+        $label = $property['label'];
+        $form->addText($field, $label);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
@@ -231,7 +237,8 @@ class ControlsFactory
     public static function createDate(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addText($field, $field);
+        $label = $property['label'];
+        $form->addText($field, $label);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
@@ -261,7 +268,8 @@ class ControlsFactory
     public static function createTime(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addText($field, $field);
+        $label = $property['label'];
+        $form->addText($field, $label);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(
@@ -289,7 +297,7 @@ class ControlsFactory
                                          array $data)
     {
         $field = $property['fieldName'];
-        $label = $field;
+        $label = $property['label'];
         if ($form->getTranslator()) {
             $label = $form->getTranslator()->translate($label);
         }
@@ -322,7 +330,7 @@ class ControlsFactory
                                          array $data)
     {
         $field = $property['fieldName'];
-        $label = $field;
+        $label = $property['label'];
         if ($form->getTranslator()) {
             $label = $form->getTranslator()->translate($label);
         }
@@ -388,7 +396,8 @@ class ControlsFactory
     public static function createPassword(Forms\Form $form, array $property)
     {
         $field = $property['fieldName'];
-        $form->addPassword($field, $field);
+        $label = $property['label'];
+        $form->addPassword($field, $label);
 
         if ($form->canValidate(FOXY_NULLABLE) && ! $property['nullable']) {
             $form[$field]->setRequired(

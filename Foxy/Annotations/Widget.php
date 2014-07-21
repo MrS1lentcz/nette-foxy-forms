@@ -43,4 +43,9 @@ class Widget implements \Doctrine\ORM\Mapping\Annotation
 	# ------------------------
 
 	public $customUpload = FALSE;
+
+	/**
+	 * @var string
+	 */
+	public $label;
 }
