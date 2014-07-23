@@ -339,7 +339,7 @@ abstract class Form extends \Nette\Application\UI\Form
             );
         }
 
-        if ($data) {
+        if ($data !== NULL) {
             return $data;
         }
 
