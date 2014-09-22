@@ -172,7 +172,7 @@ abstract class Form extends \Nette\Application\UI\Form
 	/**
 	 * @var string
 	 */
-	protected $dateFormat = 'Y-m-d H:i:s';
+	protected $dateFormat = 'Y-m-d';
 
 	/**
 	 * @var string
@@ -765,7 +765,7 @@ abstract class Form extends \Nette\Application\UI\Form
 		}
 
         elseif (in_array($property['type'], array('datetime','date','time'))) {
-            $value = new \Datetime($value);
+            $value = $value ? new \Datetime($value) : NULL;
         }
 
         if (method_exists($this->instance,$setter)) {
